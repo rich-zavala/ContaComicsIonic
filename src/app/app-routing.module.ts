@@ -1,20 +1,25 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "dates-listing",
+    pathMatch: "full"
   },
   {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    path: "home",
+    loadChildren: "./home/home.module#HomePageModule"
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+    path: "list",
+    loadChildren: "./list/list.module#ListPageModule"
+  },
+  {
+    path: "dates-listing",
+    loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
+  },
+  { path: "add-form", loadChildren: "./add-form/add-form.module#AddFormPageModule" }
 ];
 
 @NgModule({
@@ -23,4 +28,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

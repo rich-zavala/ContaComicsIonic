@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Add a new Comic
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="ccRecordForm">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input type="search" formControlName="title" autofocus="true" autocapitalize="'characters'"></ion-input>
+    </ion-item>
+
+    <ion-list class="autocompleteOptions" *ngIf="!filteredTitleSelected && filteredTitles.length > 0">
+      <ion-button *ngFor="let title of filteredTitles" expand=full color=light (click)="selectTitle(title)">{{title}}</ion-button>
+    </ion-list>
+
+    <ion-item>
+      <ion-label position="floating">Volume</ion-label>
+      <ion-input type="number" formControlName="volume"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Price</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Variant</ion-label>
+      <ion-input formControlName="variant"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Is this in your shelf?</ion-label>
+      <ion-input></ion-input>
+      <ion-checkbox formControlName="checked"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Publish Date</ion-label>
+      <ion-input type="date" formControlName="publishDate"></ion-input>
+    </ion-item>
+    <ion-button expand="full" [disabled]="ccRecordForm.invalid" (click)="save()">Save Comic</ion-button>
+  </form>
+</ion-content>

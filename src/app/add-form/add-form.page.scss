@@ -1,0 +1,10 @@
+.autocompleteOptions {
+    margin: 0px 16px;
+    padding: 2px 4px;
+    width: calc(100% - 32px);
+    max-height: 26vh;
+    position: absolute;
+    box-shadow: 0px 2px 4px #0000004f;
+    overflow: auto;
+    z-index: 10;
+}
