@@ -168,7 +168,12 @@ export class IndexedDB implements ICCDBHandler {
                     .pipe(toArray())
                     .subscribe(
                         (years: ICCYear[]) => {
-                            observer.next(lodash.reverse(lodash.sortBy(years, "year")));
+                            years = lodash.sortBy(
+                                years.map(y => {
+                                    y.days = y.days.sort().reverse();
+                                    return y;
+                                }), "year").reverse();
+                            observer.next(years);
                             observer.complete();
                         }
                     );
@@ -307,7 +312,7 @@ export class IndexedDB implements ICCDBHandler {
                             .pipe(toArray())
                             .subscribe(
                                 (records: ICCRecord[]) => {
-                                    observer.next(records);
+                                    observer.next(lodash.sortBy(records, r => r.recordDate).reverse());
                                     observer.complete();
                                 }
                             );

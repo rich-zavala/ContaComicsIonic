@@ -18,11 +18,19 @@ export class CollectionService {
     }
 
     updateYears() {
-        this.getYears().subscribe(d => this.years.next(d));
+        this.getYears().subscribe(d => {
+            this.years.next(d);
+
+
+        });
     }
 
     private getYears() {
         return this.db.db.getYears();
+    }
+
+    getYearDates(year: number) {
+        return this.db.db.getDays(year);
     }
 
     updateDates(year: number) {

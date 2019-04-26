@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 
 import { DATE_FORMAT } from "src/constants/formats";
-import { CCRecord } from 'src/models/record';
+import { CCRecord } from "src/models/record";
 import { DbHandlingService } from "../services/db-handling.service";
 
 import * as lodash from "lodash";
