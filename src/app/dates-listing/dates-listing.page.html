@@ -11,7 +11,7 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="top">
-        <ion-tab-button *ngFor="let year of years" (click)="updateYearSelected(year)" [selected]="year.year === selectedYear.year">
+        <ion-tab-button *ngFor="let year of years" (click)="updateYearSelected(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: working || isSelected(year.year) }">
           <ion-icon name="calendar"></ion-icon>
           <ion-label>{{year.year}}</ion-label>
         </ion-tab-button>
@@ -20,6 +20,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="selectedYear">
-  <app-date-records *ngFor="let date of selectedYearDates" [date]="date"></app-date-records>
+<ion-content>
+  <ion-progress-bar *ngIf="working" [value]="loadingProgress"></ion-progress-bar>
+
+  <ng-container *ngIf="!working">
+    <app-date-records *ngFor="let date of selectedYearDates" [date]="date" [records]="records[date.date]"></app-date-records>
+  </ng-container>
 </ion-content>

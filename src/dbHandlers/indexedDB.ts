@@ -321,6 +321,10 @@ export class IndexedDB implements ICCDBHandler {
         });
     }
 
+    getRecord(id: string): Rx.Observable<ICCRecord> {
+        return Rx.from(this.dbRecords.getItem(id) as Promise<ICCRecord>);
+    }
+
     private getYear(year: number): Rx.Observable<ICCYear> {
         return new Rx.Observable(observer => {
             const yStr = year.toString();

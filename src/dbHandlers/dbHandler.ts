@@ -1,6 +1,5 @@
 import { Observable } from "rxjs";
 import { ICCRecord, CCRecord } from "../models/record";
-import { ICCCollection } from "../models/collection";
 import { ICCDay } from "../models/day";
 import { ICCYear } from "src/models/year";
 
@@ -29,4 +28,5 @@ export interface ICCDBHandler {
     getDays(year: number): Observable<ICCDay[]>;
     getSeries(): Observable<string[]>;
     getRecordsByDay(date: string): Observable<ICCRecord[]>;
+    getRecord(id: string): Observable<ICCRecord>;
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { CollectionService } from "src/app/services/collection.service";
 import { ICCDay } from "src/models/day";
-import * as moment from "moment";
 import { ICCRecord } from "src/models/record";
+import * as moment from "moment";
 
 @Component({
   selector: "app-date-records",
@@ -11,16 +11,13 @@ import { ICCRecord } from "src/models/record";
 })
 export class DateRecordsComponent implements OnInit {
   @Input() date: ICCDay;
+  @Input() records: ICCRecord[];
   @Output() recordDeleted: EventEmitter<ICCRecord>;
   dateString: string;
-
-  private records: ICCRecord[] = [];
 
   constructor(private db: CollectionService) { }
 
   ngOnInit() {
     this.dateString = moment(this.date.date).format("DD MMM, YYYY");
-    this.db.getRecordsByDate(this.date.date)
-      .subscribe(d => this.records = d);
   }
 }

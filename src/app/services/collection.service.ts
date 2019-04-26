@@ -37,7 +37,7 @@ export class CollectionService {
         return this.db.db.getDays(year).subscribe(d => this.dates.next(d));
     }
 
-    getRecordsByDate(date: string) {
-        return this.db.db.getRecordsByDay(date);
+    getRecord(id: string) {
+        return this.db.db.getRecord(id);
     }
 }

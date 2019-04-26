@@ -1,7 +1,9 @@
 <ion-list>
   <ion-list-header>
-    {{dateString}}
-    <div style="float: right">{{date.total | currency}}</div>
+    <ion-grid>
+      <ion-col> {{dateString}}</ion-col>
+      <ion-col>{{date.total | currency}}</ion-col>
+    </ion-grid>
   </ion-list-header>
   <ion-item *ngFor="let cc of records">
     <ion-label>{{cc.title}} #{{cc.volume}}</ion-label>
