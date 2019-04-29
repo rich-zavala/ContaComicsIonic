@@ -22,8 +22,7 @@
 
 <ion-content>
   <ion-progress-bar *ngIf="working" [value]="loadingProgress"></ion-progress-bar>
-
-  <ng-container *ngIf="!working">
+  <ion-list *ngIf="!working">
     <app-date-records *ngFor="let date of selectedYearDates" [date]="date" [records]="records[date.date]"></app-date-records>
-  </ng-container>
+  </ion-list>
 </ion-content>

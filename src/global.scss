@@ -13,3 +13,20 @@
 .mTop10 {
     margin-top: 10px;
 }
+
+.flex {
+    display: flex;
+    position: relative;
+
+    &.fcol {
+        flex-direction: column;
+    }
+
+    &.fcenter {
+        justify-content: center;
+    }
+
+    &.fvertical {
+        align-items: center;
+    }
+}

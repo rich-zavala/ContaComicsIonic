@@ -1,11 +1,23 @@
-<ion-list>
-  <ion-list-header>
-    <ion-grid>
-      <ion-col> {{dateString}}</ion-col>
-      <ion-col>{{date.total | currency}}</ion-col>
-    </ion-grid>
-  </ion-list-header>
-  <ion-item *ngFor="let cc of records">
-    <ion-label>{{cc.title}} #{{cc.volume}}</ion-label>
-  </ion-item>
-</ion-list>
+<div class="date-container flex fcol">
+  <div class="date-display flex">
+    <div class="col-1 flex fcol fcenter">
+      <div class="day">25</div>
+      <div class="month">Nov</div>
+      <div class="width-holder"></div>
+    </div>
+    <div class="col-2 flex fcol fcenter">
+      <div class="counter">{{records.length}} comics</div>
+      <div class="total">{{date.total | currency}}</div>
+    </div>
+  </div>
+  <div class="date-records flex">
+    <div class="col-1 flex fcenter">
+      <div class="width-holder"></div>
+    </div>
+    <div class="col-2">
+      <ion-card>
+        <app-record-row *ngFor="let cc of records; let index=index; let odd=odd;" [cc]="cc" [odd]="odd"></app-record-row>
+      </ion-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+.cc-row {
+    border-bottom: 1px solid lightgray;
+    line-height: 1;
+
+    &.odd {
+        background: #f1f1f1;
+    }
+
+    .info {
+        padding: 1vh 0 1vh 1vh;
+        flex: 1;
+
+        &>div {
+            margin-right: 10px;
+        }
+
+        .checkbox {}
+
+        .title,
+        .price {
+            // font-size: .rem;
+        }
+
+        .title {
+            flex: 1;
+        }
+
+        .volumen {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .price {
+            margin: 0;
+        }
+    }
+
+    .more {
+        width: 1.5rem;
+        height: 100%;
+        font-size: 1.3rem;
+    }
+}

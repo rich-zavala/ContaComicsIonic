@@ -6,8 +6,8 @@ import { toArray, delay } from "rxjs/operators";
 import * as Rx from "rxjs";
 import * as lodash from "lodash";
 
-import { ICCDay } from 'src/models/day';
-import { ICCRecord } from 'src/models/record';
+import { ICCDay } from "src/models/day";
+import { ICCRecord } from "src/models/record";
 
 @Component({
   selector: "app-dates-listing",

@@ -4,6 +4,8 @@ import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { RouterModule } from "@angular/router";
 
+import { RecordRowModule } from "../record-row/record-row.module";
+
 import { DatesListingPage } from "./dates-listing.page";
 import { DateRecordsComponent } from "./date-records/date-records.component";
 
@@ -12,6 +14,7 @@ import { DateRecordsComponent } from "./date-records/date-records.component";
     CommonModule,
     FormsModule,
     IonicModule,
+    RecordRowModule,
     RouterModule.forChild([
       {
         path: "",
