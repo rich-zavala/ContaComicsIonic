@@ -26,28 +26,3 @@
         align-items: center;
     }
 }
-
-.checkboxContainer {
-    // position: relative;
-    width: 18px;
-    height: 18px;
-
-    &::before {
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        content: '';
-        z-index: 1;
-    }
-
-    ion-checkbox {
-        margin: 0;
-        position: absolute;
-        z-index: 0;
-    }
-}
-
-.checked {
-    color: var(--ion-color-primary);
-}

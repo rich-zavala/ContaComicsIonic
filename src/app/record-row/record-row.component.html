@@ -1,6 +1,6 @@
 <div class="cc-row flex" [ngClass]="{ odd: odd }">
   <div class="info flex fvertical">
-    <div class="flex fvertical">
+    <div>
       <ion-checkbox *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
     </div>
     <div class="title flex">
