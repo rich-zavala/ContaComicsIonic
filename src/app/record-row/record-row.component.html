@@ -1,20 +1,21 @@
 <div class="cc-row flex" [ngClass]="{ odd: odd }">
   <div class="info flex fvertical">
-    <div class="checkbox flex fvertical">
-      <ion-checkbox></ion-checkbox>
+    <div class="flex fvertical">
+      <div *ngIf="cc.checked" class="checkboxContainer" (click)="uncheck()">
+        <ion-checkbox checked></ion-checkbox>
+      </div>
+      <ion-checkbox *ngIf="!cc.checked" (ionChange)="check()"></ion-checkbox>
     </div>
     <div class="title flex">
-      <div>{{cc.title}}</div>
+      <div class="ion-text-capitalize">{{cc.title}}</div>
       <div *ngIf="cc.variant">{{cc.variant}}</div>
     </div>
-    <!-- <div class="details flex fvertical"> -->
     <div class="volumen">
       #{{cc.volume}}
     </div>
     <div class="price">
-      {{cc.price | currency}}
+      {{cc.priceCurrency()}}
     </div>
-    <!-- </div> -->
   </div>
   <div class="ion-activatable" ion-activatable>
     <ion-ripple-effect></ion-ripple-effect>

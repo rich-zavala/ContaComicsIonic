@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ICCDBHandler } from "src/dbHandlers/dbHandler";
-import { IndexedDB } from "src/dbHandlers/indexedDB";
+import { LocalForageHandler } from "src/dbHandlers/localForageHandler";
 
 @Injectable({
   providedIn: "root"
 })
 export class DbHandlingService {
-  db: ICCDBHandler = new IndexedDB();
+  db: ICCDBHandler = new LocalForageHandler();
 }

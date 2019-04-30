@@ -1,5 +1,6 @@
 import * as moment from "moment";
-import { DATE_FORMAT } from "src/constants/formats";
+import { DATE_FORMAT, DATE_FORMAT_READ, DATE_FORMAT_READ_TIME } from "src/constants/formats";
+import { dynCurrency } from "src/app/tools/utils";
 
 export interface ICCRecord {
     id?: string;
@@ -64,5 +65,17 @@ export class CCRecord implements ICCRecord {
 
     public insertable() {
         return JSON.parse(JSON.stringify(this));
+    }
+
+    public priceCurrency() {
+        return dynCurrency(this.price);
+    }
+
+    get detailDates() {
+        return {
+            published: this.publishDateMoment.format(DATE_FORMAT_READ),
+            registry: moment(this.recordDate).format(DATE_FORMAT_READ_TIME),
+            checked: moment(this.checkedDate).format(DATE_FORMAT_READ_TIME),
+        };
     }
 }

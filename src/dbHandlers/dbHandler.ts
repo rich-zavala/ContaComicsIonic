@@ -9,6 +9,7 @@ export interface IInsertRecordResponse {
 }
 
 export interface IDeleteRecordResponse {
+    record: ICCRecord;
     recordDeleted: boolean;
     dayDeleted: boolean;
     yearDeleted: boolean;
@@ -21,8 +22,7 @@ export interface IDeleteRecordResponse {
 }
 export interface ICCDBHandler {
     insert(data: ICCRecord): Observable<IInsertRecordResponse>;
-    check(data: ICCRecord): Observable<ICCRecord>;
-    uncheck(data: ICCRecord): Observable<ICCRecord>;
+    update(data: ICCRecord): Observable<ICCRecord>;
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;
     getDays(year: number): Observable<ICCDay[]>;

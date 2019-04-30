@@ -1,0 +1,20 @@
+.title {
+    .info {
+        flex: 1;
+
+        div {
+            color: var(--ion-color-medium);
+            font-style: italic;
+        }
+    }
+
+    .volumen {
+        font-size: 2rem;
+    }
+}
+
+small {
+    margin-bottom: .5rem;
+    display: block;
+    color: var(--ion-color-medium);
+}

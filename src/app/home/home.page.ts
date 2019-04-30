@@ -48,6 +48,7 @@ export class HomePage {
       .subscribe(res => {
         console.log("Insert result:", res);
         records = res.map(r => r.record);
+        alert("Done!");
       });
   }
 }

@@ -4,10 +4,11 @@ import { ToastController, AlertController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 
-import { DATE_FORMAT } from "src/constants/formats";
+import { CollectionService } from '../services/collection.service';
 import { CCRecord } from "src/models/record";
-import { DbHandlingService } from "../services/db-handling.service";
+// import { DbHandlingService } from "../services/db-handling.service";
 
+import { DATE_FORMAT } from "src/constants/formats";
 import * as lodash from "lodash";
 import * as moment from "moment";
 
@@ -24,12 +25,13 @@ export class AddFormPage implements OnInit {
   filteredTitleSelected = false;
 
   constructor(
-    private db: DbHandlingService,
+    // private db: DbHandlingService,
+    private db: CollectionService,
     private toastController: ToastController,
     private alertController: AlertController
   ) {
     this.initForm();
-    db.db.getSeries()
+    db.getSeries()
       .subscribe(
         titles => this.titles = titles
       );
@@ -68,7 +70,7 @@ export class AddFormPage implements OnInit {
   }
 
   private save() {
-    this.db.db.insert(this.ccRecordForm.value)
+    this.db.insert(this.ccRecordForm.value)
       .subscribe(
         res => {
           if (res.duplicate) {
@@ -95,15 +97,15 @@ export class AddFormPage implements OnInit {
       header: "Warning!",
       subHeader: "This comic is in the catalog",
       message: `<b>${cc.title} #${cc.volume}</b>
-      <div class="mTop10">
+      <div class="ion-margin-top">
         <small>Variant:</small>
         <div>${(lodash.isEmpty(cc.variant) ? "No variant" : cc.variant)}</div>
       </div>
-      <div class="mTop10">
+      <div class="ion-margin-top">
         <small>Date registered:</small>
         <div>${cc.getPublishDate()}</div>
       </div>
-      <div class="mTop10">Be careful about purchasing this comic as it may be part of your collection already</div>`,
+      <div class="ion-margin-top">Be careful about purchasing this comic as it may be part of your collection already</div>`,
       buttons: ["OK"]
     });
 

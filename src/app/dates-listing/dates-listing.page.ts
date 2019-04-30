@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChildren, QueryList } from "@angular/core";
 import { ICCYear } from "src/models/year";
 import { CollectionService } from "../services/collection.service";
 import { toArray, delay } from "rxjs/operators";
@@ -7,7 +7,7 @@ import * as Rx from "rxjs";
 import * as lodash from "lodash";
 
 import { ICCDay } from "src/models/day";
-import { ICCRecord } from "src/models/record";
+import { DateRecordsComponent } from './date-records/date-records.component';
 
 @Component({
   selector: "app-dates-listing",
@@ -15,6 +15,8 @@ import { ICCRecord } from "src/models/record";
   styleUrls: ["./dates-listing.page.scss"],
 })
 export class DatesListingPage implements OnInit {
+  @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
+
   loadingProgress = 0;
   years: ICCYear[] = [];
   selectedYear: ICCYear;
@@ -23,15 +25,40 @@ export class DatesListingPage implements OnInit {
   working = false;
 
   constructor(private db: CollectionService) {
+    db.updateYears();
   }
 
   ngOnInit() {
     this.db.years.subscribe(d => {
-      this.years = d;
-      if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
-        this.updateYearSelected(lodash.first(this.years));
+      if (!this.years || this.years.length === 0 || JSON.stringify(this.years) !== JSON.stringify(d)) {
+        this.years = d;
+        if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
+          this.updateYearSelected(lodash.first(this.years));
+        }
       }
     });
+
+    this.db.deletedRecord.subscribe(
+      deleteInfo => {
+        if (this.selectedYear.year === deleteInfo.recordYear) {
+          this.selectedYear.total = deleteInfo.yearTotal;
+          if (deleteInfo.yearDeleted) {
+            this.ngOnInit();
+          } else if (deleteInfo.dayDeleted) {
+            this.selectedYearDates.splice(this.selectedYearDates.findIndex(d => d.date === deleteInfo.recordDate), 1);
+          } else {
+            const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
+            if (dateChild) {
+              const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
+              date.total = deleteInfo.dayTotal;
+              date.records.splice(date.records.findIndex(record => record === deleteInfo.record.id), 1);
+              this.records[date.date].splice(this.records[date.date].findIndex(record => record.id === deleteInfo.record.id), 1);
+              dateChild.ngOnInit();
+            }
+          }
+        }
+      }
+    );
   }
 
   private updateYearSelected($event: ICCYear) {

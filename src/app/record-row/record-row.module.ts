@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 
@@ -8,6 +9,7 @@ import { RecordDetailsComponent } from "./record-details/record-details.componen
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         IonicModule
     ],
     declarations: [

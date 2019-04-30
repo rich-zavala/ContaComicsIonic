@@ -9,7 +9,7 @@ import { ICCDay } from "../models/day";
 import { ICCYear } from "../models/year";
 import { ICCSerie } from "src/models/serie";
 
-export class IndexedDB implements ICCDBHandler {
+export class LocalForageHandler implements ICCDBHandler {
     dbYears: LocalForage;
     dbDays: LocalForage;
     dbRecords: LocalForage;
@@ -208,20 +208,18 @@ export class IndexedDB implements ICCDBHandler {
         });
     }
 
-    check(data: ICCRecord): Rx.Observable<ICCRecord> {
+    update(data: ICCRecord): Rx.Observable<ICCRecord> {
         return new Rx.Observable(observer => {
-
-        });
-    }
-
-    uncheck(data: ICCRecord): Rx.Observable<ICCRecord> {
-        return new Rx.Observable(observer => {
-
+            this.dbRecords.setItem(data.id, data, () => {
+                observer.next(data);
+                observer.complete();
+            });
         });
     }
 
     delete(cc: CCRecord): Rx.Observable<IDeleteRecordResponse> {
         const resp: IDeleteRecordResponse = {
+            record: cc.insertable(),
             recordDeleted: false,
             dayDeleted: false,
             yearDeleted: false,
@@ -308,7 +306,7 @@ export class IndexedDB implements ICCDBHandler {
             this.getDay(day)
                 .subscribe(
                     dayData => {
-                        Rx.merge(...dayData.records.map(recordId => Rx.from(this.dbRecords.getItem(recordId))))
+                        Rx.merge(...dayData.records.map(recordId => Rx.from(this.getRecord(recordId))))
                             .pipe(toArray())
                             .subscribe(
                                 (records: ICCRecord[]) => {
@@ -322,7 +320,14 @@ export class IndexedDB implements ICCDBHandler {
     }
 
     getRecord(id: string): Rx.Observable<ICCRecord> {
-        return Rx.from(this.dbRecords.getItem(id) as Promise<ICCRecord>);
+        return new Rx.Observable(observer => {
+            this.dbRecords.getItem(id, (err, recordData: ICCRecord) => {
+                if (recordData) {
+                    observer.next(new CCRecord(recordData));
+                    observer.complete();
+                }
+            });
+        });
     }
 
     private getYear(year: number): Rx.Observable<ICCYear> {
