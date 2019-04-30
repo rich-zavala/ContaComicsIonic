@@ -1,20 +1,17 @@
 import { Injectable } from "@angular/core";
-import { AlertController } from '@ionic/angular';
+import { AlertController } from "@ionic/angular";
 import * as Rx from "rxjs";
 
 import { DbHandlingService } from "./db-handling.service";
 
-import { ICCYear } from "src/models/year";
-import { ICCDay } from "src/models/day";
-import { CCRecord, ICCRecord } from "src/models/record";
-import { IDeleteRecordResponse, IInsertRecordResponse } from 'src/dbHandlers/dbHandler';
+import { ICCYear, CCRecord, ICCRecord } from "src/models";
+import { IDeleteRecordResponse, IInsertRecordResponse } from "src/dbHandlers/dbHandler";
 
 @Injectable({
     providedIn: "root"
 })
 export class CollectionService {
     years: Rx.Subject<ICCYear[]> = new Rx.Subject();
-    // dates: Subject<ICCDay[]> = new Subject();
     updatedRecord: Rx.Subject<CCRecord> = new Rx.Subject();
     deletedRecord: Rx.Subject<IDeleteRecordResponse> = new Rx.Subject();
 

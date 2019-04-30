@@ -1,13 +1,10 @@
+import { ICCDBHandler, IInsertRecordResponse, IDeleteRecordResponse } from "./dbHandler";
+import { ICCRecord, CCRecord, ICCDay, ICCYear, ICCSerie } from "src/models";
+
 import * as Rx from "rxjs";
 import { finalize, toArray } from "rxjs/operators";
-import * as db from "localforage";
 import * as lodash from "lodash";
-
-import { ICCDBHandler, IInsertRecordResponse, IDeleteRecordResponse } from "./dbHandler";
-import { ICCRecord, CCRecord } from "../models/record";
-import { ICCDay } from "../models/day";
-import { ICCYear } from "../models/year";
-import { ICCSerie } from "src/models/serie";
+import * as db from "localforage";
 
 export class LocalForageHandler implements ICCDBHandler {
     dbYears: LocalForage;

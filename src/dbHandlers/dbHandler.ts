@@ -1,7 +1,5 @@
 import { Observable } from "rxjs";
-import { ICCRecord, CCRecord } from "../models/record";
-import { ICCDay } from "../models/day";
-import { ICCYear } from "src/models/year";
+import { ICCRecord, CCRecord, ICCDay, ICCYear } from "../models";
 
 export interface IInsertRecordResponse {
     duplicate: boolean;

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController, AlertController } from "@ionic/angular";
+
+import { CCRecord } from "src/models";
+
 import { CollectionService } from "src/app/services/collection.service";
-import { CCRecord } from "src/models/record";
 
 @Component({
   selector: "app-record-details",

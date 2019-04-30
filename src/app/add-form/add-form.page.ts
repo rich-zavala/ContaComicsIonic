@@ -1,14 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController, AlertController } from "@ionic/angular";
-import { Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
 
-import { CollectionService } from '../services/collection.service';
+import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
-// import { DbHandlingService } from "../services/db-handling.service";
-
 import { DATE_FORMAT } from "src/constants/formats";
+
 import * as lodash from "lodash";
 import * as moment from "moment";
 
@@ -25,7 +22,6 @@ export class AddFormPage implements OnInit {
   filteredTitleSelected = false;
 
   constructor(
-    // private db: DbHandlingService,
     private db: CollectionService,
     private toastController: ToastController,
     private alertController: AlertController

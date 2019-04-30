@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
+
 import * as Rx from "rxjs";
 import { toArray } from "rxjs/operators";
 import * as moment from "moment";
-import * as lodash from "lodash";
-import { DbHandlingService } from "../services/db-handling.service";
+
+import { CCRecord, ICCRecord } from "src/models";
 import { CC_DATA } from "src/cc";
-import { CCRecord, ICCRecord } from "src/models/record";
+
+import { DbHandlingService } from "../services/db-handling.service";
 
 const x = {
   id: "28DIASDESPUES12",

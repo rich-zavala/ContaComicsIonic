@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChildren, QueryList } from "@angular/core";
-import { ICCYear } from "src/models/year";
+import { ICCYear, ICCDay } from "src/models";
 import { CollectionService } from "../services/collection.service";
-import { toArray, delay } from "rxjs/operators";
 
 import * as Rx from "rxjs";
+import { toArray, delay } from "rxjs/operators";
 import * as lodash from "lodash";
 
-import { ICCDay } from "src/models/day";
-import { DateRecordsComponent } from './date-records/date-records.component';
+import { DateRecordsComponent } from "./date-records/date-records.component";
 
 @Component({
   selector: "app-dates-listing",
