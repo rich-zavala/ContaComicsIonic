@@ -10,6 +10,7 @@ import { CollectionService } from "src/app/services/collection.service";
   styleUrls: ["./record-details.component.scss"],
 })
 export class RecordDetailsComponent extends RecordHandlerComponent {
+  public emmitUpdates = true;
 
   constructor(
     public db: CollectionService,

@@ -6,6 +6,7 @@ import { CollectionService } from "src/app/services/collection.service";
 export class RecordHandlerComponent implements OnInit {
     @Input() cc: CCRecord;
     public checkState = { checked: false };
+    public emmitUpdates = false;
 
     constructor(public db: CollectionService) { }
 
@@ -16,9 +17,9 @@ export class RecordHandlerComponent implements OnInit {
     checkUpdate($event) {
         if ($event.detail.checked) {
             this.cc.check();
-            this.db.updateRecord(this.cc, true);
+            this.db.updateRecord(this.cc, this.emmitUpdates);
         } else {
-            this.db.uncheck(this.cc, true)
+            this.db.uncheck(this.cc, this.emmitUpdates)
                 .subscribe(
                     unchecked => {
                         if (!unchecked) {
