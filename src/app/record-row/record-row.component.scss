@@ -14,13 +14,6 @@
             margin-right: 10px;
         }
 
-        .checkbox {}
-
-        .title,
-        .price {
-            // font-size: .rem;
-        }
-
         .title {
             flex: 1;
         }
@@ -32,6 +25,8 @@
 
         .price {
             margin: 0;
+            min-width: 36px;
+            text-align: right;
         }
     }
 

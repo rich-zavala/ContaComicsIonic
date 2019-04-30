@@ -35,22 +35,11 @@
         <div>{{cc.detailDates.registry}}</div>
       </ion-label>
     </ion-item>
-    <ng-container *ngIf="cc.checked">
-      <ion-item (click)="uncheck()">
-        <ion-label>This comic is in your shelf since<br>{{cc.detailDates.checked}}</ion-label>
-
-        <div *ngIf="cc.checked" class="checkboxContainer">
-          <ion-checkbox checked></ion-checkbox>
-        </div>
-        <!-- <ion-icon name="checkbox" class="checked checkbox"></ion-icon> -->
-      </ion-item>
-    </ng-container>
-    <ng-container *ngIf="!cc.checked">
-      <ion-item>
-        <ion-label>This is not part of the collection yet</ion-label>
-        <ion-checkbox (ionChange)="check()"></ion-checkbox>
-      </ion-item>
-    </ng-container>
+    <ion-item>
+      <ion-label *ngIf="cc.checked">This comic is in your shelf since<br>{{cc.detailDates.checked}}</ion-label>
+      <ion-label *ngIf="!cc.checked">This is not part of the collection yet</ion-label>
+      <ion-checkbox [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
+    </ion-item>
   </ion-list>
 </ion-content>
 

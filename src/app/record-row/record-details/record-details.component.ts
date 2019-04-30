@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { ModalController, AlertController } from "@ionic/angular";
 
-import { CCRecord } from "src/models";
-
+import { RecordHandlerComponent } from "../record-handler.component";
 import { CollectionService } from "src/app/services/collection.service";
 
 @Component({
@@ -10,35 +9,19 @@ import { CollectionService } from "src/app/services/collection.service";
   templateUrl: "./record-details.component.html",
   styleUrls: ["./record-details.component.scss"],
 })
-export class RecordDetailsComponent implements OnInit {
-  @Input() cc: CCRecord;
+export class RecordDetailsComponent extends RecordHandlerComponent {
 
   constructor(
-    private db: CollectionService,
+    public db: CollectionService,
     private modalCtrl: ModalController,
     private alertController: AlertController
   ) {
-  }
-
-  ngOnInit() {
+    super(db);
   }
 
   close() {
     this.modalCtrl.getTop();
     this.modalCtrl.dismiss();
-  }
-
-  uncheck() {
-    this.db.uncheck(this.cc);
-  }
-
-  check() {
-    this.cc.check();
-    this.updateData();
-  }
-
-  updateData() {
-    this.db.updateRecord(this.cc);
   }
 
   async delete() {

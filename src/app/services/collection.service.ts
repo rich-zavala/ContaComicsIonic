@@ -45,7 +45,6 @@ export class CollectionService {
             this.db.db.insert(cc).subscribe(
                 insertResult => {
                     if (!insertResult.duplicate) {
-                        // this.updatedRecord.next(insertResult.record);
                         this.updateYears();
                     }
                     observer.next(insertResult);
@@ -55,31 +54,46 @@ export class CollectionService {
         });
     }
 
-    async uncheck(cc: CCRecord) {
-        const alert = await this.alertController.create({
-            header: "Are you sure?",
-            buttons: [
-                {
-                    text: "Uncheck it",
-                    cssClass: "secondary",
-                    handler: () => {
-                        cc.uncheck();
-                        this.updateRecord(cc);
-                    }
-                },
-                {
-                    text: "Keep it",
-                    role: "cancel"
-                }]
-        });
+    uncheck(cc: CCRecord, emmit: boolean): Rx.Observable<boolean> {
+        return new Rx.Observable(observer => {
+            const resolve = (value: boolean) => {
+                observer.next(value);
+                observer.complete();
+            };
 
-        await alert.present();
+            (async () => {
+                const alert = await this.alertController.create({
+                    header: "Are you sure?",
+                    buttons: [
+                        {
+                            text: "Uncheck it",
+                            cssClass: "secondary",
+                            handler: () => {
+                                cc.uncheck();
+                                this.updateRecord(cc, emmit);
+                                resolve(true);
+                            }
+                        },
+                        {
+                            text: "Keep it",
+                            role: "cancel",
+                            handler: () => resolve(false)
+                        }]
+                });
+
+                await alert.present();
+            })();
+        });
     }
 
-    updateRecord(cc: CCRecord) {
+    updateRecord(cc: CCRecord, emmit: boolean) {
         return this.db.db.update(cc.insertable())
             .subscribe(
-                () => this.updatedRecord.next(cc)
+                () => {
+                    if (emmit) {
+                        this.updatedRecord.next(cc);
+                    }
+                }
             );
     }
 

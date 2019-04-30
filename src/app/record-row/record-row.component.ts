@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-// import { ModalPage } from '../modal/modal.page';
-import { CCRecord } from "src/models/record";
+
+import { RecordHandlerComponent } from "./record-handler.component";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { CollectionService } from "../services/collection.service";
 
@@ -10,34 +10,29 @@ import { CollectionService } from "../services/collection.service";
   templateUrl: "./record-row.component.html",
   styleUrls: ["./record-row.component.scss"]
 })
-export class RecordRowComponent implements OnInit {
-  @Input() cc: CCRecord;
+export class RecordRowComponent extends RecordHandlerComponent {
   @Input() odd: any;
-  @Output() showRecordDetails: EventEmitter<CCRecord>;
+
+  private updatingCheckFromDetails = false;
 
   constructor(
-    private db: CollectionService,
+    public db: CollectionService,
     private modalController: ModalController
   ) {
+    super(db);
+
     db.updatedRecord.subscribe(
       updatedRecord => {
         if (updatedRecord.id === this.cc.id) {
-          this.cc = updatedRecord;
+          this.updatingCheckFromDetails = true;
+          setTimeout(() => { // To avoid double reaction
+            this.cc = updatedRecord;
+            this.checkState.checked = this.cc.checked;
+            this.updatingCheckFromDetails = false;
+          });
         }
       }
     );
-  }
-
-  ngOnInit() {
-  }
-
-  check() {
-    this.cc.checked = true;
-    this.db.updateRecord(this.cc);
-  }
-
-  uncheck() {
-    this.db.uncheck(this.cc);
   }
 
   async showDetails() {

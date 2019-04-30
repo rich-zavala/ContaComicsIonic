@@ -46,8 +46,10 @@ export class CCRecord implements ICCRecord {
     }
 
     public check() {
-        this.checked = true;
-        this.checkedDate = Date.now();
+        if (!this.checked) {
+            this.checked = true;
+            this.checkedDate = Date.now();
+        }
     }
 
     public uncheck() {
