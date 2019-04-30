@@ -2,3 +2,8 @@
     pointer-events: none;
     touch-action: none;
 }
+
+ion-progress-bar {
+    position: fixed;
+    z-index: 1;
+}

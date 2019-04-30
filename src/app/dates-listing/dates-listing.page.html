@@ -21,12 +21,12 @@
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar *ngIf="working" [value]="loadedPercent" [buffer]="loadedPercent"></ion-progress-bar>
   <ion-list>
     <ng-container *ngFor="let date of selectedYearDates">
       <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]"></app-date-records>
     </ng-container>
   </ion-list>
-
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>

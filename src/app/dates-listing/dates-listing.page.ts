@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
 import { IonInfiniteScroll } from "@ionic/angular";
 
-import { ICCYear, ICCDay } from "src/models";
+import { ICCYear, ICCDay, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
 import { toArray } from "rxjs/operators";
@@ -19,6 +19,7 @@ export class DatesListingPage implements OnInit {
   @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
+  working = false;
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
@@ -71,6 +72,7 @@ export class DatesListingPage implements OnInit {
   }
 
   private updateYearSelected(): Rx.Observable<boolean> {
+    this.working = true;
     return new Rx.Observable(observer => {
       this.db.getYearDates(this.selectedYear.year)
         .subscribe(days => {
@@ -79,18 +81,31 @@ export class DatesListingPage implements OnInit {
           const nextSize = next + 15;
           const nextDays = days.slice(next, nextSize);
           this.selectedYearDates.push(...nextDays);
+          const records = {};
+
+          const recordsObservables = [];
           nextDays.forEach(
-            day => {
-              Rx.merge(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
-                .pipe(toArray())
-                .subscribe(r => {
-                  this.records[day.date] = r;
-                  const recordsSize = lodash.size(this.records);
-                  if (recordsSize === nextSize || this.daysCount === recordsSize) {
-                    observer.next(this.daysCount === recordsSize);
-                    observer.complete();
-                  }
-                });
+            day => day.records.forEach(
+              cc => recordsObservables.push(Rx.from(this.db.getRecord(cc)))
+            )
+          );
+
+          Rx.merge(...recordsObservables)
+            .pipe(toArray())
+            .subscribe((daysRecords: CCRecord[]) => {
+              daysRecords.forEach(r => {
+                const recordDate = r.getPublishDate();
+                if (!records[recordDate]) {
+                  records[recordDate] = [r];
+                } else {
+                  records[recordDate].push(r);
+                }
+              });
+
+              lodash.merge(this.records, records);
+              observer.next(lodash.size(this.records) === this.daysCount);
+              observer.complete();
+              this.working = false;
             });
         });
     });
@@ -107,5 +122,9 @@ export class DatesListingPage implements OnInit {
         $event.target.disabled = finished;
       }
     );
+  }
+
+  get loadedPercent() {
+    return this.daysCount > 0 ? lodash.size(this.records) / this.daysCount : 0;
   }
 }
