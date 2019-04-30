@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChildren, QueryList } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
+import { IonInfiniteScroll } from "@ionic/angular";
+
 import { ICCYear, ICCDay } from "src/models";
-import { CollectionService } from "../services/collection.service";
 
 import * as Rx from "rxjs";
-import { toArray, delay } from "rxjs/operators";
+import { toArray } from "rxjs/operators";
 import * as lodash from "lodash";
 
+import { CollectionService } from "../services/collection.service";
 import { DateRecordsComponent } from "./date-records/date-records.component";
 
 @Component({
@@ -15,13 +17,13 @@ import { DateRecordsComponent } from "./date-records/date-records.component";
 })
 export class DatesListingPage implements OnInit {
   @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  loadingProgress = 0;
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
   records = {};
-  working = false;
+  daysCount = 0;
 
   constructor(private db: CollectionService) {
     db.updateYears();
@@ -32,7 +34,7 @@ export class DatesListingPage implements OnInit {
       if (!this.years || this.years.length === 0 || JSON.stringify(this.years) !== JSON.stringify(d)) {
         this.years = d;
         if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
-          this.updateYearSelected(lodash.first(this.years));
+          this.selectYear(lodash.first(this.years));
         }
       }
     });
@@ -60,35 +62,50 @@ export class DatesListingPage implements OnInit {
     );
   }
 
-  private updateYearSelected($event: ICCYear) {
-    if (this.working || this.isSelected($event.year)) {
-      return;
-    }
-
-    this.working = true;
-    this.loadingProgress = 0;
+  private selectYear(yearData: ICCYear) {
     this.records = {};
-    this.selectedYear = $event;
-    this.db.getYearDates($event.year)
-      .subscribe(days => {
-        this.selectedYearDates = days;
-        days.forEach(
-          day => {
-            Rx.concat(...day.records.map(cc => Rx.from(this.db.getRecord(cc)).pipe(delay(1))))
-              .pipe(toArray())
-              .subscribe(r => {
-                this.records[day.date] = r;
-                this.loadingProgress = lodash.size(this.records) / days.length;
+    this.selectedYearDates = [];
+    this.selectedYear = yearData;
+    this.infiniteScroll.disabled = false;
+    this.updateYearSelected().subscribe();
+  }
 
-                if (this.loadingProgress === 1) {
-                  this.working = false;
-                }
-              });
-          });
-      });
+  private updateYearSelected(): Rx.Observable<boolean> {
+    return new Rx.Observable(observer => {
+      this.db.getYearDates(this.selectedYear.year)
+        .subscribe(days => {
+          this.daysCount = days.length;
+          const next = this.selectedYearDates.length;
+          const nextSize = next + 15;
+          const nextDays = days.slice(next, nextSize);
+          this.selectedYearDates.push(...nextDays);
+          nextDays.forEach(
+            day => {
+              Rx.merge(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
+                .pipe(toArray())
+                .subscribe(r => {
+                  this.records[day.date] = r;
+                  const recordsSize = lodash.size(this.records);
+                  if (recordsSize === nextSize || this.daysCount === recordsSize) {
+                    observer.next(this.daysCount === recordsSize);
+                    observer.complete();
+                  }
+                });
+            });
+        });
+    });
   }
 
   private isSelected(year: number) {
     return this.selectedYear && this.selectedYear.year === year;
+  }
+
+  private loadData($event) {
+    this.updateYearSelected().subscribe(
+      finished => {
+        $event.target.complete();
+        $event.target.disabled = finished;
+      }
+    );
   }
 }
