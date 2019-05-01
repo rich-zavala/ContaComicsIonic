@@ -23,7 +23,7 @@ export interface ICCDBHandler {
     update(data: ICCRecord): Observable<ICCRecord>;
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;
-    getDays(year: number): Observable<ICCDay[]>;
+    getYearDays(year: number): Observable<ICCDay[]>;
     getSeries(): Observable<ICCSerie[]>;
     getRecordsByDay(date: string): Observable<ICCRecord[]>;
     getRecord(id: string): Observable<CCRecord>;

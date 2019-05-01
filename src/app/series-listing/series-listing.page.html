@@ -3,13 +3,19 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-searchbar placeholder="Filter serie title" debounce="500" animated></ion-searchbar>
+    <ion-searchbar placeholder="Filter serie title" debounce="500" animated [(value)]="filterValue" (ionChange)="filterBar($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-item-group>
-    <ng-container *ngFor="let serie of series">
+    <ng-container *ngFor="let serie of seriesFiltered">
       <ion-item-divider>
         <ion-label class="flex fvertical" (click)="expandToggle(serie)">
           <div class="serie-name">{{serie.name}}</div>

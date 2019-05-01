@@ -21,7 +21,7 @@ export class RecordRowComponent extends RecordHandlerComponent {
   ) {
     super(db);
 
-    db.updatedRecord.subscribe(
+    db.updatedRecord$.subscribe(
       updatedRecord => {
         if (updatedRecord.id === this.cc.id) {
           this.updatingCheckFromDetails = true;

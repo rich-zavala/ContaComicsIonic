@@ -178,7 +178,7 @@ export class LocalForageHandler implements ICCDBHandler {
         });
     }
 
-    getDays(year: number): Rx.Observable<ICCDay[]> {
+    getYearDays(year: number): Rx.Observable<ICCDay[]> {
         return new Rx.Observable(observer => {
             this.getYear(year)
                 .subscribe(

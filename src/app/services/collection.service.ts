@@ -11,10 +11,11 @@ import { IDeleteRecordResponse, IInsertRecordResponse } from "src/dbHandlers/dbH
     providedIn: "root"
 })
 export class CollectionService {
-    years: Rx.Subject<ICCYear[]> = new Rx.Subject();
-    series: Rx.Subject<ICCSerie[]> = new Rx.Subject();
-    updatedRecord: Rx.Subject<CCRecord> = new Rx.Subject();
-    deletedRecord: Rx.Subject<IDeleteRecordResponse> = new Rx.Subject();
+    years$: Rx.Subject<ICCYear[]> = new Rx.Subject();
+    series$: Rx.Subject<ICCSerie[]> = new Rx.Subject();
+    insertedRecord$: Rx.Subject<CCRecord> = new Rx.Subject();
+    updatedRecord$: Rx.Subject<CCRecord> = new Rx.Subject();
+    deletedRecord$: Rx.Subject<IDeleteRecordResponse> = new Rx.Subject();
 
     constructor(
         private db: DbHandlingService,
@@ -22,11 +23,11 @@ export class CollectionService {
     ) { }
 
     updateYears() {
-        this.getYears().subscribe(d => this.years.next(d));
+        this.getYears().subscribe(d => this.years$.next(d));
     }
 
     getYearDates(year: number) {
-        return this.db.db.getDays(year);
+        return this.db.db.getYearDays(year);
     }
 
     private getYears() {
@@ -34,16 +35,12 @@ export class CollectionService {
     }
 
     updateSeries() {
-        this.getSeries().subscribe(d => this.series.next(d));
+        this.getSeries().subscribe(d => this.series$.next(d));
     }
 
     getSeries() {
         return this.db.db.getSeries();
     }
-
-    // private getSeries() {
-
-    // }
 
     getRecord(id: string) {
         return this.db.db.getRecord(id);
@@ -55,6 +52,8 @@ export class CollectionService {
                 insertResult => {
                     if (!insertResult.duplicate) {
                         this.updateYears();
+                        this.updateSeries();
+                        this.insertedRecord$.next(new CCRecord(insertResult.record));
                     }
                     observer.next(insertResult);
                     observer.complete();
@@ -100,7 +99,7 @@ export class CollectionService {
             .subscribe(
                 () => {
                     if (emmit) {
-                        this.updatedRecord.next(cc);
+                        this.updatedRecord$.next(cc);
                     }
                 }
             );
@@ -113,7 +112,7 @@ export class CollectionService {
                     if (data.yearDeleted) {
                         this.updateYears();
                     } else {
-                        this.deletedRecord.next(data);
+                        this.deletedRecord$.next(data);
                     }
                 }
             );

@@ -11,6 +11,10 @@ import { CollectionService } from "../services/collection.service";
 import { DateRecordsComponent } from "./date-records/date-records.component";
 import { AddFormComponent } from "../add-form/add-form.component";
 
+interface TDatesCollection {
+  [key: string]: CCRecord[];
+}
+
 @Component({
   selector: "app-dates-listing",
   templateUrl: "./dates-listing.page.html",
@@ -24,7 +28,7 @@ export class DatesListingPage implements OnInit {
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
-  records = {};
+  records: TDatesCollection = {};
   daysCount = 0;
 
   constructor(
@@ -35,7 +39,7 @@ export class DatesListingPage implements OnInit {
   }
 
   ngOnInit() {
-    this.db.years.subscribe(d => {
+    this.db.years$.subscribe(d => {
       if (!this.years || this.years.length === 0 || JSON.stringify(this.years) !== JSON.stringify(d)) {
         this.years = d;
         if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
@@ -44,34 +48,55 @@ export class DatesListingPage implements OnInit {
       }
     });
 
-    this.db.deletedRecord.subscribe(
-      deleteInfo => {
-        if (this.selectedYear.year === deleteInfo.recordYear) {
-          this.selectedYear.total = deleteInfo.yearTotal;
-          if (deleteInfo.yearDeleted) {
-            this.ngOnInit();
-          } else if (deleteInfo.dayDeleted) {
-            this.selectedYearDates.splice(this.selectedYearDates.findIndex(d => d.date === deleteInfo.recordDate), 1);
-          } else {
-            const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
-            if (dateChild) {
-              const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
-              date.total = deleteInfo.dayTotal;
-              date.records.splice(date.records.findIndex(record => record === deleteInfo.record.id), 1);
-              this.records[date.date].splice(this.records[date.date].findIndex(record => record.id === deleteInfo.record.id), 1);
-              dateChild.ngOnInit();
-            }
-          }
+    this.db.insertedRecord$.subscribe(
+      record => {
+        const rPublYear = record.getPublishYear();
+        const rPublDate = record.getPublishDate();
+
+        if (rPublYear === this.selectedYear.year && this.records[rPublDate]) {
+          this.records[rPublDate] = lodash.sortBy([...this.records[rPublDate], record], r => r.recordDate).reverse();
+        } else if (rPublYear === this.selectedYear.year) {
+          /**
+           * If the new record's date is not listed in the current view,
+           * then the full list must be reseted. This is something that
+           * could behave in a better way.
+           */
+          this.reset();
+          this.updateYearSelected().subscribe();
         }
       }
     );
+
+    this.db.deletedRecord$.subscribe(deleteInfo => {
+      if (this.selectedYear.year === deleteInfo.recordYear) {
+        this.selectedYear.total = deleteInfo.yearTotal;
+        if (deleteInfo.yearDeleted) {
+          this.ngOnInit();
+        } else if (deleteInfo.dayDeleted) {
+          this.selectedYearDates.splice(this.selectedYearDates.findIndex(d => d.date === deleteInfo.recordDate), 1);
+        } else {
+          const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
+          if (dateChild) {
+            const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
+            date.total = deleteInfo.dayTotal;
+            date.records.splice(date.records.findIndex(record => record === deleteInfo.record.id), 1);
+            this.records[date.date].splice(this.records[date.date].findIndex(record => record.id === deleteInfo.record.id), 1);
+            dateChild.ngOnInit();
+          }
+        }
+      }
+    });
+  }
+
+  private reset() {
+    this.records = {};
+    this.selectedYearDates = [];
+    this.infiniteScroll.disabled = false;
   }
 
   private selectYear(yearData: ICCYear) {
-    this.records = {};
-    this.selectedYearDates = [];
+    this.reset();
     this.selectedYear = yearData;
-    this.infiniteScroll.disabled = false;
     this.updateYearSelected().subscribe();
   }
 
@@ -85,7 +110,7 @@ export class DatesListingPage implements OnInit {
           const nextSize = next + 15;
           const nextDays = days.slice(next, nextSize);
           this.selectedYearDates.push(...nextDays);
-          const records = {};
+          const records: TDatesCollection = {};
 
           const recordsObservables = [];
           nextDays.forEach(
@@ -111,7 +136,7 @@ export class DatesListingPage implements OnInit {
               observer.complete();
               this.working = false;
             });
-        });
+        }, x => console.warn(x));
     });
   }
 

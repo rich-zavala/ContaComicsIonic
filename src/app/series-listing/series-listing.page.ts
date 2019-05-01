@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import * as Rx from "rxjs";
+import { ModalController } from "@ionic/angular";
 import { toArray } from "rxjs/operators";
 
-import { CollectionService } from "../services/collection.service";
-
 import { ICCSerie, CCRecord } from "src/models";
+import { CollectionService } from "../services/collection.service";
+import { AddFormComponent } from "../add-form/add-form.component";
 
+import * as Rx from "rxjs";
 import * as lodash from "lodash";
 import { dynCurrency } from "../tools/utils";
 
@@ -21,48 +22,55 @@ interface ListState {
 })
 export class SeriesListingPage implements OnInit {
   series: ICCSerie[] = [];
+  seriesFiltered: ICCSerie[] = [];
   states: { [key: string]: ListState } = {};
+
+  filterValue = "";
 
   constructor(
     private db: CollectionService,
-    // private modalCtrl: ModalController
+    private modalCtrl: ModalController
   ) {
     db.updateSeries();
   }
 
   ngOnInit() {
-    this.db.series.subscribe(d => {
+    this.db.series$.subscribe(d => {
       this.series = d;
-      this.series.forEach(serie => this.states[serie.name] = { expanded: false, records: [] });
-      // if (!this.years || this.years.length === 0 || JSON.stringify(this.years) !== JSON.stringify(d)) {
-      //   this.years = d;
-      //   if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
-      //     this.selectYear(lodash.first(this.years));
-      //   }
-      // }
+      this.series.forEach(serie => {
+        if (!this.states[serie.name]) {
+          this.states[serie.name] = { expanded: false, records: [] };
+        }
+      });
+      this.filter();
     });
 
-    this.db.deletedRecord.subscribe(
-      deleteInfo => {
-        // if (this.selectedYear.year === deleteInfo.recordYear) {
-        //   this.selectedYear.total = deleteInfo.yearTotal;
-        //   if (deleteInfo.yearDeleted) {
-        //     this.ngOnInit();
-        //   } else if (deleteInfo.dayDeleted) {
-        //     this.selectedYearDates.splice(this.selectedYearDates.findIndex(d => d.date === deleteInfo.recordDate), 1);
-        //   } else {
-        //     const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
-        //     if (dateChild) {
-        //       const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
-        //       date.total = deleteInfo.dayTotal;
-        //       date.records.splice(date.records.findIndex(record => record === deleteInfo.record.id), 1);
-        //       this.records[date.date].splice(this.records[date.date].findIndex(record => record.id === deleteInfo.record.id), 1);
-        //       dateChild.ngOnInit();
-        //     }
-        //   }
-        // }
-      }
+    this.db.insertedRecord$.subscribe(
+      record => this.states[record.title].records = lodash.orderBy([...this.states[record.title].records, record], ["volumen"])
     );
+
+    this.db.deletedRecord$.subscribe(deleteInfo => {
+      if (deleteInfo.serieDeleted) {
+        this.series = this.series.filter(s => s.name !== deleteInfo.record.title);
+        this.filter();
+      } else {
+        const index = lodash.findIndex(this.states[deleteInfo.record.title].records, r => r.id === deleteInfo.record.id);
+        this.states[deleteInfo.record.title].records.splice(index, 1);
+      }
+    });
+  }
+
+  private filter() {
+    if (this.filterValue === "") {
+      this.seriesFiltered = this.series;
+    } else {
+      this.seriesFiltered = this.series.filter(s => s.name.toLocaleLowerCase().includes(this.filterValue));
+    }
+  }
+
+  private filterBar($event) {
+    this.filterValue = $event.detail.value.toLowerCase();
+    this.filter();
   }
 
   private expandToggle(serie: ICCSerie) {
@@ -88,5 +96,11 @@ export class SeriesListingPage implements OnInit {
   private dynCurrency(total: number) {
     return dynCurrency(total);
   }
-  // updateSeries
+
+  async openAddForm() {
+    const modal = await this.modalCtrl.create({
+      component: AddFormComponent
+    });
+    return await modal.present();
+  }
 }
