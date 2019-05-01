@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ToastController, AlertController } from "@ionic/angular";
+import { ToastController, AlertController, ModalController } from "@ionic/angular";
 
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
@@ -11,10 +11,10 @@ import * as moment from "moment";
 
 @Component({
   selector: "app-add-form",
-  templateUrl: "./add-form.page.html",
-  styleUrls: ["./add-form.page.scss"],
+  templateUrl: "./add-form.component.html",
+  styleUrls: ["./add-form.component.scss"],
 })
-export class AddFormPage implements OnInit {
+export class AddFormComponent implements OnInit {
   ccRecordForm: FormGroup;
   titles: string[] = [];
 
@@ -23,6 +23,7 @@ export class AddFormPage implements OnInit {
 
   constructor(
     private db: CollectionService,
+    private modalCtrl: ModalController,
     private toastController: ToastController,
     private alertController: AlertController
   ) {
@@ -106,5 +107,10 @@ export class AddFormPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  private close() {
+    this.modalCtrl.getTop();
+    this.modalCtrl.dismiss();
   }
 }

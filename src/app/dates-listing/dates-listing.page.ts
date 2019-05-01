@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
-import { IonInfiniteScroll } from "@ionic/angular";
+import { IonInfiniteScroll, ModalController } from "@ionic/angular";
 
 import { ICCYear, ICCDay, CCRecord } from "src/models";
 
@@ -9,6 +9,7 @@ import * as lodash from "lodash";
 
 import { CollectionService } from "../services/collection.service";
 import { DateRecordsComponent } from "./date-records/date-records.component";
+import { AddFormComponent } from "../add-form/add-form.component";
 
 @Component({
   selector: "app-dates-listing",
@@ -26,7 +27,10 @@ export class DatesListingPage implements OnInit {
   records = {};
   daysCount = 0;
 
-  constructor(private db: CollectionService) {
+  constructor(
+    private db: CollectionService,
+    private modalCtrl: ModalController
+  ) {
     db.updateYears();
   }
 
@@ -126,5 +130,12 @@ export class DatesListingPage implements OnInit {
 
   get loadedPercent() {
     return this.daysCount > 0 ? lodash.size(this.records) / this.daysCount : 0;
+  }
+
+  async openAddForm() {
+    const modal = await this.modalCtrl.create({
+      component: AddFormComponent
+    });
+    return await modal.present();
   }
 }

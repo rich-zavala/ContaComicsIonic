@@ -18,8 +18,7 @@ const routes: Routes = [
   {
     path: "dates-listing",
     loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
-  },
-  { path: "add-form", loadChildren: "./add-form/add-form.module#AddFormPageModule" }
+  }
 ];
 
 @NgModule({

@@ -5,12 +5,12 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { IonicModule } from "@ionic/angular";
 
-import { AddFormPage } from "./add-form.page";
+import { AddFormComponent } from "./add-form.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: AddFormPage
+    component: AddFormComponent
   }
 ];
 
@@ -22,6 +22,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AddFormPage]
+  declarations: [
+    AddFormComponent
+  ],
+  entryComponents: [
+    AddFormComponent
+  ]
 })
-export class AddFormPageModule { }
+export class AddFormModule { }

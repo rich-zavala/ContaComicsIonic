@@ -22,6 +22,13 @@
 
 <ion-content>
   <ion-progress-bar *ngIf="working" [value]="loadedPercent" [buffer]="loadedPercent"></ion-progress-bar>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-list>
     <ng-container *ngFor="let date of selectedYearDates">
       <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]"></app-date-records>

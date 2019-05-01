@@ -19,6 +19,8 @@ import { RecordDetailsComponent } from "./record-details/record-details.componen
     exports: [
         RecordRowComponent
     ],
-    entryComponents: [RecordDetailsComponent]
+    entryComponents: [
+        RecordDetailsComponent
+    ]
 })
 export class RecordRowModule { }
