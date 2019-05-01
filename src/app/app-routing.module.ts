@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dates-listing",
+    redirectTo: "series-listing",
     pathMatch: "full"
   },
   {
@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: "dates-listing",
     loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
-  }
+  },
+  { path: "series-listing", loadChildren: "./series-listing/series-listing.module#SeriesListingPageModule" }
 ];
 
 @NgModule({

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-searchbar placeholder="Filter serie title" debounce="500" animated></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-group>
+    <ng-container *ngFor="let serie of series">
+      <ion-item-divider>
+        <ion-label class="flex fvertical" (click)="expandToggle(serie)">
+          <div class="serie-name">{{serie.name}}</div>
+          <div class="serie-details">
+            <div class="count">{{serie.records.length}} records</div>
+            <div class="total">{{dynCurrency(serie.total)}}</div>
+          </div>
+        </ion-label>
+
+        <div class="card-container" *ngIf="states[serie.name].expanded">
+
+          <ion-card>
+            <div *ngIf="states[serie.name].records.length === 0" class="flex fcenter">
+              <ion-spinner></ion-spinner>
+            </div>
+
+            <app-record-row *ngFor="let cc of states[serie.name].records; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
+          </ion-card>
+        </div>
+      </ion-item-divider>
+    </ng-container>
+  </ion-item-group>
+</ion-content>

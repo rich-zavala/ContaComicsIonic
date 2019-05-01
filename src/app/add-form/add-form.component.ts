@@ -28,10 +28,7 @@ export class AddFormComponent implements OnInit {
     private alertController: AlertController
   ) {
     this.initForm();
-    db.getSeries()
-      .subscribe(
-        titles => this.titles = titles
-      );
+    db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
   }
 
   ngOnInit() {
@@ -52,7 +49,7 @@ export class AddFormComponent implements OnInit {
   private initForm() {
     this.ccRecordForm = new FormGroup({
       title: new FormControl("", Validators.required),
-      volume: new FormControl("", Validators.required),
+      volumen: new FormControl("", Validators.required),
       price: new FormControl("", Validators.required),
       variant: new FormControl(""),
       checked: new FormControl(false),
@@ -93,7 +90,7 @@ export class AddFormComponent implements OnInit {
     const alert = await this.alertController.create({
       header: "Warning!",
       subHeader: "This comic is in the catalog",
-      message: `<b>${cc.title} #${cc.volume}</b>
+      message: `<b>${cc.title} #${cc.volumen}</b>
       <div class="ion-margin-top">
         <small>Variant:</small>
         <div>${(lodash.isEmpty(cc.variant) ? "No variant" : cc.variant)}</div>

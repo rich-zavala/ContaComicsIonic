@@ -196,11 +196,16 @@ export class LocalForageHandler implements ICCDBHandler {
         });
     }
 
-    getSeries(): Rx.Observable<string[]> {
+    getSeries(): Rx.Observable<ICCSerie[]> {
         return new Rx.Observable(observer => {
             this.dbSeries.keys((err, seriesKeys) => {
-                observer.next(seriesKeys.sort());
-                observer.complete();
+                Rx.merge(...seriesKeys.map(serieTitle => Rx.from(this.dbSeries.getItem(serieTitle))))
+                    .pipe(toArray())
+                    .subscribe(
+                        (serie: ICCSerie[]) => {
+                            observer.next(lodash.sortBy(serie, ["title"]));
+                            observer.complete();
+                        });
             });
         });
     }
@@ -316,7 +321,7 @@ export class LocalForageHandler implements ICCDBHandler {
         });
     }
 
-    getRecord(id: string): Rx.Observable<ICCRecord> {
+    getRecord(id: string): Rx.Observable<CCRecord> {
         return new Rx.Observable(observer => {
             this.dbRecords.getItem(id, (err, recordData: ICCRecord) => {
                 if (recordData) {

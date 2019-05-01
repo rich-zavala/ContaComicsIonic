@@ -37,7 +37,7 @@ export class HomePage {
     Rx.concat(...CC_DATA.map(r => {
       const d: ICCRecord = {
         title: r.titulo,
-        volume: r.volumen,
+        volumen: r.volumen,
         price: r.precio,
         checked: r.adquirido === 1,
         publishDate: moment(r.fecha).valueOf(),

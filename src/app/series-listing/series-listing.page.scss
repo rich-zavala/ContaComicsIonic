@@ -1,0 +1,41 @@
+ion-item-divider {
+    flex-direction: column;
+}
+
+ion-label {
+    width: 100%;
+    margin: 8px 0;
+    display: flex !important; // Override ion-label display
+    flex: 1;
+    justify-content: space-between;
+
+    .serie-name {
+
+        white-space: normal;
+    }
+
+    .serie-details {
+        text-align: right;
+        margin: -2px 16px;
+        font-size: .7rem;
+
+        .count {
+            font-weight: bold;
+        }
+    }
+}
+
+.card-container {
+    width: 100%;
+    margin-left: -16px;
+    margin-bottom: 16px;
+}
+
+ion-card {
+    &::before {
+        height: 4px;
+        display: flex;
+        background: var(--ion-color-primary);
+        content: '';
+    }
+}

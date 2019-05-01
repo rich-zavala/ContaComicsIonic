@@ -4,7 +4,7 @@ import * as Rx from "rxjs";
 
 import { DbHandlingService } from "./db-handling.service";
 
-import { ICCYear, CCRecord, ICCRecord } from "src/models";
+import { ICCYear, CCRecord, ICCRecord, ICCSerie } from "src/models";
 import { IDeleteRecordResponse, IInsertRecordResponse } from "src/dbHandlers/dbHandler";
 
 @Injectable({
@@ -12,6 +12,7 @@ import { IDeleteRecordResponse, IInsertRecordResponse } from "src/dbHandlers/dbH
 })
 export class CollectionService {
     years: Rx.Subject<ICCYear[]> = new Rx.Subject();
+    series: Rx.Subject<ICCSerie[]> = new Rx.Subject();
     updatedRecord: Rx.Subject<CCRecord> = new Rx.Subject();
     deletedRecord: Rx.Subject<IDeleteRecordResponse> = new Rx.Subject();
 
@@ -24,20 +25,28 @@ export class CollectionService {
         this.getYears().subscribe(d => this.years.next(d));
     }
 
-    private getYears() {
-        return this.db.db.getYears();
-    }
-
     getYearDates(year: number) {
         return this.db.db.getDays(year);
     }
 
-    getRecord(id: string) {
-        return this.db.db.getRecord(id);
+    private getYears() {
+        return this.db.db.getYears();
+    }
+
+    updateSeries() {
+        this.getSeries().subscribe(d => this.series.next(d));
     }
 
     getSeries() {
         return this.db.db.getSeries();
+    }
+
+    // private getSeries() {
+
+    // }
+
+    getRecord(id: string) {
+        return this.db.db.getRecord(id);
     }
 
     insert(cc: ICCRecord): Rx.Observable<IInsertRecordResponse> {

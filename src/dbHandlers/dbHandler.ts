@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ICCRecord, CCRecord, ICCDay, ICCYear } from "../models";
+import { ICCRecord, CCRecord, ICCDay, ICCYear, ICCSerie } from "../models";
 
 export interface IInsertRecordResponse {
     duplicate: boolean;
@@ -24,7 +24,7 @@ export interface ICCDBHandler {
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;
     getDays(year: number): Observable<ICCDay[]>;
-    getSeries(): Observable<string[]>;
+    getSeries(): Observable<ICCSerie[]>;
     getRecordsByDay(date: string): Observable<ICCRecord[]>;
-    getRecord(id: string): Observable<ICCRecord>;
+    getRecord(id: string): Observable<CCRecord>;
 }

@@ -5,7 +5,7 @@ import { dynCurrency } from "src/app/tools/utils";
 export interface ICCRecord {
     id?: string;
     title: string;
-    volume: number;
+    volumen: number;
     price: number;
     variant?: string;
     checked?: boolean;
@@ -17,7 +17,7 @@ export interface ICCRecord {
 export class CCRecord implements ICCRecord {
     id: string;
     title: string;
-    volume: number;
+    volumen: number;
     price: number;
     variant: string;
     checked: boolean;
@@ -29,7 +29,7 @@ export class CCRecord implements ICCRecord {
 
     constructor(data: ICCRecord) {
         this.title = data.title;
-        this.volume = data.volume;
+        this.volumen = data.volumen;
         this.price = data.price;
         this.variant = data.variant;
         this.checked = data.checked || false;
@@ -37,7 +37,7 @@ export class CCRecord implements ICCRecord {
         this.checkedDate = data.checkedDate;
         this.recordDate = data.recordDate || Date.now();
 
-        this.id = [data.title, data.volume, data.variant]
+        this.id = [data.title, data.volumen, data.variant]
             .filter(d => d)
             .join("_")
             .replace(/[^a-zA-Z0-9]/g, "");

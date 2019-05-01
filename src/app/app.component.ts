@@ -19,16 +19,6 @@ export class AppComponent {
       title: "List",
       url: "/list",
       icon: "list"
-    },
-    {
-      title: "Years list",
-      url: "/dates-listing",
-      icon: "calendar"
-    },
-    {
-      title: "Add form",
-      url: "/add-form",
-      icon: "add"
     }
   ];
 
