@@ -3,7 +3,12 @@
     touch-action: none;
 }
 
+ion-tab-button {
+    --ripple-color: var(--ion-color-light);
+}
+
 ion-progress-bar {
     position: fixed;
     z-index: 1;
+    --buffer-background: var(--ion-color-tertiary-tint);
 }

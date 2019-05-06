@@ -15,17 +15,19 @@ $col1Width: 5.2vh;
     }
 
     .date-display {
+        color: var(--ion-color-light);
+
         .col-1 {
             width: $col1Width;
             height: $col1Width;
-            border: 2px solid var(--ion-color-primary);
+            background: var(--ion-color-tertiary-shade);
+            border: 2px solid var(--ion-color-tertiary);
             border-radius: 100%;
             text-align: center;
             line-height: 1;
 
             .day {
                 font-size: .8rem;
-                ;
                 font-weight: bold;
             }
 
@@ -51,7 +53,7 @@ $col1Width: 5.2vh;
                 width: 2px;
                 display: block;
                 position: absolute;
-                background: var(--ion-color-primary);
+                background: var(--ion-color-tertiary);
                 content: '';
             }
         }
@@ -63,7 +65,7 @@ $col1Width: 5.2vh;
                 &::before {
                     height: 4px;
                     display: flex;
-                    background: var(--ion-color-primary);
+                    background: var(--ion-color-medium);
                     content: '';
                 }
             }

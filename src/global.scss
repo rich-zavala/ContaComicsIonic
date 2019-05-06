@@ -26,3 +26,7 @@
         align-items: center;
     }
 }
+
+ion-checkbox:not(.checkbox-checked) {
+    --border-color: var(--ion-color-tertiary);
+}

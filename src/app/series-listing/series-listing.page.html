@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
-    <ion-fab-button>
+    <ion-fab-button color="tertiary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -17,7 +17,7 @@
   <ion-item-group>
     <ng-container *ngFor="let serie of seriesFiltered">
       <ion-item-divider>
-        <ion-label class="flex fvertical" (click)="expandToggle(serie)">
+        <ion-label class="flex fvertical" (click)="expandToggle(serie)" [ngClass]="{ expanded: states[serie.name].expanded }">
           <div class="serie-name">{{serie.name}}</div>
           <div class="serie-details">
             <div class="count">{{serie.records.length}} records</div>
@@ -27,7 +27,7 @@
 
         <div class="card-container" *ngIf="states[serie.name].expanded">
 
-          <ion-card>
+          <ion-card color="dark">
             <div *ngIf="states[serie.name].records.length === 0" class="flex fcenter">
               <ion-spinner></ion-spinner>
             </div>

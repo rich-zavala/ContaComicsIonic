@@ -1,9 +1,8 @@
 .cc-row {
-    border-bottom: 1px solid lightgray;
     line-height: 1;
 
     &.odd {
-        background: #f1f1f1;
+        background: var(--ion-color-odd);
     }
 
     .info {

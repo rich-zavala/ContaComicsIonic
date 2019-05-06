@@ -1,7 +1,7 @@
 <div class="cc-row flex" [ngClass]="{ odd: odd }">
   <div class="info flex fvertical">
     <div>
-      <ion-checkbox *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
+      <ion-checkbox color="tertiary" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
     </div>
     <div class="title flex">
       <div class="ion-text-capitalize">{{cc.title}}</div>

@@ -1,3 +1,7 @@
+ion-searchbar {
+    color: var(--ion-color-light);
+}
+
 ion-item-divider {
     flex-direction: column;
 }
@@ -8,6 +12,10 @@ ion-label {
     display: flex !important; // Override ion-label display
     flex: 1;
     justify-content: space-between;
+
+    &.expanded {
+        color: var(--ion-color-light);
+    }
 
     .serie-name {
 
@@ -35,7 +43,7 @@ ion-card {
     &::before {
         height: 4px;
         display: flex;
-        background: var(--ion-color-primary);
+        background: var(--ion-color-tertiary);
         content: '';
     }
 }

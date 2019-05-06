@@ -21,10 +21,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar *ngIf="working" [value]="loadedPercent" [buffer]="loadedPercent"></ion-progress-bar>
+  <ion-progress-bar *ngIf="working" color="tertiary" [value]="loadedPercent" [buffer]="loadedPercent"></ion-progress-bar>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
-    <ion-fab-button>
+    <ion-fab-button color="tertiary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -35,6 +35,6 @@
     </ng-container>
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
