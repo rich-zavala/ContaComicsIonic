@@ -15,11 +15,11 @@
   <form [formGroup]="ccRecordForm">
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input type="search" formControlName="title" autofocus="true" autocapitalize="'characters'"></ion-input>
+      <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()" autofocus></ion-input>
     </ion-item>
 
     <ion-list class="autocompleteOptions" *ngIf="!filteredTitleSelected && filteredTitles.length > 0">
-      <ion-button *ngFor="let title of filteredTitles" expand=full color=light (click)="selectTitle(title)">{{title}}</ion-button>
+      <ion-button *ngFor="let title of filteredTitles" expand="full" color="tertiary" (click)="selectTitle(title)">{{title}}</ion-button>
     </ion-list>
 
     <ion-item>
@@ -40,7 +40,7 @@
     <ion-item>
       <ion-label>Is this in your shelf?</ion-label>
       <ion-input></ion-input>
-      <ion-checkbox formControlName="checked"></ion-checkbox>
+      <ion-checkbox color="tertiary" formControlName="checked"></ion-checkbox>
     </ion-item>
 
     <ion-item>

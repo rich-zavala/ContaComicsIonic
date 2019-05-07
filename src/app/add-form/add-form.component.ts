@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ToastController, AlertController, ModalController } from "@ionic/angular";
+import { ToastController, AlertController, ModalController, IonInput } from "@ionic/angular";
 
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
@@ -15,6 +15,8 @@ import * as moment from "moment";
   styleUrls: ["./add-form.component.scss"],
 })
 export class AddFormComponent implements OnInit {
+  @ViewChild("title") titleField: IonInput;
+
   ccRecordForm: FormGroup;
   titles: string[] = [];
 
@@ -32,15 +34,19 @@ export class AddFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => this.titleField.setFocus(), 500);
+
     this.ccRecordForm.controls.title.valueChanges
       .subscribe(
-        d => {
-          this.filteredTitleSelected = false;
-          if (d.length < 3) { // Three characters minimum
-            this.filteredTitles = [];
-          } else {
-            const filterValue = d.toLowerCase();
-            this.filteredTitles = this.titles.filter(option => option.toLowerCase().includes(filterValue));
+        value => {
+          if (value) {
+            this.filteredTitleSelected = false;
+            if (value.length < 3) { // Three characters minimum
+              this.filteredTitles = [];
+            } else {
+              const filterValue = value.toLowerCase();
+              this.filteredTitles = this.titles.filter(option => option.toLowerCase().includes(filterValue));
+            }
           }
         }
       );
@@ -55,6 +61,15 @@ export class AddFormComponent implements OnInit {
       checked: new FormControl(false),
       publishDate: new FormControl(moment().format(DATE_FORMAT), Validators.required)
     });
+  }
+
+  private updateTitle() {
+    const value = this.ccRecordForm.controls.title.value;
+    if (value) {
+      this.ccRecordForm.controls.title.setValue(value.toUpperCase());
+    }
+
+    setTimeout(() => this.filteredTitleSelected = true);
   }
 
   private selectTitle(option: string) {
