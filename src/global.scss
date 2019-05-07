@@ -30,3 +30,7 @@
 ion-checkbox:not(.checkbox-checked) {
     --border-color: var(--ion-color-tertiary);
 }
+
+ion-alert {
+    --background: black !important;
+}

@@ -136,7 +136,7 @@ export class DatesListingPage implements OnInit {
               observer.complete();
               this.working = false;
             });
-        }, x => console.warn(x));
+        });
     });
   }
 
