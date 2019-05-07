@@ -5,7 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { IonicModule } from "@ionic/angular";
 
-import { RecordRowModule } from '../record-row/record-row.module';
+import { RecordRowModule } from "../record-row/record-row.module";
 import { SeriesListingPage } from "./series-listing.page";
 
 const routes: Routes = [

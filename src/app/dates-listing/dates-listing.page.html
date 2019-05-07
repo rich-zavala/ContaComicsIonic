@@ -3,6 +3,32 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+
+    <ion-buttons slot="end" class="filterButton" (click)="showFilter()">
+      <ng-container *ngIf="filterValue === 0">
+        <ion-icon name="reorder"></ion-icon>
+        <ion-label>All</ion-label>
+      </ng-container>
+      <ng-container *ngIf="filterValue === 1">
+        <ion-icon name="square-outline"></ion-icon>
+        <ion-label>Owned</ion-label>
+      </ng-container>
+      <ng-container *ngIf="filterValue === 2">
+        <ion-icon name="checkbox-outline"></ion-icon>
+        <ion-label>Not owned</ion-label>
+      </ng-container>
+      <ion-icon name="arrow-dropdown"></ion-icon>
+    </ion-buttons>
+
+    <ion-item class="filter-select">
+      <ion-label>Filter records</ion-label>
+      <ion-select #filter okText="Okay" cancelText="Cancel" (ionChange)="filterRecords($event)">
+        <ion-select-option value="0">All</ion-select-option>
+        <ion-select-option value="1">Owned</ion-select-option>
+        <ion-select-option value="2">Not owned</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-title>
       Comics Collection
     </ion-title>
@@ -21,7 +47,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar *ngIf="working" color="tertiary" [value]="loadedPercent" [buffer]="loadedPercent"></ion-progress-bar>
+  <ion-progress-bar *ngIf="working" color="tertiary" [value]="loadingProgress"></ion-progress-bar>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
     <ion-fab-button color="tertiary">
@@ -31,10 +57,7 @@
 
   <ion-list>
     <ng-container *ngFor="let date of selectedYearDates">
-      <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]"></app-date-records>
+      <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]" [filterValue]="filterValue"></app-date-records>
     </ng-container>
   </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

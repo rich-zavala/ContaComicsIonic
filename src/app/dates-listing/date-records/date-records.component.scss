@@ -6,6 +6,10 @@ $col1Width: 5.2vh;
     margin-bottom: $marginBetweenDates;
     margin-right: 10px;
 
+    &.hidden {
+        display: none;
+    }
+
     .col-1 .width-holder {
         width: $col1Width;
     }

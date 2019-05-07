@@ -10,9 +10,17 @@ ion-tab-button {
 ion-progress-bar {
     position: fixed;
     z-index: 1;
-    --buffer-background: var(--ion-color-tertiary-tint);
 }
 
 ion-list {
     margin-bottom: 56px;
+}
+
+.filterButton ion-label {
+    font-size: .8rem;
+    margin: 0 4px 0 2px;
+}
+
+.filter-select {
+    display: none;
 }

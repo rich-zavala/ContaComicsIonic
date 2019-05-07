@@ -1,4 +1,4 @@
-<div class="date-container flex fcol">
+<div class="date-container flex fcol" [ngClass]="{ hidden: !displayDate }">
   <div class="date-display flex">
     <div class="col-1 flex fcol fcenter">
       <div class="day">{{dayStr}}</div>
@@ -16,7 +16,7 @@
     </div>
     <div class="col-2">
       <ion-card color="dark">
-        <app-record-row *ngFor="let cc of records; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
+        <app-record-row *ngFor="let cc of displayRecords; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
       </ion-card>
     </div>
   </div>

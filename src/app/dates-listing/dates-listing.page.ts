@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
-import { IonInfiniteScroll, ModalController } from "@ionic/angular";
+import { IonInfiniteScroll, ModalController, PopoverController, IonSelect } from "@ionic/angular";
 
 import { ICCYear, ICCDay, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray } from "rxjs/operators";
+import { toArray, delay } from "rxjs/operators";
 import * as lodash from "lodash";
 
 import { CollectionService } from "../services/collection.service";
@@ -22,18 +22,24 @@ interface TDatesCollection {
 })
 export class DatesListingPage implements OnInit {
   @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  // @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild("filter") filterChild: IonSelect;
 
-  working = false;
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
   records: TDatesCollection = {};
-  daysCount = 0;
+  // daysCount = 0;
+
+  loadingProgress = 0;
+  working = false;
+
+  filterValue = 0;
 
   constructor(
     private db: CollectionService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public popoverController: PopoverController
   ) {
     db.updateYears();
   }
@@ -62,7 +68,7 @@ export class DatesListingPage implements OnInit {
            * could behave in a better way.
            */
           this.reset();
-          this.updateYearSelected().subscribe();
+          this.updateYearSelected();
         }
       }
     );
@@ -91,70 +97,46 @@ export class DatesListingPage implements OnInit {
   private reset() {
     this.records = {};
     this.selectedYearDates = [];
-    this.infiniteScroll.disabled = false;
+    this.loadingProgress = 0;
   }
 
   private selectYear(yearData: ICCYear) {
-    this.reset();
-    this.selectedYear = yearData;
-    this.updateYearSelected().subscribe();
+    if (!this.isSelected(yearData.year)) {
+      this.reset();
+      this.selectedYear = yearData;
+      this.updateYearSelected();
+    }
   }
 
-  private updateYearSelected(): Rx.Observable<boolean> {
+  private updateYearSelected() {
+    if (this.working) {
+      return;
+    }
+
     this.working = true;
-    return new Rx.Observable(observer => {
-      this.db.getYearDates(this.selectedYear.year)
-        .subscribe(days => {
-          this.daysCount = days.length;
-          const next = this.selectedYearDates.length;
-          const nextSize = next + 15;
-          const nextDays = days.slice(next, nextSize);
-          this.selectedYearDates.push(...nextDays);
-          const records: TDatesCollection = {};
+    this.loadingProgress = 0;
+    this.records = {};
+    this.db.getYearDates(this.selectedYear.year)
+      .subscribe(days => {
+        this.selectedYearDates = days;
+        days.forEach(
+          day => {
+            Rx.concat(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
+              .pipe(toArray())
+              .subscribe(r => {
+                this.records[day.date] = r;
+                this.loadingProgress = lodash.size(this.records) / days.length;
 
-          const recordsObservables = [];
-          nextDays.forEach(
-            day => day.records.forEach(
-              cc => recordsObservables.push(Rx.from(this.db.getRecord(cc)))
-            )
-          );
-
-          Rx.merge(...recordsObservables)
-            .pipe(toArray())
-            .subscribe((daysRecords: CCRecord[]) => {
-              daysRecords.forEach(r => {
-                const recordDate = r.getPublishDate();
-                if (!records[recordDate]) {
-                  records[recordDate] = [r];
-                } else {
-                  records[recordDate].push(r);
+                if (this.loadingProgress === 1) {
+                  this.working = false;
                 }
               });
-
-              lodash.merge(this.records, records);
-              observer.next(lodash.size(this.records) === this.daysCount);
-              observer.complete();
-              this.working = false;
-            });
-        });
-    });
+          });
+      });
   }
 
   private isSelected(year: number) {
     return this.selectedYear && this.selectedYear.year === year;
-  }
-
-  private loadData($event) {
-    this.updateYearSelected().subscribe(
-      finished => {
-        $event.target.complete();
-        $event.target.disabled = finished;
-      }
-    );
-  }
-
-  get loadedPercent() {
-    return this.daysCount > 0 ? lodash.size(this.records) / this.daysCount : 0;
   }
 
   async openAddForm() {
@@ -162,5 +144,14 @@ export class DatesListingPage implements OnInit {
       component: AddFormComponent
     });
     return await modal.present();
+  }
+
+  private showFilter() {
+    this.filterChild.open();
+    this.filterChild.value = this.filterValue.toString();
+  }
+
+  private filterRecords($event: CustomEvent) {
+    this.filterValue = parseInt($event.detail.value, 10);
   }
 }

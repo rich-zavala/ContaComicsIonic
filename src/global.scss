@@ -32,5 +32,7 @@ ion-checkbox:not(.checkbox-checked) {
 }
 
 ion-alert {
-    --background: black !important;
+    .alert-title {
+        color: var(--ion-color-light-contrast) !important;
+    }
 }
