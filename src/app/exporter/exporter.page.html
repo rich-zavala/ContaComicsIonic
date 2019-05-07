@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Export your collection data
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p class="justify">
+    <small>
+      La información de tu colección <b>EXISTE ÚNICAMENTE EN ESTE DISPOSITIVO</b> y no es compartida con ninguna otra entidad, por lo que es importante generar constantemente un archivo de reespaldo
+      el cual puede ser importado en cualquier momento en este u otro dispositivo.
+    </small>
+  </p>
+
+  <ion-button color="tertiary" expand="block" (click)="export()">
+    Save data backup
+    <ion-icon slot="end" name="download"></ion-icon>
+  </ion-button>
+
+  <div *ngIf="working" class="flex fcol fvertical worker">
+    <ion-spinner></ion-spinner>
+  </div>
+
+</ion-content>
