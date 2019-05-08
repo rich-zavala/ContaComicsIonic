@@ -27,4 +27,5 @@ export interface ICCDBHandler {
     getSeries(): Observable<ICCSerie[]>;
     getRecordsByDay(date: string): Observable<ICCRecord[]>;
     getRecord(id: string): Observable<CCRecord>;
+    clear(): Observable<boolean>;
 }

@@ -1,12 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { ToastController } from "@ionic/angular";
+import { File } from "@ionic-native/file/ngx";
+
+
+import { DATE_FORMAT } from "src/constants/formats";
 import { CollectionService } from "../services/collection.service";
+import { CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
 import { toArray } from "rxjs/operators";
-import { CCRecord } from "src/models";
 
+import * as lodash from "lodash";
 import * as moment from "moment";
-import { DATE_FORMAT } from 'src/constants/formats';
 
 @Component({
   selector: "app-exporter",
@@ -14,11 +19,32 @@ import { DATE_FORMAT } from 'src/constants/formats';
   styleUrls: ["./exporter.page.scss"],
 })
 export class ExporterPage implements OnInit {
-  working = false;
+  private filePath: string;
+  private working = false;
 
-  constructor(private db: CollectionService) { }
+  constructor(
+    private db: CollectionService,
+    private fileController: File,
+    private toastController: ToastController,
+    private ref: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
+  }
+
+  private chooseDestination() {
+    (window as any).OurCodeWorld.Filebrowser.folderPicker.single({
+      success: data => {
+        if (!data.length) {
+          // No folder selected
+          return;
+        }
+
+        this.filePath = lodash.first(data);
+        this.ref.detectChanges();
+      },
+      error: err => console.log(err)
+    });
   }
 
   private export() {
@@ -38,24 +64,29 @@ export class ExporterPage implements OnInit {
           .subscribe(
             (records: CCRecord[]) => {
               const data = JSON.stringify(records.map(record => record.insertable()), null, 2);
-              const blob = new Blob([data], { type: "text/json" });
-              const filename = `ContaComics-${moment().format(DATE_FORMAT)}.json`;
-
-              if (window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveBlob(blob, filename);
-              } else {
-                const elem = window.document.createElement("a");
-                elem.href = window.URL.createObjectURL(blob);
-                elem.download = filename;
-                document.body.appendChild(elem);
-                elem.click();
-                document.body.removeChild(elem);
-              }
-
-              this.working = false;
+              this.writeFile(data);
             }
           );
       }
     );
+  }
+
+  private writeFile(data: string) {
+    const filename = `ContaComics-${moment().format(DATE_FORMAT)}.json`;
+    Rx.from(this.fileController.writeFile(this.filePath, filename, data, { replace: true }))
+      .subscribe(
+        () => this.showToast("Backup file have been created"),
+        () => this.showToast("Error: the backup was not created")
+      );
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      showCloseButton: true
+    });
+    toast.present();
+    this.working = false;
   }
 }

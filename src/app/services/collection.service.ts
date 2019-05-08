@@ -117,4 +117,8 @@ export class CollectionService {
                 }
             );
     }
+
+    clear(): Rx.Observable<boolean> {
+        return this.db.db.clear();
+    }
 }

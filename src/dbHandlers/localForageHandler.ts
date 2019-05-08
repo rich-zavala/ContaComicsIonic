@@ -326,8 +326,10 @@ export class LocalForageHandler implements ICCDBHandler {
             this.dbRecords.getItem(id, (err, recordData: ICCRecord) => {
                 if (recordData) {
                     observer.next(new CCRecord(recordData));
-                    observer.complete();
+                } else {
+                    observer.error();
                 }
+                observer.complete();
             });
         });
     }
@@ -369,6 +371,22 @@ export class LocalForageHandler implements ICCDBHandler {
                 }
                 observer.complete();
             });
+        });
+    }
+
+    clear(): Rx.Observable<boolean> {
+        return new Rx.Observable(observer => {
+            Rx.merge(
+                this.dbDays.clear(),
+                this.dbRecords.clear(),
+                this.dbYears.clear(),
+                this.dbSeries.clear()
+            )
+                .pipe(toArray())
+                .subscribe(
+                    () => observer.next(true),
+                    () => observer.error()
+                );
         });
     }
 }

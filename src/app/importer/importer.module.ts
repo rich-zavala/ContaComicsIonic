@@ -6,12 +6,12 @@ import { File } from "@ionic-native/file/ngx";
 
 import { IonicModule } from "@ionic/angular";
 
-import { ExporterPage } from "./exporter.page";
+import { ImporterPage } from "./importer.page";
 
 const routes: Routes = [
   {
     path: "",
-    component: ExporterPage
+    component: ImporterPage
   }
 ];
 
@@ -23,10 +23,10 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    ExporterPage
+    ImporterPage
   ],
   providers: [
     File
   ]
 })
-export class ExporterPageModule { }
+export class ImporterPageModule { }

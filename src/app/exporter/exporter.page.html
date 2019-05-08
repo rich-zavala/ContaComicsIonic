@@ -10,17 +10,25 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <p class="justify">
+  <p class="justify marginBottom20">
     <small>
       La información de tu colección <b>EXISTE ÚNICAMENTE EN ESTE DISPOSITIVO</b> y no es compartida con ninguna otra entidad, por lo que es importante generar constantemente un archivo de reespaldo
       el cual puede ser importado en cualquier momento en este u otro dispositivo.
     </small>
   </p>
 
-  <ion-button color="tertiary" expand="block" (click)="export()">
-    Save data backup
-    <ion-icon slot="end" name="download"></ion-icon>
-  </ion-button>
+  <div class="marginBottom20">
+    <ion-button (click)="chooseDestination()" expand="block" [disabled]="working">
+      <ng-container *ngIf="!filePath">Choose file destination</ng-container>
+      <ng-container *ngIf="filePath">Change backup destination</ng-container>
+    </ion-button>
+  </div>
+  <div class="marginBottom20">
+    <ion-button color="tertiary" expand="block" (click)="export()" [disabled]="!filePath || working">
+      Save data backup
+      <ion-icon slot="end" name="download"></ion-icon>
+    </ion-button>
+  </div>
 
   <div *ngIf="working" class="flex fcol fvertical worker">
     <ion-spinner></ion-spinner>

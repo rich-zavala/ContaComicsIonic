@@ -27,12 +27,22 @@
     }
 }
 
+.marginBottom20 {
+    margin-bottom: 2em;
+}
+
+.worker ion-spinner {
+    margin-bottom: 1em;
+}
+
 ion-checkbox:not(.checkbox-checked) {
     --border-color: var(--ion-color-tertiary);
 }
 
 ion-alert {
-    .alert-title {
+
+    .alert-title,
+    .alert-sub-title {
         color: var(--ion-color-light-contrast) !important;
     }
 }

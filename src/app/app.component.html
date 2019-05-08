@@ -29,8 +29,14 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item color="dark" [routerDirection]="'root'" [routerLink]="['/exporter']">
+            <ion-item color="dark" [routerDirection]="'root'" [routerLink]="['/importer']">
               <ion-icon slot="start" name="download"></ion-icon>
+              <ion-label>Import data</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item color="dark" [routerDirection]="'root'" [routerLink]="['/exporter']">
+              <ion-icon slot="start" name="save"></ion-icon>
               <ion-label>Export data</ion-label>
             </ion-item>
           </ion-menu-toggle>

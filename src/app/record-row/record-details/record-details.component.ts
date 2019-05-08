@@ -33,10 +33,7 @@ export class RecordDetailsComponent extends RecordHandlerComponent {
         {
           text: "Delete this record",
           cssClass: "secondary",
-          handler: () => {
-            this.db.deleteRecord(this.cc)
-              .add(() => this.close());
-          }
+          handler: () => this.db.deleteRecord(this.cc).add(() => this.close())
         },
         {
           text: "Cancel",

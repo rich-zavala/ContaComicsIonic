@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "series-listing",
+    redirectTo: "importer",
     pathMatch: "full"
   },
   {
@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: "exporter",
     loadChildren: "./exporter/exporter.module#ExporterPageModule"
+  },
+  {
+    path: "importer",
+    loadChildren: "./importer/importer.module#ImporterPageModule"
   }
 ];
 
