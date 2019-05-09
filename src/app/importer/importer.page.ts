@@ -59,7 +59,7 @@ export class ImporterPage {
             this.importErr();
           }
         },
-        (e) => console.warn(e)
+        () => this.importErr()
       );
     } else {
       this.dbManage();
@@ -100,8 +100,7 @@ export class ImporterPage {
             let records: ICCRecord[] = JSON.parse(data);
 
             const importRecords = () => {
-              console.log("Inserting!");
-              Rx.merge(...records.map(r => Rx.from(this.db.insert(r))))
+              Rx.concat(...records.map(r => Rx.from(this.db.insert(r))))
                 .pipe(toArray())
                 .subscribe(
                   res => this.importEnding(`${res.length} new comics!`),
