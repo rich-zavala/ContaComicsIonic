@@ -28,9 +28,6 @@ export class DateRecordsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.monthStr = moment(this.date.date).format("MMM");
     this.dayStr = moment(this.date.date).format("DD");
-
-    this.displayRecords = this.records;
-    this.filterRecords();
   }
 
   ngOnChanges(changes: SimpleChanges) {

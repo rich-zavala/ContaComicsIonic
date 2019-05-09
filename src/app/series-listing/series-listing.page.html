@@ -8,12 +8,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
-    <ion-fab-button color="tertiary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
   <div *ngIf="working" class="flex fcol fvertical worker margin20">
     <ion-spinner></ion-spinner>
   </div>
@@ -42,4 +36,23 @@
       </ion-item-divider>
     </ng-container>
   </ion-item-group>
+
+  <ng-container *ngIf="showEmpty">
+    <ion-text class="flex fcol fvertical marginBottom20">
+      <h2>There are no records yet</h2>
+      <ion-button strong="false" size="small" color="tertiary" (click)="openAddForm()">
+        Start adding comics to the collection!
+      </ion-button>
+    </ion-text>
+  </ng-container>
+
+  <ng-container *ngIf="filterEmpty">
+    <ion-text class="flex fcol fvertical marginBottom20" color="medium">There are no series matching your filtering</ion-text>
+  </ng-container>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

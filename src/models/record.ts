@@ -9,7 +9,7 @@ export interface ICCRecord {
     price: number;
     variant?: string;
     checked?: boolean;
-    publishDate: number;
+    publishDate: string;
     checkedDate?: number;
     recordDate?: number;
 }
@@ -21,7 +21,7 @@ export class CCRecord implements ICCRecord {
     price: number;
     variant: string;
     checked: boolean;
-    publishDate: number;
+    publishDate: string;
     checkedDate: number;
     recordDate: number;
 

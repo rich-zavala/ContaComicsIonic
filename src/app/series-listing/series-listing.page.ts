@@ -26,6 +26,9 @@ export class SeriesListingPage implements OnInit {
   seriesFiltered: ICCSerie[] = [];
   states: { [key: string]: ListState } = {};
 
+  showEmpty = false;
+  filterEmpty = false;
+
   filterValue = "";
 
   constructor(
@@ -44,10 +47,17 @@ export class SeriesListingPage implements OnInit {
         }
       });
       this.filter();
+      this.showEmpty = this.series.length === 0;
     });
 
     this.db.insertedRecord$.subscribe(
-      record => this.states[record.title].records = lodash.orderBy([...this.states[record.title].records, record], ["volumen"])
+      record => {
+        if (this.states[record.title]) {
+          this.states[record.title].records = lodash.orderBy([...this.states[record.title].records, record], ["volumen"]);
+        } else {
+          this.db.updateSeries();
+        }
+      }
     );
 
     this.db.deletedRecord$.subscribe(deleteInfo => {
@@ -55,17 +65,20 @@ export class SeriesListingPage implements OnInit {
         this.series = this.series.filter(s => s.name !== deleteInfo.record.title);
         this.filter();
       } else {
-        const index = lodash.findIndex(this.states[deleteInfo.record.title].records, r => r.id === deleteInfo.record.id);
-        this.states[deleteInfo.record.title].records.splice(index, 1);
+        lodash.remove(this.states[deleteInfo.record.title].records, r => r.id === deleteInfo.record.id);
       }
+
+      this.showEmpty = this.series.length === 0;
     });
   }
 
   private filter() {
     if (this.filterValue === "") {
       this.seriesFiltered = this.series;
+      this.filterEmpty = false;
     } else {
       this.seriesFiltered = this.series.filter(s => s.name.toLocaleLowerCase().includes(this.filterValue));
+      this.filterEmpty = this.seriesFiltered.length === 0;
     }
 
     this.working = false;

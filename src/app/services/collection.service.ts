@@ -111,9 +111,8 @@ export class CollectionService {
                 data => {
                     if (data.yearDeleted) {
                         this.updateYears();
-                    } else {
-                        this.deletedRecord$.next(data);
                     }
+                    this.deletedRecord$.next(data);
                 }
             );
     }

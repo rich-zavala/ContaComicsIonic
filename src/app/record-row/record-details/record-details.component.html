@@ -40,6 +40,9 @@
   </ion-list>
 </ion-content>
 
-<ion-button expand="block" size="small" color="light" (click)="delete()">
-  <ion-icon slot="start" name="trash"></ion-icon> Delete this record
-</ion-button>
+<ion-footer slot="end" class="ion-padding">
+  <ion-button size="small" color="danger" expand="block" (click)="delete()">
+    Delete this record
+    <ion-icon slot="end" name="trash"></ion-icon>
+  </ion-button>
+</ion-footer>

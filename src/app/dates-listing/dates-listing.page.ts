@@ -22,19 +22,19 @@ interface TDatesCollection {
 })
 export class DatesListingPage implements OnInit {
   @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
-  // @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild("filter") filterChild: IonSelect;
 
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
   records: TDatesCollection = {};
-  // daysCount = 0;
 
   loadingProgress = 0;
   working = false;
+  showEmpty = false;
 
   filterValue = 0;
+  showFilteredEmpty = false;
 
   constructor(
     private db: CollectionService,
@@ -52,15 +52,23 @@ export class DatesListingPage implements OnInit {
           this.selectYear(lodash.first(this.years));
         }
       }
+
+      this.showEmpty = this.years.length === 0;
     });
 
     this.db.insertedRecord$.subscribe(
       record => {
+        if (!this.selectedYear || this.years.length === 0) {
+          this.reset();
+          return;
+        }
+
         const rPublYear = record.getPublishYear();
         const rPublDate = record.getPublishDate();
 
         if (rPublYear === this.selectedYear.year && this.records[rPublDate]) {
           this.records[rPublDate] = lodash.sortBy([...this.records[rPublDate], record], r => r.recordDate).reverse();
+          this.showFilteredMessage();
         } else if (rPublYear === this.selectedYear.year) {
           /**
            * If the new record's date is not listed in the current view,
@@ -77,19 +85,28 @@ export class DatesListingPage implements OnInit {
       if (this.selectedYear.year === deleteInfo.recordYear) {
         this.selectedYear.total = deleteInfo.yearTotal;
         if (deleteInfo.yearDeleted) {
-          this.ngOnInit();
+          lodash.remove(this.years, y => y.year === deleteInfo.recordYear);
+          if (this.years.length > 0) {
+            this.selectYear(lodash.first(this.years));
+          } else {
+            this.selectedYearDates = [];
+            this.records = {};
+          }
+          this.showEmpty = this.years.length === 0;
         } else if (deleteInfo.dayDeleted) {
-          this.selectedYearDates.splice(this.selectedYearDates.findIndex(d => d.date === deleteInfo.recordDate), 1);
+          lodash.remove(this.selectedYearDates, d => d.date === deleteInfo.recordDate);
         } else {
           const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
           if (dateChild) {
             const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
             date.total = deleteInfo.dayTotal;
-            date.records.splice(date.records.findIndex(record => record === deleteInfo.record.id), 1);
-            this.records[date.date].splice(this.records[date.date].findIndex(record => record.id === deleteInfo.record.id), 1);
+            lodash.remove(date.records, record => record === deleteInfo.record.id);
+            lodash.remove(this.records[date.date], record => record.id === deleteInfo.record.id);
             dateChild.ngOnInit();
           }
         }
+
+        this.showFilteredMessage();
       }
     });
   }
@@ -114,6 +131,7 @@ export class DatesListingPage implements OnInit {
     }
 
     this.working = true;
+    this.showFilteredEmpty = false;
     this.loadingProgress = 0;
     this.records = {};
     this.db.getYearDates(this.selectedYear.year)
@@ -131,6 +149,7 @@ export class DatesListingPage implements OnInit {
 
                   if (this.loadingProgress === 1) {
                     this.working = false;
+                    this.showFilteredMessage();
                   }
 
                   observer.complete();
@@ -161,5 +180,11 @@ export class DatesListingPage implements OnInit {
 
   filterRecords($event: CustomEvent) {
     this.filterValue = parseInt($event.detail.value, 10);
+    this.showFilteredMessage();
+  }
+
+  showFilteredMessage() {
+    this.showFilteredEmpty = false;
+    setTimeout(() => this.showFilteredEmpty = this.dateChildren.filter(dateRow => dateRow.displayDate).length === 0, 100);
   }
 }

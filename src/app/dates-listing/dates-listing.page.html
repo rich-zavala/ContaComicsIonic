@@ -34,7 +34,7 @@
     </ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="!showEmpty">
     <ion-tabs>
       <ion-tab-bar slot="top">
         <ion-tab-button *ngFor="let year of years" (click)="selectYear(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: working || isSelected(year.year) }">
@@ -49,15 +49,30 @@
 <ion-content>
   <ion-progress-bar *ngIf="working" color="tertiary" [value]="loadingProgress"></ion-progress-bar>
 
+  <ion-list>
+    <ng-container *ngFor="let date of selectedYearDates">
+      <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]" [filterValue]="filterValue">
+      </app-date-records>
+    </ng-container>
+  </ion-list>
+
+  <ng-container *ngIf="showEmpty">
+    <ion-text class="flex fcol fvertical marginBottom20">
+      <h2>There are no records yet</h2>
+      <ion-button strong="false" size="small" color="tertiary" (click)="openAddForm()">
+        Start adding comics to the collection!
+      </ion-button>
+    </ion-text>
+  </ng-container>
+
+  <ng-container *ngIf="showFilteredEmpty">
+    <ion-text class="flex fcol fvertical marginBottom20" color="medium">There are no records matching your filtering</ion-text>
+  </ng-container>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">
     <ion-fab-button color="tertiary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-list>
-    <ng-container *ngFor="let date of selectedYearDates">
-      <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]" [filterValue]="filterValue"></app-date-records>
-    </ng-container>
-  </ion-list>
 </ion-content>
