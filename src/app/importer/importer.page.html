@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <ion-list>
     <ion-radio-group (ionChange)="updateOption($event)">
       <ion-list-header>Choose an import mode option</ion-list-header>
@@ -28,16 +28,15 @@
     </ion-radio-group>
   </ion-list>
 
-
-
   <div class="marginBottom20">
-    <ion-button (click)="chooseFile()" expand="block" [disabled]="working">
+    <ion-button (click)="chooseFile()" color="medium" expand="block" [disabled]="working">
       Choose
       <ng-container *ngIf="!filePath"> a </ng-container>
       <ng-container *ngIf="filePath">another</ng-container>
       backup file
     </ion-button>
   </div>
+
   <div class="marginBottom20">
     <ion-button color="tertiary" expand="block" (click)="importData()" [disabled]="!filePath || working">
       Import data
