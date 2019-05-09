@@ -6,15 +6,14 @@
 
     <ion-buttons slot="end" class="filterButton" (click)="showFilter()">
       <ng-container *ngIf="filterValue === 0">
-        <ion-icon name="reorder"></ion-icon>
         <ion-label>All</ion-label>
       </ng-container>
       <ng-container *ngIf="filterValue === 1">
-        <ion-icon name="square-outline"></ion-icon>
+        <ion-icon name="checkbox-outline"></ion-icon>
         <ion-label>Owned</ion-label>
       </ng-container>
       <ng-container *ngIf="filterValue === 2">
-        <ion-icon name="checkbox-outline"></ion-icon>
+        <ion-icon name="square-outline"></ion-icon>
         <ion-label>Not owned</ion-label>
       </ng-container>
       <ion-icon name="arrow-dropdown"></ion-icon>

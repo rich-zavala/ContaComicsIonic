@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 
 import { IonicModule } from "@ionic/angular";
+import { Vibration } from "@ionic-native/vibration/ngx";
 
 import { AddFormComponent } from "./add-form.component";
 
@@ -24,6 +25,9 @@ const routes: Routes = [
   ],
   declarations: [
     AddFormComponent
+  ],
+  providers: [
+    Vibration
   ],
   entryComponents: [
     AddFormComponent

@@ -28,20 +28,22 @@
     </ion-radio-group>
   </ion-list>
 
-  <div class="marginBottom20">
-    <ion-button (click)="chooseFile()" color="medium" expand="block" [disabled]="working">
-      Choose
-      <ng-container *ngIf="!filePath"> a </ng-container>
-      <ng-container *ngIf="filePath">another</ng-container>
-      backup file
-    </ion-button>
-  </div>
+  <div class="ion-padding">
+    <div class="marginBottom20">
+      <ion-button color="medium" expand="block" [disabled]="working" (click)="chooseFile()">
+        Choose
+        <ng-container *ngIf="!filePath"> a </ng-container>
+        <ng-container *ngIf="filePath">another</ng-container>
+        backup file
+      </ion-button>
+    </div>
 
-  <div class="marginBottom20">
-    <ion-button color="tertiary" expand="block" (click)="importData()" [disabled]="!filePath || working">
-      Import data
-      <ion-icon slot="end" name="download"></ion-icon>
-    </ion-button>
+    <div class="marginBottom20">
+      <ion-button color="tertiary" expand="block" (click)="importData()" [disabled]="!filePath || working">
+        Import data
+        <ion-icon slot="end" name="download"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
   <ion-text color="secondary" class="flex fcenter" *ngIf="importOutput.length > 0">{{importOutput}}</ion-text>

@@ -1,10 +1,16 @@
 .cc-row {
     line-height: 1;
-    padding: 1vh 0 1vh 1vh;
+    // padding: 1vh 0 1vh 1vh;
     flex: 1;
+    position: relative;
 
     &.odd {
         background: var(--ion-color-odd);
+    }
+
+    ion-checkbox {
+        --size: 2.2em;
+        margin: 2px 0px 0 2px;
     }
 
     &>div {

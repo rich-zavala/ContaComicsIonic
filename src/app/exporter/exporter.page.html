@@ -17,17 +17,19 @@
     </small>
   </p>
 
-  <div class="marginBottom20">
-    <ion-button (click)="chooseDestination()" color="medium" expand="block" [disabled]="working">
-      <ng-container *ngIf="!filePath">Choose file destination</ng-container>
-      <ng-container *ngIf="filePath">Change backup destination</ng-container>
-    </ion-button>
-  </div>
-  <div class="marginBottom20">
-    <ion-button color="tertiary" expand="block" (click)="export()" [disabled]="!filePath || working">
-      Save data backup
-      <ion-icon slot="end" name="download"></ion-icon>
-    </ion-button>
+  <div class="ion-padding">
+    <div class="marginBottom20">
+      <ion-button (click)="chooseDestination()" color="medium" expand="block" [disabled]="working">
+        <ng-container *ngIf="!filePath">Choose file destination</ng-container>
+        <ng-container *ngIf="filePath">Change backup destination</ng-container>
+      </ion-button>
+    </div>
+    <div class="marginBottom20">
+      <ion-button color="tertiary" expand="block" (click)="export()" [disabled]="!filePath || working">
+        Save data backup
+        <ion-icon slot="end" name="download"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
   <div *ngIf="working" class="flex fcol fvertical worker">

@@ -1,5 +1,5 @@
-<div class="cc-row flex fvertical" [ngClass]="{ odd: odd }" (click)="showDetails($event)">
-  <div>
+<div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd }" (click)="showDetails($event)" ion-activatable>
+  <div class="checkboxContainer">
     <ion-checkbox color="tertiary" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
   </div>
   <div class="title flex">
@@ -8,4 +8,5 @@
   </div>
   <div class="volumen">#{{cc.volumen}}</div>
   <div class="price">{{cc.priceCurrency()}}</div>
+  <ion-ripple-effect></ion-ripple-effect>
 </div>

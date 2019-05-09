@@ -5,8 +5,16 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="ccRecordForm.invalid" (click)="save()" color="light" fill="solid">
+        Save Comic
+        <ion-icon slot="end" name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-title>
-      Add a new Comic
+      Add a Comic
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -57,7 +65,5 @@
       <ion-label position="floating">Publish Date</ion-label>
       <ion-input type="date" formControlName="publishDate" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
-
-    <ion-button color="tertiary" expand="block" [disabled]="ccRecordForm.invalid" (click)="save()">Save Comic</ion-button>
   </form>
 </ion-content>

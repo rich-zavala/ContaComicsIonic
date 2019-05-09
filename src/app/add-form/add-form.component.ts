@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController, AlertController, ModalController, IonInput } from "@ionic/angular";
+import { Vibration } from "@ionic-native/vibration/ngx";
 
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
@@ -28,7 +29,8 @@ export class AddFormComponent implements OnInit {
     private db: CollectionService,
     private modalCtrl: ModalController,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private vibration: Vibration
   ) {
     this.initForm();
     db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
@@ -113,6 +115,8 @@ export class AddFormComponent implements OnInit {
   }
 
   async errorToast(cc: CCRecord) {
+    this.vibration.vibrate(700);
+
     const alert = await this.alertController.create({
       header: "Warning!",
       subHeader: "This comic is in the catalog",
