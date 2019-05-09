@@ -4,16 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "importer",
+    redirectTo: "dates-listing",
     pathMatch: "full"
-  },
-  {
-    path: "home",
-    loadChildren: "./home/home.module#HomePageModule"
-  },
-  {
-    path: "list",
-    loadChildren: "./list/list.module#ListPageModule"
   },
   {
     path: "dates-listing",
@@ -31,6 +23,10 @@ const routes: Routes = [
   {
     path: "importer",
     loadChildren: "./importer/importer.module#ImporterPageModule"
+  },
+  {
+    path: "about",
+    loadChildren: "./about/about.module#AboutPageModule"
   }
 ];
 

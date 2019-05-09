@@ -1,0 +1,315 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      About ContaComics
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="dark">
+    <ion-card-header>
+      <div class="logo"></div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text class="flex fcol fvertical">
+        <h1>ContaComics v2.0</h1>
+        <div class="marginBottom20"></div>
+        <div> Creado por <b>Ricardo Zavala</b></div>
+        <div><a href="mailto:righ.zavalac@gmail.com">rich.zavalac@gmail.com</a></div>
+      </ion-text>
+    </ion-card-content>
+    <!-- <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <ion-label>ion-item in a card, icon left, button right</ion-label>
+        <ion-button fill="outline" slot="end">View</ion-button>
+      </ion-item> -->
+  </ion-card>
+  <ion-card color="dark">
+    <ion-card-header (click)="expandTerms()" no-padding>
+      <ion-item color="dark" no-margin>
+        Términos y condiciones (Spanish only)
+        <ion-icon *ngIf="!expanded" slot="end" name="arrow-dropdown"></ion-icon>
+        <ion-icon *ngIf="expanded" slot="end" name="arrow-dropup"></ion-icon>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="expanded">
+      <div class="terms">
+        <b>TÉRMINOS DE SERVICIO</b>
+
+        <p>
+          Esta applicación es operada por ContaComics. En toda la applicación, los términos “nosotros”, “nos” y “nuestro” se refieren a ContaComics. ContaComics ofrece esta applicación, incluyendo
+          toda la información, herramientas y servicios disponibles para ti, el usuario, está condicionado a la aceptación de todos los términos, condiciones, políticas y notificaciones aquí
+          establecidos.
+        </p>
+
+        <p>
+          Al utilizar ContaComics y/o comprar algo de nosotros, paticipas en nuestro “Servicio” y aceptas los siguientes términos y condiciones (“Términos de Servicio”, “Términos”), incluídos todos
+          los
+          términos y condiciones adicionales y las polítias a las que se hace referencia en el presente documento y/o disponible a través de hipervínculos. Estas Condiciones de Servicio se aplican a
+          todos los usuarios de la aplicación, incluyendo sin limitación a usuarios que sean navegadores, proveedores, clientes, comerciantes, y/o colaboradores de contenido.
+
+        </p>
+        <p>
+          Por favor, lee estos Términos de Servicio cuidadosamente antes de utilizar nuestra aplicación. Al acceder o utilizar cualquier parte de la aplicación, estás aceptando los Términos de
+          Servicio.
+          Si no estás de acuerdo con todos los términos y condiciones de este acuerdo, entonces no deberías utilizar la apliacación o usar cualquiera de los servicios. Si los Términos de Servicio son
+          considerados una oferta, la aceptación está expresamente limitada a estos Términos de Servicio.
+        </p>
+
+        <p>
+          Cualquier función nueva o herramienta que se añadan a la aplicación actual, tambien estarán sujetas a los Términos de Servicio. Nos reservamos el derecho de actualizar, cambiar o reemplazar
+          cualquier parte de los Términos de Servicio mediante la publicación de actualizaciones y/o cambios en esta sección de la aplicación. Es tu responsabilidad chequear esta sección
+          periódicamente
+          para verificar cambios. Tu uso contínuo o el acceso a la aplicación después de la publicación de cualquier cambio constituye la aceptación de dichos cambios.
+        </p>
+
+        <b>SECCIÓN 1 - TÉRMINOS DE LA APLICACIÓN</b>
+
+        <p>
+          Al utilizar esta aplicación, declaras que tienes al menos la mayoría de edad en tu estado o provincia de residencia, o que tienes la mayoría de edad en tu estado o provincia de residencia y
+          que nos has dado tu consentimiento para permitir que cualquiera de tus dependientes menores use esta aplicación.
+        </p>
+
+        <p>
+          No puedes usar nuestra aplicación con ningún propósito ilegal o no autorizado tampoco puedes, en el uso del Servicio, violar cualquier ley en tu jurisdicción (incluyendo pero no limitado a
+          las leyes de derecho de autor).
+        </p>
+
+        <p>
+          No debes transmitir gusanos, virus o cualquier código de naturaleza destructiva.
+        </p>
+
+        <b>SECCIÓN 2 - CONDICIONES GENERALES</b>
+
+        <p>
+          Entiendes que tu contenido, puede ser transferida sin encriptar e involucrar (a) transmisiones a través de varias redes; y (b) cambios para ajustarse o adaptarse a los requisitos técnicosde
+          conexión de redes o dispositivos.
+        </p>
+
+        <p>
+          Estás de acuerdo con no reproducir, duplicar, copiar, vender, revender o explotar cualquier parte de la aplicación, uso de la aplicación, o acceso a la aplicación o cualquier contacto en la
+          aplicación, sin el expreso permiso por escrito de nuestra parte.
+        </p>
+
+        <p>
+          Los títulos utilizados en este acuerdo se icluyen solo por conveniencia y no limita o afecta a estos Términos.
+        </p>
+
+        <b>SECCIÓN 3 - EXACTITUD, EXHAUSTVIDAD Y ACTUALIDAD DE LA INFORMACIÓN</b>
+
+        <p>
+          No nos hacemos responsables si la información disponible en esta aplicación no es exacta, completa o actual. El material en esta aplicación es provisto solo para información general y no
+          debe
+          confiarse en ella o utilizarse como la única base para la toma de decisiones sin consultar primeramente, información más precisa, completa u oportuna. Cualquier dependencia en el materia
+          de
+          esta aplicación es bajo su propio riesgo.
+        </p>
+
+        <p>
+          Esta aplicación puede contener cierta información histórica. La información histórica, no es necesriamente actual y es provista únicamente para tu referencia. Nos reservamos el derecho de
+          modificar los contenidos de esta aplicación en cualquier momento, pero no tenemos obligación de actualizar cualquier información en nuestra aplicación. Aceptas que es tu responsabilidad
+          monitorear los cambios en nuestra aplicación.
+        </p>
+
+        <b>SECTION 4 - MODIFICACIONES AL SERVICIO Y PRECIOS</b>
+
+        <p>
+          Los precios de la aplicación está sujeta a cambio sin aviso.
+        </p>
+        <p>
+          Nos reservamos el derecho de modificar o discontinuar la aplicación (o cualquier parte del contenido) en cualquier momento sin aviso previo.
+        </p>
+
+        <p>
+          No seremos responsables ante ti o alguna tercera parte por cualquier modificación, cambio de precio, suspensión o discontinuidad de la aplicación.
+        </p>
+
+        <b>SECCIÓN 4 - HERRAMIENTAS OPCIONALES</b>
+
+        <p>
+          Es posible que te proporcionemos aceso a herramientas de terceros a los cuales no monitoreamos y sobre los que no tenemos control ni entrada.
+        </p>
+
+        <p>
+          Reconoces y aceptas que proporcionamos acceso a este tipo de herramientas "tal cual" y "según disponibilidad" sin garantías, representaciones o condiciones de ningún tipo y sin ningún
+          respaldo. No tendremos responsabilidad alguna derivada de o relacionada con tu uso de herramientas proporcionadas por terceras partes.
+        </p>
+
+        <p>
+          Cualquier uso que hagas de las herramientas opcionales que se ofrecen a través de la aplicación bajo tu propio riesgo y discreción y debes asegurarte de estar familiarizado y aprobar los
+          términos bajo los cuales estas herramientas son proporcionadas por el o los proveedores de terceros.
+        </p>
+        <p>
+          Tambien es posible que, en el futuro, te ofrezcamos nuevos servicios y/o características a través de la aplicación (incluyendo el lanzamiento de nuevas herramientas y recursos). Estas
+          nuevas
+          caraterísticas y/o servicios tambien estarán sujetos a estos Términos de Servicio.
+        </p>
+
+        <b>SECCIÓN 5 - ENLACES DE TERCERAS PARTES</b>
+
+        <p>
+          Cierto contenido, productos y servicios disponibles vía nuestra aplicación puede incluír material de terceras partes.
+        </p>
+
+        <p>
+          Enlaces de terceras partes en esta aplicación pueden direccionarte a sitios web de terceras partes que no están afiliadas con nosotros. No nos responsabilizamos de examinar o evaluar el
+          contenido o exactitud y no garantizamos ni tendremos ninguna obligación o responsabilidad por cualquier material de terceros o sitios web, o de cualquier material, productos o servicios de
+          terceros.
+        </p>
+
+        <p>
+          No nos hacemos responsables de cualquier daño o daños relacionados con la adquisición o utilización de bienes, servicios, recursos, contenidos, o cualquier otra transacción realizadas en
+          conexión con sitios web de terceros. Por favor revisa cuidadosamente las políticas y prácticas de terceros y asegúrate de entenderlas antes de participar en cualquier transacción. Quejas,
+          reclamos, inquietudes o pregutas con respecto a productos de terceros deben ser dirigidas a la tercera parte.
+        </p>
+
+        <b>SECCIÓN 6 - COMENTARIOS DE USUARIO, CAPTACIÓN Y OTROS ENVÍOS</b>
+
+        <p>
+          Si, a pedido nuestro, envías ciertas presentaciones específicas (por ejemplo la participación en concursos) o sin un pedido de nuestra parte envías ideas creativas, sugerencias,
+          proposiciones,
+          planes, u otros materiales, ya sea en línea, por email, por correo postal, o de otra manera (colectivamente, 'comentarios'), aceptas que podamos, en cualquier momento, sin restricción,
+          editar,
+          copiar, publicar, distribuír, traducir o utilizar por cualquier medio comentarios que nos hayas enviado. No tenemos ni tendremos ninguna obligación (1) de mantener ningún comentario
+          confidencialmente; (2) de pagar compensación por comentarios; o (3) de responder a comentarios.
+        </p>
+
+        <p>
+          Nosotros podemos, pero no tenemos obligación de, monitorear, editar o remover contenido que consideremos sea ilegítimo, ofensivo, amenazante, calumnioso, difamatorio, pornográfico,
+          obsceno u
+          objetable o viole la propiedad intelectual de cualquiera de las partes o los Términos de Servicio.
+        </p>
+
+        <b>SECCIÓN 7 - INFORMACIÓN PERSONAL</b>
+
+        <p>
+          Tu presentación de información personal a través de la aplicación se rige por nuestra <a href="./policy">Política de Privacidad</a>.
+        </p>
+
+        <b>SECCIÓN 8 - USOS PROHIBIDOS</b>
+
+        <p>
+          En adición a otras prohibiciones como se establece en los Términos de Servicio, se prohibe el uso de la aplicación o su contenido: (a) para ningún propósito ilegal; (b) para pedirle a
+          otros que realicen o partiicpen en actos ilícitos; (c) para violar cualquier regulación, reglas, leyes internacionales, federales, provinciales o estatales, u ordenanzas locales; (d) para
+          infringir o violar el derecho de propiedad intelectual nuestro o de terceras partes; (e) para acosar, abusar, insultar, dañar, difamar, calumniar, desprestigiar, intimidar o discriminar por
+          razones de género, orientación sexual, religión, tnia, raza, edad, nacionalidad o discapacidad; (f) para presentar información falsa o engañosa; (g) para cargar o transmitir virus o
+          cualquier otro
+          tipo de código malicioso que sea o pueda ser utilizado en cualquier forma que pueda comprometer la funcionalidad o el funcionamientodel Servicio o de cualquier sitio web relacionado, otros
+          sitios o Internet; (h) para recopilar o rastrear información personal de otros; (i) para generar spam, phish, pharm, pretext, spider, crawl, or scrape; (j) para cualquier propósito obsceno o
+          inmoral; o (k) para interferir con o burlar los elementos de seguridad del Servicio o cualquier sitio web relacionado u otros sitios o Internet.
+        </p>
+
+        <b>SECCIÓN 9 - EXCLUSIÓN DE GARANTÍAS; LIMITACIÓN DE RESPONSABILIDAD</b>
+
+        <p>
+          No garantizamos ni aseguramos que el uso de nuestra aplicación será ininterrumpido, puntual, seguro o libre de errores.
+        </p>
+
+        <p>
+          No garantizamos que los resultados que se puedan obtener del uso de la aplicación serán exactos o confiables.
+        </p>
+
+        <p>
+          Aceptas expresamenteque el uso de, o la posibilidad de utilizar, la aplicación es bajo tu propio riesgo. la aplicación es proporcionada "tal cual" y "según esté disponible" para su uso,
+          sin
+          ningún tipo de representación, garantías o condiciones de ningún tipo, ya sea expresa o implícita, incluídas todas las garantías o condiciones implícitas de comercialización, calidad
+          comercializable, la aptitud para un propósito particular, durabilidad, título y no infracción.
+        </p>
+
+        <p>
+          En ningún caso ContaComics, nuestros directores, funcionarios, empleados, afiliados, agentes, contratistas, internos, proveedores, prestadores de servicios o licenciantes serán
+          responsables
+          por cualquier daño, pérdida, reclamo, o daños directos, indirectos, incidentales, punitivos, especiales o consecuentes de cualquier tipo, incluyendo, sin limitación, pérdida de
+          beneficios,
+          pérdida de igresos, pérdida de ahorros, pérdida de datos, costos de reemplazo, o cualquier daño similar, ya sea basado en contrato, agravio (incluyendo negligencia), responsabilidad
+          estricta o
+          de otra manera, como consecuencia del uso de cualquiera de los servicios o productos adquiridos mediante la aplicación, o por cualquier otro reclamo relacionado de alguna manera con el
+          uso del
+          servici, incluyendo pero no limitado, a cualquier error u omisión en cualquier contenido, o cualquier pérdida o daño de cualquier tipo incurridos como resultados de la utilización del
+          servicio
+          o cualquier contenido (o producto) publicado, transmitido, o que se pongan a disposición a través de la aplicación, incluso si se avisa de su posibilidad.
+        </p>
+
+        <b>SECCIÓN 10 - INDEMNIZACIÓN</b>
+
+        <p>
+          Aceptas indemnizar, defender y mantener indemne ContaComics y nuestras matrices, subsidiarias, afiliados, socios, funcionarios, directores, agentes, contratistas, concesionarios,
+          proveedores
+          de servicios, subcontratistas, proveedores, internos y empleados, de cualquier reclamo o demanda, incluyendo honorarios razonables de abogados, hechos por cualquier tercero a causa o
+          como
+          resultado de tu incumplimiento de las Condiciones de Servicio o de los documentos que incorporan como referencia, o la violación de cualquier ley o de los derechos de u tercero.
+        </p>
+
+        <b>SECCIÓN 11 - DIVISIBILIDAD</b>
+
+        <p>
+          En el caso de que se determine que cualquier disposición de estas Condiciones de Servicio sea ilegal, nula o inejecutable, dicha disposición será, no obstante, efectiva a obtener la
+          máxima medida permitida por la ley aplicable, y la parte no exigible se considerará separada de estos Términos de Servicio, dicha determinación no afectará la validez de aplicabilidad de las
+          demás disposiciones restantes.
+        </p>
+
+        <b>SECCIÓN 12 - RESCISIÓN</b>
+
+        <p>
+          Las obligaciones y responsabilidades de las partes que hayan incurrido con anterioridad a la fecha de terminación sobrevivirán a la terminación de este acuerdo a todos los efectos.
+        </p>
+
+        <p>
+          Estas Condiciones de servicio son efectivos a menos que y hasta que sea terminado por ti o nosotros. Puedes terminar estos Términos de Servicio en cualquier momento por avisarnos que ya
+          no
+          deseas utilizar nuestros servicios, o cuando dejes de usar nuestra aplicación.
+        </p>
+
+        <p>
+          Si a nuestro juicio, fallas, o se sospecha que haz fallado, en el cumplimiento de cualquier término o disposición de estas Condiciones de Servicio, tambien podemos terminar este acuerdo
+          en
+          cualquier momento sin previo aviso, y seguirás siendo responsable de todos los montos adeudados hasta incluída la fecha de terminación; y/o en consecuencia podemos negarte el acceso a
+          nuestros
+          servicios (o cualquier parte del mismo).
+        </p>
+
+        <b>SECCIÓN 13 - ACUERDO COMPLETO</b>
+
+        <p>
+          Nuestra falla para ejercer o hacer valer cualquier derecho o disposiciôn de estas Condiciones de Servicio no constituirá una renucia a tal derecho o disposición.
+        </p>
+
+        <p>
+          Estas Condiciones del servicio y las políticas o reglas de operación publicadas por nosotros en esta aplicación o con respecto al servicio constituyen el acuerdo completo y el
+          entendimiento
+          entre tu y nosotros y rigen el uso del Servicio y reemplaza cualquier acuerdo, comunicaciones y propuestas anteriores o contemporáneas, ya sea oral o escrita, entre tu y nosotros
+          (incluyendo,
+          pero no limitado a, cualquier versión previa de los Términos de Servicio).
+        </p>
+
+        <p>
+          Cualquier ambigüedad en la interpretación de estas Condiciones del servicio no se interpretarán en contra del grupo de redacción.
+        </p>
+
+        <b>SECCIÓN 14 - CAMBIOS EN LOS TÉRMINOS DE SERVICIO</b>
+
+        <p>
+          Puedes revisar la versión más actualizada de los Términos de Servicio en cualquier momento en esta sección.
+        </p>
+
+        <p>
+          Nos reservamos el derecho, a nuestra sola discreción, de actualizar, modificar o reemplazar cualquier parte de estas Condiciones del servicio mediante la publicación de las
+          actualizaciones y
+          los cambios en nuestra aplicación. Es tu responsabilidad revisar nuestra aplicación periódicamente para verificar los cambios. El uso contínuo de o el acceso a nuestra aplicación o el
+          Servicio
+          después de la publicación de cualquier cambio en estas Condiciones de servicio implica la aceptación de dichos cambios.
+        </p>
+
+        <b>SECCIÓN 15 - INFORMACIÓN DE CONTACTO</b>
+
+        <p>
+          Preguntas acerca de los Términos de Servicio deben ser enviadas a rich.zavalac@gmail.com.
+        </p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

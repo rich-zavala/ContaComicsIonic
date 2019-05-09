@@ -46,3 +46,11 @@ ion-alert {
         color: var(--ion-color-light-contrast) !important;
     }
 }
+
+.logo {
+    height: 86px;
+    background-image: url("../src/assets/icon/icono.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
