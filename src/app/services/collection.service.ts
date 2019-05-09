@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { AlertController } from "@ionic/angular";
+import { Dialogs } from "@ionic-native/dialogs/ngx";
+
 import * as Rx from "rxjs";
 
 import { DbHandlingService } from "./db-handling.service";
 
 import { ICCYear, CCRecord, ICCRecord, ICCSerie } from "src/models";
 import { IDeleteRecordResponse, IInsertRecordResponse } from "src/dbHandlers/dbHandler";
-
 @Injectable({
     providedIn: "root"
 })
@@ -19,7 +20,8 @@ export class CollectionService {
 
     constructor(
         private db: DbHandlingService,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private dialogs: Dialogs
     ) { }
 
     updateYears() {
@@ -69,12 +71,22 @@ export class CollectionService {
                 observer.complete();
             };
 
-            (async () => {
+            const header = "Are you sure?";
+            const subHeader = "Please confirm this action";
+            const buttons = ["Keep it", "Uncheck it"];
+            const uncheck = () => {
+                cc.uncheck();
+                this.updateRecord(cc, emmit);
+                resolve(true);
+            };
+            const revert = () => resolve(false);
+
+            const alternativeDialog = async () => {
                 const alert = await this.alertController.create({
-                    header: "Are you sure?",
+                    header,
                     buttons: [
                         {
-                            text: "Uncheck it",
+                            text: buttons[1],
                             cssClass: "secondary",
                             handler: () => {
                                 cc.uncheck();
@@ -83,14 +95,35 @@ export class CollectionService {
                             }
                         },
                         {
-                            text: "Keep it",
+                            text: buttons[0],
                             role: "cancel",
-                            handler: () => resolve(false)
+                            handler: () => revert()
                         }]
                 });
 
                 await alert.present();
-            })();
+            };
+
+            try {
+                Rx.from(this.dialogs.confirm(subHeader, header, buttons))
+                    .subscribe(
+                        option => {
+                            if (option === 1) {
+                                revert();
+                            } else {
+                                uncheck();
+                            }
+                        },
+                        e => {
+                            console.log("Error displaying dialog", e);
+                            alternativeDialog();
+                        }
+                    );
+            } catch (e) {
+                alternativeDialog();
+            }
+
+
         });
     }
 

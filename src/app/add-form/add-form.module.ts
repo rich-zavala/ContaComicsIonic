@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { IonicModule } from "@ionic/angular";
 import { Vibration } from "@ionic-native/vibration/ngx";
+import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import { AddFormComponent } from "./add-form.component";
 
@@ -27,7 +28,8 @@ const routes: Routes = [
     AddFormComponent
   ],
   providers: [
-    Vibration
+    Vibration,
+    Dialogs
   ],
   entryComponents: [
     AddFormComponent

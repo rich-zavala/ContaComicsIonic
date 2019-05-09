@@ -1,13 +1,12 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
+import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import { CollectionService } from "../services/collection.service";
 import { ICCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray } from "rxjs/operators";
-
 import * as lodash from "lodash";
 
 @Component({
@@ -23,10 +22,11 @@ export class ImporterPage {
   progress = 0;
 
   constructor(
+    private ref: ChangeDetectorRef,
     private db: CollectionService,
     private alertController: AlertController,
     private fileController: File,
-    private ref: ChangeDetectorRef
+    private dialogs: Dialogs,
   ) { }
 
   updateOption($event) {
@@ -68,23 +68,47 @@ export class ImporterPage {
     }
   }
 
-  async clearRecords() {
-    const alert = await this.alertController.create({
-      header: "Are you sure?",
-      subHeader: "This action cannot be undone",
-      buttons: [
-        {
-          text: "Clear database",
-          cssClass: "secondary",
-          handler: () => this.clearData().subscribe(() => this.importEnding("The database has been cleared"))
-        },
-        {
-          text: "Cancel",
-          role: "cancel"
-        }]
-    });
+  clearRecords() {
+    const header = "Are you sure?";
+    const subHeader = "This action cannot be undone";
+    const buttons = ["Clear database", "Cancel"];
+    const callback = () => this.clearData().subscribe(() => this.importEnding("The database has been cleared"));
 
-    await alert.present();
+    const alternativeDialog = async () => {
+      const alert = await this.alertController.create({
+        header,
+        subHeader,
+        buttons: [
+          {
+            text: buttons[0],
+            cssClass: "secondary",
+            handler: () => callback()
+          },
+          {
+            text: buttons[1],
+            role: "cancel"
+          }]
+      });
+
+      await alert.present();
+    };
+
+    try {
+      Rx.from(this.dialogs.confirm(subHeader, header, buttons))
+        .subscribe(
+          option => {
+            if (option === 1) {
+              callback();
+            }
+          },
+          e => {
+            console.log("Error displaying dialog", e);
+            alternativeDialog();
+          }
+        );
+    } catch (e) {
+      alternativeDialog();
+    }
   }
 
   private clearData(): Rx.Observable<boolean> {

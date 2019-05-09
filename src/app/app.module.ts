@@ -5,6 +5,7 @@ import { RouteReuseStrategy } from "@angular/router";
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -23,6 +24,7 @@ import { AddFormModule } from "./add-form/add-form.module";
   providers: [
     StatusBar,
     SplashScreen,
+    Dialogs,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [

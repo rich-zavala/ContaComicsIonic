@@ -2,11 +2,13 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController, AlertController, ModalController, IonInput } from "@ionic/angular";
 import { Vibration } from "@ionic-native/vibration/ngx";
+import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
 import { DATE_FORMAT } from "src/constants/formats";
 
+import * as Rx from "rxjs";
 import * as lodash from "lodash";
 import * as moment from "moment";
 
@@ -30,7 +32,8 @@ export class AddFormComponent implements OnInit {
     private modalCtrl: ModalController,
     private toastController: ToastController,
     private alertController: AlertController,
-    private vibration: Vibration
+    private vibration: Vibration,
+    private dialogs: Dialogs
   ) {
     this.initForm();
     db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
@@ -96,7 +99,7 @@ export class AddFormComponent implements OnInit {
       .subscribe(
         res => {
           if (res.duplicate) {
-            this.errorToast(res.record);
+            this.showWarnDialog(res.record);
           } else {
             this.initForm();
             this.successToast();
@@ -114,26 +117,46 @@ export class AddFormComponent implements OnInit {
     toast.present();
   }
 
-  async errorToast(cc: CCRecord) {
+  showWarnDialog(cc: CCRecord) {
     this.vibration.vibrate(700);
 
-    const alert = await this.alertController.create({
-      header: "Warning!",
-      subHeader: "This comic is in the catalog",
-      message: `<b>${cc.title} #${cc.volumen}</b>
-      <div class="ion-margin-top">
-        <small>Variant:</small>
-        <div>${(lodash.isEmpty(cc.variant) ? "No variant" : cc.variant)}</div>
-      </div>
-      <div class="ion-margin-top">
-        <small>Date registered:</small>
-        <div>${cc.detailDates.registry}</div>
-      </div>
-      <div class="ion-margin-top">Be careful about purchasing this comic as it may be part of your collection already</div>`,
-      buttons: ["OK"]
-    });
+    const header = "Warning!";
+    const variant = cc.variant.length > 0 ? `Variant:\n${cc.variant}` : "";
+    const nativeMessage = `${cc.title} #${cc.volumen}\n${variant}
+Date registered:\n${cc.detailDates.registry}\n\nBe careful about purchasing this comic as it may be part of your collection already`;
+    const alternativeDialog = async () => {
+      let altVariant = "";
+      if (cc.variant.length > 0) {
+        altVariant = `<div class="ion-margin-top">
+                        <small>Variant:</small>
+                        <div>${(lodash.isEmpty(cc.variant) ? "No variant" : cc.variant)}</div>
+                      </div>`;
+      }
+      const alert = await this.alertController.create({
+        header,
+        subHeader: "This comic is in the catalog",
+        message: `<b>${cc.title} #${cc.volumen}</b>
+                  {altVariant}
+                  <div class="ion-margin-top">
+                    <small>Date registered:</small>
+                    <div>${cc.detailDates.registry}</div>
+                  </div>
+                  <div class="ion-margin-top">Be careful about purchasing this comic as it may be part of your collection already</div>`,
+        buttons: ["OK"]
+      });
 
-    await alert.present();
+      await alert.present();
+    };
+
+    try {
+      Rx.from(this.dialogs.alert(nativeMessage, header))
+        .subscribe(
+          () => { },
+          () => alternativeDialog()
+        );
+    } catch (e) {
+      alternativeDialog();
+    }
   }
 
   close() {
