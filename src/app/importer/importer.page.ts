@@ -20,6 +20,7 @@ export class ImporterPage {
   filePath: string;
   working = false;
   importOutput = "";
+  progress = 0;
 
   constructor(
     private db: CollectionService,
@@ -49,6 +50,7 @@ export class ImporterPage {
   }
 
   importData() {
+    this.progress = 0;
     this.working = true;
     if (this.option === 2) {
       this.clearData().subscribe(
@@ -98,13 +100,19 @@ export class ImporterPage {
         data => {
           try {
             let records: ICCRecord[] = JSON.parse(data);
-
             const importRecords = () => {
+              let insCounter = 0;
               Rx.concat(...records.map(r => Rx.from(this.db.insert(r))))
-                .pipe(toArray())
                 .subscribe(
-                  res => this.importEnding(`${res.length} new comics!`),
-                  x => console.warn(x)
+                  () => {
+                    insCounter++;
+                    this.progress = insCounter / records.length;
+
+                    if (insCounter === records.length) {
+                      this.importEnding(`${insCounter} new comics!`);
+                    }
+                  },
+                  () => this.importErr()
                 );
             };
 

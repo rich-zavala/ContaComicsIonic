@@ -44,18 +44,22 @@
         <ion-icon slot="end" name="download"></ion-icon>
       </ion-button>
     </div>
+
+
+    <div *ngIf="working" class="flex fcol fvertical worker">
+      <ion-spinner></ion-spinner>
+      <ion-progress-bar color="tertiary" [value]="progress"></ion-progress-bar>
+    </div>
   </div>
+
 
   <ion-text color="secondary" class="flex fcenter" *ngIf="importOutput.length > 0">{{importOutput}}</ion-text>
 
-  <div *ngIf="working" class="flex fcol fvertical worker">
-    <ion-spinner></ion-spinner>
-  </div>
 
 </ion-content>
 
 <ion-footer slot="end" class="ion-padding">
-  <ion-button size="small" color="danger" expand="block" (click)="clearRecords()">
+  <ion-button size="small" color="danger" expand="block" (click)="clearRecords()" [disabled]=" working">
     Clean all the database
     <ion-icon slot="end" name="nuclear"></ion-icon>
   </ion-button>
