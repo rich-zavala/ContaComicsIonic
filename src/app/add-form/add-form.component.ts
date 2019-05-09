@@ -16,12 +16,13 @@ import * as moment from "moment";
 })
 export class AddFormComponent implements OnInit {
   @ViewChild("title") titleField: IonInput;
+  @ViewChild("volumen") volumenField: IonInput;
 
   ccRecordForm: FormGroup;
   titles: string[] = [];
 
   filteredTitles: string[] = [];
-  filteredTitleSelected = false;
+  showAutocomplete = false;
 
   constructor(
     private db: CollectionService,
@@ -35,21 +36,6 @@ export class AddFormComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => this.titleField.setFocus(), 500);
-
-    this.ccRecordForm.controls.title.valueChanges
-      .subscribe(
-        value => {
-          if (value) {
-            this.filteredTitleSelected = false;
-            if (value.length < 3) { // Three characters minimum
-              this.filteredTitles = [];
-            } else {
-              const filterValue = value.toLowerCase();
-              this.filteredTitles = this.titles.filter(option => option.toLowerCase().includes(filterValue));
-            }
-          }
-        }
-      );
   }
 
   private initForm() {
@@ -61,6 +47,22 @@ export class AddFormComponent implements OnInit {
       checked: new FormControl(false),
       publishDate: new FormControl(moment().format(DATE_FORMAT), Validators.required)
     });
+
+    this.ccRecordForm.controls.title.valueChanges
+      .subscribe(
+        value => {
+          if (value) {
+            if (value.length < 3) { // Three characters minimum
+              this.filteredTitles = [];
+            } else {
+              const filterValue = value.toLowerCase();
+              this.filteredTitles = this.titles.filter(option => option.toLowerCase().includes(filterValue));
+            }
+
+            this.showAutocomplete = this.filteredTitles.length > 0;
+          }
+        }
+      );
   }
 
   updateTitle() {
@@ -68,17 +70,26 @@ export class AddFormComponent implements OnInit {
     if (value) {
       this.ccRecordForm.controls.title.setValue(value.toUpperCase());
     }
-
-    setTimeout(() => this.filteredTitleSelected = true);
   }
 
   private selectTitle(option: string) {
     this.ccRecordForm.controls.title.setValue(option);
     this.ccRecordForm.controls.title.updateValueAndValidity();
-    this.filteredTitleSelected = true;
+    this.hideAutocomplete();
+    this.volumenField.setFocus();
+  }
+
+  private hideAutocomplete() {
+    this.showAutocomplete = false;
   }
 
   save() {
+    for (const i in this.ccRecordForm.value) {
+      if (typeof this.ccRecordForm.value[i] === "string") {
+        this.ccRecordForm.value[i] = this.ccRecordForm.value[i].trim();
+      }
+    }
+
     this.db.insert(this.ccRecordForm.value)
       .subscribe(
         res => {

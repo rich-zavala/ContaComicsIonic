@@ -1,10 +1,30 @@
 .autocompleteOptions {
-    margin: 0px 16px;
+    margin-top: -42px;
     padding: 2px 4px;
-    width: calc(100% - 32px);
-    max-height: 26vh;
+    width: calc(100% - 94px);
     position: absolute;
-    box-shadow: 0px 2px 4px #0000004f;
-    overflow: auto;
+    right: 0;
     z-index: 10;
+
+    .close-container {
+        background: var(--ion-color-dark);
+        float: right;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .titles-container {
+        padding: 4px;
+        background: var(--ion-color-dark);
+        border-radius: 4px 0 4px 4px;
+        clear: both;
+
+        .titles-scroll {
+            max-height: 168px;
+            overflow: auto;
+
+            ion-button {
+                white-space: normal;
+            }
+        }
+    }
 }

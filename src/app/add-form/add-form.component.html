@@ -13,18 +13,28 @@
 
 <ion-content>
   <form [formGroup]="ccRecordForm">
+
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()" autofocus></ion-input>
+      <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()"></ion-input>
     </ion-item>
 
-    <ion-list class="autocompleteOptions" *ngIf="!filteredTitleSelected && filteredTitles.length > 0">
-      <ion-button *ngFor="let title of filteredTitles" expand="full" color="tertiary" (click)="selectTitle(title)">{{title}}</ion-button>
-    </ion-list>
+    <div class="autocompleteOptions" *ngIf="showAutocomplete">
+      <div class="close-container">
+        <ion-button class="close" color="light" fill="clear" size="small" (click)="hideAutocomplete()" no-margin>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="titles-container">
+        <div class="titles-scroll">
+          <ion-button *ngFor="let title of filteredTitles" expand="full" color="tertiary" (click)="selectTitle(title)">{{title}}</ion-button>
+        </div>
+      </div>
+    </div>
 
     <ion-item>
       <ion-label position="floating">Volumen</ion-label>
-      <ion-input type="number" formControlName="volumen"></ion-input>
+      <ion-input #volumen type="number" formControlName="volumen" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
