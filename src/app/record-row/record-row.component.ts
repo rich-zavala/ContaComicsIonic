@@ -12,7 +12,6 @@ import { CollectionService } from "../services/collection.service";
 })
 export class RecordRowComponent extends RecordHandlerComponent {
   @Input() odd: any;
-
   updatingCheckFromDetails = false;
 
   constructor(
@@ -35,11 +34,13 @@ export class RecordRowComponent extends RecordHandlerComponent {
     );
   }
 
-  async showDetails() {
-    const modal = await this.modalController.create({
-      component: RecordDetailsComponent,
-      componentProps: { cc: this.cc }
-    });
-    return await modal.present();
+  async showDetails($event) {
+    if ($event.target.localName !== "ion-checkbox") {
+      const modal = await this.modalController.create({
+        component: RecordDetailsComponent,
+        componentProps: { cc: this.cc }
+      });
+      return await modal.present();
+    }
   }
 }

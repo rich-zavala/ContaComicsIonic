@@ -1,23 +1,11 @@
-<div class="cc-row flex" [ngClass]="{ odd: odd }">
-  <div class="info flex fvertical">
-    <div>
-      <ion-checkbox color="tertiary" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
-    </div>
-    <div class="title flex">
-      <div class="ion-text-capitalize">{{cc.title}}</div>
-      <div *ngIf="cc.variant">{{cc.variant}}</div>
-    </div>
-    <div class="volumen">
-      #{{cc.volumen}}
-    </div>
-    <div class="price">
-      {{cc.priceCurrency()}}
-    </div>
+<div class="cc-row flex fvertical" [ngClass]="{ odd: odd }" (click)="showDetails($event)">
+  <div>
+    <ion-checkbox color="tertiary" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
   </div>
-  <div class="ion-activatable" ion-activatable>
-    <ion-ripple-effect></ion-ripple-effect>
-    <div class="more flex fcenter fvertical" (click)="showDetails()">
-      <ion-icon name="more"></ion-icon>
-    </div>
+  <div class="title flex">
+    <div class="ion-text-capitalize">{{cc.title}}</div>
+    <div *ngIf="cc.variant">{{cc.variant}}</div>
   </div>
+  <div class="volumen">#{{cc.volumen}}</div>
+  <div class="price">{{cc.priceCurrency()}}</div>
 </div>

@@ -1,37 +1,27 @@
 .cc-row {
     line-height: 1;
+    padding: 1vh 0 1vh 1vh;
+    flex: 1;
 
     &.odd {
         background: var(--ion-color-odd);
     }
 
-    .info {
-        padding: 1vh 0 1vh 1vh;
-        flex: 1;
-
-        &>div {
-            margin-right: 10px;
-        }
-
-        .title {
-            flex: 1;
-        }
-
-        .volumen {
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .price {
-            margin: 0;
-            min-width: 36px;
-            text-align: right;
-        }
+    &>div {
+        margin-right: 10px;
     }
 
-    .more {
-        width: 1.5rem;
-        height: 100%;
-        font-size: 1.3rem;
+    .title {
+        flex: 1;
+    }
+
+    .volumen {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .price {
+        min-width: 36px;
+        text-align: right;
     }
 }
