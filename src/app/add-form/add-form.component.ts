@@ -12,7 +12,7 @@ import * as moment from "moment";
 @Component({
   selector: "app-add-form",
   templateUrl: "./add-form.component.html",
-  styleUrls: ["./add-form.component.scss"],
+  styleUrls: ["./add-form.component.scss"]
 })
 export class AddFormComponent implements OnInit {
   @ViewChild("title") titleField: IonInput;
@@ -63,7 +63,7 @@ export class AddFormComponent implements OnInit {
     });
   }
 
-  private updateTitle() {
+  updateTitle() {
     const value = this.ccRecordForm.controls.title.value;
     if (value) {
       this.ccRecordForm.controls.title.setValue(value.toUpperCase());
@@ -78,7 +78,7 @@ export class AddFormComponent implements OnInit {
     this.filteredTitleSelected = true;
   }
 
-  private save() {
+  save() {
     this.db.insert(this.ccRecordForm.value)
       .subscribe(
         res => {
@@ -121,7 +121,7 @@ export class AddFormComponent implements OnInit {
     await alert.present();
   }
 
-  private close() {
+  close() {
     this.modalCtrl.getTop();
     this.modalCtrl.dismiss();
   }

@@ -18,7 +18,7 @@ interface ListState {
 @Component({
   selector: "app-series-listing",
   templateUrl: "./series-listing.page.html",
-  styleUrls: ["./series-listing.page.scss"],
+  styleUrls: ["./series-listing.page.scss"]
 })
 export class SeriesListingPage implements OnInit {
   series: ICCSerie[] = [];
@@ -68,7 +68,7 @@ export class SeriesListingPage implements OnInit {
     }
   }
 
-  private filterBar($event) {
+  filterBar($event) {
     this.filterValue = $event.detail.value.toLowerCase();
     this.filter();
   }

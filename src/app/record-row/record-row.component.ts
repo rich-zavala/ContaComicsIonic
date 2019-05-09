@@ -13,7 +13,7 @@ import { CollectionService } from "../services/collection.service";
 export class RecordRowComponent extends RecordHandlerComponent {
   @Input() odd: any;
 
-  private updatingCheckFromDetails = false;
+  updatingCheckFromDetails = false;
 
   constructor(
     public db: CollectionService,

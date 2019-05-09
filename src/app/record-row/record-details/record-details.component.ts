@@ -7,7 +7,7 @@ import { CollectionService } from "src/app/services/collection.service";
 @Component({
   selector: "app-record-details",
   templateUrl: "./record-details.component.html",
-  styleUrls: ["./record-details.component.scss"],
+  styleUrls: ["./record-details.component.scss"]
 })
 export class RecordDetailsComponent extends RecordHandlerComponent {
   public emmitUpdates = true;

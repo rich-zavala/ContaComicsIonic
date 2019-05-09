@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { RecordRowComponent } from "./record-row.component";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
+import { RecordHandlerComponent } from "./record-handler.component";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { RecordDetailsComponent } from "./record-details/record-details.componen
     ],
     declarations: [
         RecordRowComponent,
-        RecordDetailsComponent
+        RecordDetailsComponent,
+        RecordHandlerComponent
     ],
     exports: [
         RecordRowComponent

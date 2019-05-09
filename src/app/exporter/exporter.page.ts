@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ChangeDetectorRef } from "@angular/core";
 import { ToastController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 
@@ -16,11 +16,11 @@ import * as moment from "moment";
 @Component({
   selector: "app-exporter",
   templateUrl: "./exporter.page.html",
-  styleUrls: ["./exporter.page.scss"],
+  styleUrls: ["./exporter.page.scss"]
 })
-export class ExporterPage implements OnInit {
-  private filePath: string;
-  private working = false;
+export class ExporterPage {
+  filePath: string;
+  working = false;
 
   constructor(
     private db: CollectionService,
@@ -29,10 +29,7 @@ export class ExporterPage implements OnInit {
     private ref: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-  }
-
-  private chooseDestination() {
+  chooseDestination() {
     (window as any).OurCodeWorld.Filebrowser.folderPicker.single({
       success: data => {
         if (!data.length) {
@@ -47,7 +44,7 @@ export class ExporterPage implements OnInit {
     });
   }
 
-  private export() {
+  export() {
     this.working = true;
 
     this.db.getSeries().subscribe(

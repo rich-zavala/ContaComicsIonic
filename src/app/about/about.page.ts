@@ -1,19 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-about",
   templateUrl: "./about.page.html",
-  styleUrls: ["./about.page.scss"],
+  styleUrls: ["./about.page.scss"]
 })
-export class AboutPage implements OnInit {
-  private expanded = false;
+export class AboutPage {
+  expanded = false;
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
-  private expandTerms() {
+  expandTerms() {
     this.expanded = !this.expanded;
   }
 }

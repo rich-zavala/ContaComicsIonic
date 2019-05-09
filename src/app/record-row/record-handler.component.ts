@@ -2,7 +2,11 @@ import { Component, OnInit, Input } from "@angular/core";
 import { CCRecord } from "src/models";
 import { CollectionService } from "src/app/services/collection.service";
 
-@Component({})
+
+@Component({
+    selector: "app-record-handler",
+    template: ""
+})
 export class RecordHandlerComponent implements OnInit {
     @Input() cc: CCRecord;
     public checkState = { checked: false };

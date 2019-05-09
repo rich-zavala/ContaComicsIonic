@@ -18,9 +18,9 @@ export class DateRecordsComponent implements OnInit, OnChanges {
 
   displayRecords: ICCRecord[] = [];
 
-  private monthStr: string;
-  private dayStr: string;
-  private totalStr: string;
+  monthStr: string;
+  dayStr: string;
+  totalStr: string;
 
   constructor() {
   }

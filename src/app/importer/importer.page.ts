@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ChangeDetectorRef } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 
@@ -13,13 +13,13 @@ import * as lodash from "lodash";
 @Component({
   selector: "app-importer",
   templateUrl: "./importer.page.html",
-  styleUrls: ["./importer.page.scss"],
+  styleUrls: ["./importer.page.scss"]
 })
-export class ImporterPage implements OnInit {
-  private option = 0;
-  private filePath: string;
-  private working = false;
-  private importOutput = "";
+export class ImporterPage {
+  option = 0;
+  filePath: string;
+  working = false;
+  importOutput = "";
 
   constructor(
     private db: CollectionService,
@@ -28,14 +28,11 @@ export class ImporterPage implements OnInit {
     private ref: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-  }
-
-  private updateOption($event) {
+  updateOption($event) {
     this.option = parseInt($event.detail.value, 10);
   }
 
-  private chooseFile() {
+  chooseFile() {
     (window as any).OurCodeWorld.Filebrowser.filePicker.single({
       success: data => {
         if (!data.length) {
@@ -51,7 +48,7 @@ export class ImporterPage implements OnInit {
     });
   }
 
-  private importData() {
+  importData() {
     this.working = true;
     if (this.option === 2) {
       this.clearData().subscribe(

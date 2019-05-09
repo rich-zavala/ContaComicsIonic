@@ -18,7 +18,7 @@ interface TDatesCollection {
 @Component({
   selector: "app-dates-listing",
   templateUrl: "./dates-listing.page.html",
-  styleUrls: ["./dates-listing.page.scss"],
+  styleUrls: ["./dates-listing.page.scss"]
 })
 export class DatesListingPage implements OnInit {
   @ViewChildren(DateRecordsComponent) dateChildren: QueryList<DateRecordsComponent>;
@@ -146,12 +146,12 @@ export class DatesListingPage implements OnInit {
     return await modal.present();
   }
 
-  private showFilter() {
+  showFilter() {
     this.filterChild.open();
     this.filterChild.value = this.filterValue.toString();
   }
 
-  private filterRecords($event: CustomEvent) {
+  filterRecords($event: CustomEvent) {
     this.filterValue = parseInt($event.detail.value, 10);
   }
 }
