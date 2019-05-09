@@ -119,20 +119,28 @@ export class DatesListingPage implements OnInit {
     this.db.getYearDates(this.selectedYear.year)
       .subscribe(days => {
         this.selectedYearDates = days;
+        const dateRecordsDbQueries: Rx.Observable<null>[] = [];
         days.forEach(
-          day => {
-            Rx.concat(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
-              .pipe(toArray())
-              .subscribe(r => {
-                this.records[day.date] = r;
-                this.loadingProgress = lodash.size(this.records) / days.length;
+          day => dateRecordsDbQueries.push(
+            new Rx.Observable(observer => {
+              Rx.concat(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
+                .pipe(toArray())
+                .subscribe(r => {
+                  this.records[day.date] = r;
+                  this.loadingProgress = lodash.size(this.records) / days.length;
 
-                if (this.loadingProgress === 1) {
-                  this.working = false;
-                }
-              });
-          });
+                  if (this.loadingProgress === 1) {
+                    this.working = false;
+                  }
+
+                  observer.complete();
+                });
+            })
+          )
+        );
+        Rx.concat(...dateRecordsDbQueries).subscribe();
       });
+
   }
 
   private isSelected(year: number) {
