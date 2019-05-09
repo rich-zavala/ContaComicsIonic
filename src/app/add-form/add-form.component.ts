@@ -123,7 +123,7 @@ export class AddFormComponent implements OnInit {
       </div>
       <div class="ion-margin-top">
         <small>Date registered:</small>
-        <div>${cc.getPublishDate()}</div>
+        <div>${cc.detailDates.registry}</div>
       </div>
       <div class="ion-margin-top">Be careful about purchasing this comic as it may be part of your collection already</div>`,
       buttons: ["OK"]
