@@ -21,6 +21,7 @@ interface ListState {
   styleUrls: ["./series-listing.page.scss"]
 })
 export class SeriesListingPage implements OnInit {
+  working = true;
   series: ICCSerie[] = [];
   seriesFiltered: ICCSerie[] = [];
   states: { [key: string]: ListState } = {};
@@ -66,6 +67,8 @@ export class SeriesListingPage implements OnInit {
     } else {
       this.seriesFiltered = this.series.filter(s => s.name.toLocaleLowerCase().includes(this.filterValue));
     }
+
+    this.working = false;
   }
 
   filterBar($event) {
