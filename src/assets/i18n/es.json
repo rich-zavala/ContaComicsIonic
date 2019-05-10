@@ -84,5 +84,21 @@
         "title": "Acerca de ContaComics",
         "createdBy": "Creado por",
         "terms": "Términos y Condiciones"
+    },
+    "details": {
+        "variant": "Variante",
+        "publishedDate": "Fecha de publicación",
+        "registryDate": "Fecha de registro",
+        "owned": "Adquirido en",
+        "notOwned": "No adquirido... aún",
+        "delete": "Eliminar este registro",
+        "dialog": {
+            "header": "¿Estás seguro?",
+            "subHeader": "Esta acción no se puede deshacer",
+            "btns": [
+                "Eliminar este registro",
+                "Cancelar"
+            ]
+        }
     }
 }

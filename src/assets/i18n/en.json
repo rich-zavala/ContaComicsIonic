@@ -20,7 +20,7 @@
             "price": "Price",
             "variant": "Variant",
             "check": "Is this in your shelf?",
-            "date": "Publis date"
+            "date": "Publish date"
         },
         "dialog": {
             "success": "Comic is saved",
@@ -84,5 +84,21 @@
         "title": "About ContaComics",
         "createdBy": "Created by",
         "terms": "Terms and Conditions"
+    },
+    "details": {
+        "variant": "Variant",
+        "publishedDate": "Published date",
+        "registryDate": "Registry date",
+        "owned": "In your shelf since",
+        "notOwned": "Not owned... yet",
+        "delete": "Delete this record",
+        "dialog": {
+            "header": "Are you sure?",
+            "subHeader": "This action cannot be undone",
+            "btns": [
+                "Delete this record",
+                "Cancel"
+            ]
+        }
     }
 }

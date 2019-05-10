@@ -6,6 +6,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import * as Rx from "rxjs";
+import * as moment from "moment";
 
 @Component({
   selector: "app-root",
@@ -41,8 +42,10 @@ export class AppComponent {
 
     if (this.translate.getBrowserLang() !== undefined) {
       UseResolver = this.translate.use(this.translate.getBrowserLang());
+      moment.locale(this.translate.getBrowserLang());
     } else {
-      UseResolver = this.translate.use("en");
+      UseResolver = this.translate.use("es");
+      moment.locale("es");
     }
 
     return UseResolver;
