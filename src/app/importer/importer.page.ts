@@ -3,7 +3,7 @@ import { AlertController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 
 import { CollectionService } from "../services/collection.service";
 import { ICCRecord } from "src/models";
@@ -166,7 +166,7 @@ export class ImporterPage {
   }
 
   private importErr() {
-    this.importEnding("Error: File is not supported");
+    this.importEnding(this.dialogStr.errorMsg);
   }
 
   private importEnding(message: string) {
