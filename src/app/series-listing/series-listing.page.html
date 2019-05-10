@@ -14,22 +14,23 @@
 
   <ion-item-group>
     <ng-container *ngFor="let serie of seriesFiltered">
-      <ion-item-divider>
-        <ion-label class="flex fvertical" (click)="expandToggle(serie)" [ngClass]="{ expanded: states[serie.name].expanded }">
+      <ion-item-divider [ngClass]="{ expanded: states[serie.name].expanded }" no-padding>
+        <ion-label class="flex fvertical ion-activatable" (click)="expandToggle(serie)" no-margin ion-activatable>
           <div class="serie-name">{{serie.name}}</div>
           <div class="serie-details">
             <div class="count">{{serie.records.length}} records</div>
             <div class="total">{{dynCurrency(serie.total)}}</div>
           </div>
+          <ion-ripple-effect></ion-ripple-effect>
         </ion-label>
 
         <div class="card-container" *ngIf="states[serie.name].expanded">
 
-          <ion-card color="dark">
-            <div *ngIf="states[serie.name].records.length === 0" class="flex fcenter">
-              <ion-spinner></ion-spinner>
-            </div>
+          <div *ngIf="states[serie.name].records.length === 0" class="flex fcenter">
+            <ion-spinner></ion-spinner>
+          </div>
 
+          <ion-card *ngIf="states[serie.name].records.length > 0" color="dark" no-margin>
             <app-record-row *ngFor="let cc of states[serie.name].records; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
           </ion-card>
         </div>

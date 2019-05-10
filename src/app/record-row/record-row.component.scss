@@ -1,6 +1,5 @@
 .cc-row {
     line-height: 1;
-    // padding: 1vh 0 1vh 1vh;
     flex: 1;
     position: relative;
 
@@ -9,8 +8,11 @@
     }
 
     ion-checkbox {
-        --size: 2.2em;
-        margin: 2px 0px 0 2px;
+        --size: 1.6em;
+    }
+
+    label {
+        padding: 6px 8px 6px 6px;
     }
 
     &>div {
@@ -18,7 +20,13 @@
     }
 
     .title {
+        padding: 2px 0;
         flex: 1;
+
+        .variant {
+            color: var(--ion-color-medium);
+            font-style: italic;
+        }
     }
 
     .volumen {

@@ -52,9 +52,10 @@ ion-alert {
 }
 
 .logo {
-    height: 86px;
+    height: 56px;
+    margin: 12px 0 6px 0;
     background-image: url("../src/assets/icon/icono.png");
-    background-size: contain;
+    background-size: auto;
     background-repeat: no-repeat;
     background-position: center center;
 }
