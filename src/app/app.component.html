@@ -3,28 +3,40 @@
     <ion-menu>
       <ion-header>
         <ion-toolbar class="flex fcol fcenter">
-          <!-- <ion-title>Conta Comics</ion-title> -->
           <div class="logo"></div>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-item-divider>
-          <ion-label>Collection listing</ion-label>
-        </ion-item-divider>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon color="light" slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>{{p.title}}</ion-label>
+          <ion-item-divider>
+            <ion-label>{{ 'menu.groupTitle' | translate }}</ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/dates-listing']">
+              <ion-icon color="light" slot="start" name="calendar"></ion-icon>
+              <ion-label>{{ 'menu.groupYear' | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/series-listing']">
+              <ion-icon color="light" slot="start" name="list"></ion-icon>
+              <ion-label>{{ 'menu.groupSeries' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
           <ion-item-divider>
-            <ion-label>Data management</ion-label>
+            <ion-label>{{ 'menu.dataTitle' | translate }}</ion-label>
           </ion-item-divider>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of dataPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon color="light" slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>{{p.title}}</ion-label>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/importer']">
+              <ion-icon color="light" slot="start" name="download"></ion-icon>
+              <ion-label>{{ 'menu.dataImport' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/exporter']">
+              <ion-icon color="light" slot="start" name="save"></ion-icon>
+              <ion-label>{{ 'menu.dataExport' | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
@@ -34,7 +46,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item [routerDirection]="'root'" [routerLink]="['/about']">
               <ion-icon color="light" slot="start" name="information-circle-outline"></ion-icon>
-              <ion-label>About <b>ContaComics</b></ion-label>
+              <ion-label>{{ 'menu.about' | translate }} <b>ContaComics</b></ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

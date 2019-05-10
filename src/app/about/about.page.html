@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      About ContaComics
+      {{ 'about.title' | translate }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,7 +18,7 @@
       <ion-text class="flex fcol fvertical">
         <h1>ContaComics v2.0</h1>
         <div class="marginBottom20"></div>
-        <div> Creado por <b>Ricardo Zavala</b></div>
+        <div>{{ 'about.createdBy' | translate }} <b>Ricardo Zavala</b></div>
         <div><a href="mailto:righ.zavalac@gmail.com">rich.zavalac@gmail.com</a></div>
       </ion-text>
     </ion-card-content>
@@ -26,7 +26,7 @@
   <ion-card color="dark">
     <ion-card-header (click)="expandTerms()" no-padding>
       <ion-item color="dark" no-margin>
-        Términos y condiciones (Spanish only)
+        {{ 'about.terms' | translate }}
         <ion-icon *ngIf="!expanded" slot="end" name="arrow-dropdown"></ion-icon>
         <ion-icon *ngIf="expanded" slot="end" name="arrow-dropup"></ion-icon>
       </ion-item>

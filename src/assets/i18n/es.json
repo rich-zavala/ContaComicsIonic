@@ -1,0 +1,12 @@
+{
+    "about": {
+        "title": "Acerca de ContaComics",
+        "createdBy": "Creado por",
+        "terms": "Términos y condiciones (Spanish only)"
+    },
+    "export": {
+        "title": "Export your collection data",
+        "subtitle": "La información de tu colección <b>EXISTE ÚNICAMENTE EN ESTE DISPOSITIVO</b> y no es compartida con ninguna otra entidad, por lo que es importante generar constantemente un archivo de reespaldo el cual puede ser importado en cualquier momento en este u otro dispositivo.",
+        "x": 1
+    }
+}

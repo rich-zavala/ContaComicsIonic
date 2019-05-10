@@ -3,27 +3,25 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Import a collection data file
-    </ion-title>
+    <ion-title>{{ 'import.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-radio-group (ionChange)="updateOption($event)">
-      <ion-list-header>Choose an import mode option</ion-list-header>
+      <ion-list-header>{{ 'import.subtitle' | translate }}</ion-list-header>
       <ion-item>
         <ion-radio color="tertiary" slot="start" value="0" [checked]="option === 0" [disabled]="working"></ion-radio>
-        Only add those that are not already in
+        {{ 'import.options.0' | translate }}
       </ion-item>
       <ion-item>
         <ion-radio color="tertiary" slot="start" value="1" [checked]="option === 1" [disabled]="working"></ion-radio>
-        Import records replacing duplicates
+        {{ 'import.options.1' | translate }}
       </ion-item>
       <ion-item>
         <ion-radio color="tertiary" slot="start" value="2" [checked]="option === 2" [disabled]="working"></ion-radio>
-        Clean current records and import
+        {{ 'import.options.2' | translate }}
       </ion-item>
     </ion-radio-group>
   </ion-list>
@@ -31,20 +29,17 @@
   <div class="ion-padding">
     <div class="marginBottom20">
       <ion-button color="medium" expand="block" [disabled]="working" (click)="chooseFile()">
-        Choose
-        <ng-container *ngIf="!filePath"> a </ng-container>
-        <ng-container *ngIf="filePath">another</ng-container>
-        backup file
+        <ng-container *ngIf="!filePath">{{ 'import.btns.choose0' | translate }}</ng-container>
+        <ng-container *ngIf="filePath">{{ 'import.btns.choose1' | translate }}</ng-container>
       </ion-button>
     </div>
 
     <div class="marginBottom20">
       <ion-button color="tertiary" expand="block" (click)="importData()" [disabled]="!filePath || working">
-        Import data
+        {{ 'import.btns.import' | translate }}
         <ion-icon slot="end" name="download"></ion-icon>
       </ion-button>
     </div>
-
 
     <div *ngIf="working" class="flex fcol fvertical worker">
       <ion-spinner></ion-spinner>
@@ -52,15 +47,12 @@
     </div>
   </div>
 
-
   <ion-text color="secondary" class="flex fcenter" *ngIf="importOutput.length > 0">{{importOutput}}</ion-text>
-
-
 </ion-content>
 
 <ion-footer slot="end" class="ion-padding">
   <ion-button size="small" color="danger" expand="block" (click)="clearRecords()" [disabled]=" working">
-    Clean all the database
+    {{ 'import.btns.clean' | translate }}
     <ion-icon slot="end" name="nuclear"></ion-icon>
   </ion-button>
 </ion-footer>

@@ -5,6 +5,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { File } from "@ionic-native/file/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
+import { TranslateModule } from "@ngx-translate/core";
+
 import { IonicModule } from "@ionic/angular";
 
 import { ImporterPage } from "./importer.page";
@@ -21,7 +23,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule
   ],
   declarations: [
     ImporterPage

@@ -1,6 +1,8 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { ToastController } from "@ionic/angular";
+
 import { File } from "@ionic-native/file/ngx";
+import { TranslateService } from "@ngx-translate/core";
 
 
 import { DATE_FORMAT } from "src/constants/formats";
@@ -22,12 +24,17 @@ export class ExporterPage {
   filePath: string;
   working = false;
 
+  private toastStr;
+
   constructor(
     private db: CollectionService,
     private fileController: File,
     private toastController: ToastController,
-    private ref: ChangeDetectorRef
-  ) { }
+    private ref: ChangeDetectorRef,
+    translate: TranslateService
+  ) {
+    translate.get("import.dialog").subscribe(val => this.toastStr = val);
+  }
 
   chooseDestination() {
     (window as any).OurCodeWorld.Filebrowser.folderPicker.single({
@@ -72,8 +79,8 @@ export class ExporterPage {
     const filename = `ContaComics-${moment().format(DATE_FORMAT)}.json`;
     Rx.from(this.fileController.writeFile(this.filePath, filename, data, { replace: true }))
       .subscribe(
-        () => this.showToast("Backup file have been created"),
-        () => this.showToast("Error: the backup was not created")
+        () => this.showToast(this.toastStr.successMsg),
+        () => this.showToast(this.toastStr.errorMsg)
       );
   }
 

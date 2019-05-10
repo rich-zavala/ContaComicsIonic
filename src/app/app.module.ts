@@ -1,6 +1,11 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
+import { HttpClientModule, HttpClient, } from "@angular/common/http";
+
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateService } from "@ngx-translate/core";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -11,6 +16,12 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AddFormModule } from "./add-form/add-form.module";
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+}
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,13 +30,24 @@ import { AddFormModule } from "./add-form/add-form.module";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    AddFormModule
+    AddFormModule,
+
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Dialogs,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+
+    TranslateService
   ],
   bootstrap: [
     AppComponent

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 import { Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -9,36 +10,11 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
   templateUrl: "app.component.html"
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: "Grouped by year",
-      url: "/dates-listing",
-      icon: "calendar"
-    },
-    {
-      title: "Grouped by serie",
-      url: "/series-listing",
-      icon: "list"
-    }
-  ];
-
-  public dataPages = [
-    {
-      title: "Import data",
-      url: "/importer",
-      icon: "download"
-    },
-    {
-      title: "Export data",
-      url: "/exporter",
-      icon: "save"
-    }
-  ];
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private translate: TranslateService
   ) {
     this.initializeApp();
   }
@@ -46,11 +22,22 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.splashScreen.hide();
+      this.initTranslate();
 
-      if (cordova.platformId === "android") {
+      if (typeof cordova !== "undefined" && cordova.platformId === "android") {
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString("#9a0031");
       }
     });
+  }
+
+  private initTranslate() {
+    this.translate.setDefaultLang("en");
+
+    // if (this.translate.getBrowserLang() !== undefined) {
+    //   this.translate.use(this.translate.getBrowserLang());
+    // } else {
+    //   this.translate.use("en");
+    // }
   }
 }

@@ -3,6 +3,8 @@ import { AlertController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { CollectionService } from "../services/collection.service";
 import { ICCRecord } from "src/models";
 
@@ -21,13 +23,18 @@ export class ImporterPage {
   importOutput = "";
   progress = 0;
 
+  private dialogStr;
+
   constructor(
     private ref: ChangeDetectorRef,
     private db: CollectionService,
     private alertController: AlertController,
     private fileController: File,
     private dialogs: Dialogs,
-  ) { }
+    translate: TranslateService
+  ) {
+    translate.get("import.dialog").subscribe(val => this.dialogStr = val);
+  }
 
   updateOption($event) {
     this.option = parseInt($event.detail.value, 10);
@@ -69,23 +76,19 @@ export class ImporterPage {
   }
 
   clearRecords() {
-    const header = "Are you sure?";
-    const subHeader = "This action cannot be undone";
-    const buttons = ["Clear database", "Cancel"];
-    const callback = () => this.clearData().subscribe(() => this.importEnding("The database has been cleared"));
-
+    const callback = () => this.clearData().subscribe(() => this.importEnding(this.dialogStr.cleared));
     const alternativeDialog = async () => {
       const alert = await this.alertController.create({
-        header,
-        subHeader,
+        header: this.dialogStr.header,
+        subHeader: this.dialogStr.subHeader,
         buttons: [
           {
-            text: buttons[0],
+            text: this.dialogStr.btns[0],
             cssClass: "secondary",
             handler: () => callback()
           },
           {
-            text: buttons[1],
+            text: this.dialogStr.btns[1],
             role: "cancel"
           }]
       });
@@ -94,7 +97,7 @@ export class ImporterPage {
     };
 
     try {
-      Rx.from(this.dialogs.confirm(subHeader, header, buttons))
+      Rx.from(this.dialogs.confirm(this.dialogStr.subHeader, this.dialogStr.header, this.dialogStr.btns))
         .subscribe(
           option => {
             if (option === 1) {
@@ -102,7 +105,7 @@ export class ImporterPage {
             }
           },
           e => {
-            console.log("Error displaying dialog", e);
+            console.log(this.dialogStr.fileError, e);
             alternativeDialog();
           }
         );
@@ -133,7 +136,7 @@ export class ImporterPage {
                     this.progress = insCounter / records.length;
 
                     if (insCounter === records.length) {
-                      this.importEnding(`${insCounter} new comics!`);
+                      this.importEnding(`${insCounter} ${this.dialogStr.newComics}!`);
                     }
                   },
                   () => this.importErr()
