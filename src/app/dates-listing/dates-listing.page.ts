@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
-import { IonInfiniteScroll, ModalController, PopoverController, IonSelect } from "@ionic/angular";
+import { ModalController, PopoverController, IonSelect } from "@ionic/angular";
 
 import { ICCYear, ICCDay, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray, delay } from "rxjs/operators";
+import { toArray } from "rxjs/operators";
 import * as lodash from "lodash";
 
 import { CollectionService } from "../services/collection.service";

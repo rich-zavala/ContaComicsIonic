@@ -1,15 +1,16 @@
 {
   "name": "CCIonic",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.2.0",
+  "author": "Ricardo Zavala",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "apk": "ionic cordova run android",
+    "android": "ionic cordova run android -l --address 192.168.1.110 --debug --device --verbose"
   },
   "private": true,
   "dependencies": {
