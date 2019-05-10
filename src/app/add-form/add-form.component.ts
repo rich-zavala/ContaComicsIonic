@@ -136,7 +136,7 @@ Date registered:\n${cc.detailDates.registry}\n\nBe careful about purchasing this
         header,
         subHeader: "This comic is in the catalog",
         message: `<b>${cc.title} #${cc.volumen}</b>
-                  {altVariant}
+                  ${altVariant}
                   <div class="ion-margin-top">
                     <small>Date registered:</small>
                     <div>${cc.detailDates.registry}</div>

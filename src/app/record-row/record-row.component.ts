@@ -35,8 +35,6 @@ export class RecordRowComponent extends RecordHandlerComponent {
   }
 
   async showDetails($event) {
-    console.log($event.target);
-
     if ($event.target.localName !== "ion-checkbox") {
       const modal = await this.modalController.create({
         component: RecordDetailsComponent,

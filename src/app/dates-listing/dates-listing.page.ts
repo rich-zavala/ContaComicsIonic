@@ -89,8 +89,8 @@ export class DatesListingPage implements OnInit {
           if (this.years.length > 0) {
             this.selectYear(lodash.first(this.years));
           } else {
-            this.selectedYearDates = [];
-            this.records = {};
+            this.selectedYear = undefined;
+            this.reset();
           }
           this.showEmpty = this.years.length === 0;
         } else if (deleteInfo.dayDeleted) {
@@ -185,6 +185,9 @@ export class DatesListingPage implements OnInit {
 
   showFilteredMessage() {
     this.showFilteredEmpty = false;
-    setTimeout(() => this.showFilteredEmpty = this.dateChildren.filter(dateRow => dateRow.displayDate).length === 0, 100);
+    setTimeout(
+      () => this.showFilteredEmpty = !this.showEmpty && this.dateChildren.filter(dateRow => dateRow.displayDate).length === 0,
+      100
+    );
   }
 }
