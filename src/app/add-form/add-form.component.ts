@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ToastController, AlertController, ModalController, IonInput } from "@ionic/angular";
+import { ToastController, AlertController, ModalController, IonInput, Platform } from "@ionic/angular";
 import { Vibration } from "@ionic-native/vibration/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
@@ -17,7 +17,7 @@ import * as moment from "moment";
   templateUrl: "./add-form.component.html",
   styleUrls: ["./add-form.component.scss"]
 })
-export class AddFormComponent implements OnInit {
+export class AddFormComponent implements OnInit, OnDestroy {
   @ViewChild("title") titleField: IonInput;
   @ViewChild("volumen") volumenField: IonInput;
 
@@ -27,20 +27,29 @@ export class AddFormComponent implements OnInit {
   filteredTitles: string[] = [];
   showAutocomplete = false;
 
+  private backSubs: Rx.Subscription;
+
   constructor(
     private db: CollectionService,
     private modalCtrl: ModalController,
     private toastController: ToastController,
     private alertController: AlertController,
     private vibration: Vibration,
-    private dialogs: Dialogs
+    private dialogs: Dialogs,
+    platform: Platform
   ) {
+    this.backSubs = platform.backButton.subscribe(() => this.close());
+
     this.initForm();
     db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
   }
 
   ngOnInit() {
     setTimeout(() => this.titleField.setFocus(), 500);
+  }
+
+  ngOnDestroy() {
+    this.backSubs.unsubscribe();
   }
 
   private initForm() {
