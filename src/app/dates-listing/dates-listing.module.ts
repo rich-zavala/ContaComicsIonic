@@ -4,6 +4,8 @@ import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { RouterModule } from "@angular/router";
 
+import { TranslateModule } from "@ngx-translate/core";
+
 import { RecordRowModule } from "../record-row/record-row.module";
 
 import { DatesListingPage } from "./dates-listing.page";
@@ -20,7 +22,8 @@ import { DateRecordsComponent } from "./date-records/date-records.component";
         path: "",
         component: DatesListingPage
       }
-    ])
+    ]),
+    TranslateModule
   ],
   declarations: [
     DatesListingPage,

@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 
+import { TranslateModule } from "@ngx-translate/core";
+
 import { IonicModule } from "@ionic/angular";
 
 import { RecordRowModule } from "../record-row/record-row.module";
@@ -21,7 +23,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RecordRowModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule
   ],
   declarations: [
     SeriesListingPage

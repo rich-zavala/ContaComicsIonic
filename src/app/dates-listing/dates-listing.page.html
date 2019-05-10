@@ -6,31 +6,29 @@
 
     <ion-buttons slot="end" class="filterButton" (click)="showFilter()">
       <ng-container *ngIf="filterValue === 0">
-        <ion-label>All</ion-label>
+        <ion-label>{{ 'dates.filters.all' | translate }}</ion-label>
       </ng-container>
       <ng-container *ngIf="filterValue === 1">
         <ion-icon name="checkbox-outline"></ion-icon>
-        <ion-label>Owned</ion-label>
+        <ion-label>{{ 'dates.filters.owned' | translate }}</ion-label>
       </ng-container>
       <ng-container *ngIf="filterValue === 2">
         <ion-icon name="square-outline"></ion-icon>
-        <ion-label>Not owned</ion-label>
+        <ion-label>{{ 'dates.filters.notOwned' | translate }}</ion-label>
       </ng-container>
       <ion-icon name="arrow-dropdown"></ion-icon>
     </ion-buttons>
 
     <ion-item class="filter-select">
-      <ion-label>Filter records</ion-label>
+      <ion-label>{{ 'dates.filters.title' | translate }}</ion-label>
       <ion-select #filter okText="Okay" cancelText="Cancel" (ionChange)="filterRecords($event)">
-        <ion-select-option value="0">All</ion-select-option>
-        <ion-select-option value="1">Owned</ion-select-option>
-        <ion-select-option value="2">Not owned</ion-select-option>
+        <ion-select-option value="0">{{ 'dates.filters.all' | translate }}</ion-select-option>
+        <ion-select-option value="1">{{ 'dates.filters.owned' | translate }}</ion-select-option>
+        <ion-select-option value="2">{{ 'dates.filters.notOwned' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-title>
-      Comics Collection
-    </ion-title>
+    <ion-title>{{ 'dates.title' | translate }}</ion-title>
   </ion-toolbar>
 
   <ion-toolbar *ngIf="!showEmpty">
@@ -57,15 +55,13 @@
 
   <ng-container *ngIf="showEmpty">
     <ion-text class="flex fcol fvertical marginBottom20">
-      <h2>There are no records yet</h2>
-      <ion-button strong="false" size="small" color="tertiary" (click)="openAddForm()">
-        Start adding comics to the collection!
-      </ion-button>
+      <h2>{{ 'noRecords' | translate }}</h2>
+      <ion-button strong="false" size="small" color="tertiary" (click)="openAddForm()">{{ 'isEmpty' | translate }}</ion-button>
     </ion-text>
   </ng-container>
 
   <ng-container *ngIf="showFilteredEmpty">
-    <ion-text class="flex fcol fvertical marginBottom20" color="medium">There are no records matching your filtering</ion-text>
+    <ion-text class="flex fcol fvertical marginBottom20" color="medium">{{ 'isEmptyFilter' | translate }}</ion-text>
   </ng-container>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">

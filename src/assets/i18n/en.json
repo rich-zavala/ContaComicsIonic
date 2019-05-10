@@ -1,4 +1,7 @@
 {
+    "noRecords": "There are no records yet",
+    "isEmpty": "Start adding comics to the collection!",
+    "isEmptyFilter": "There are no records matching your filtering",
     "menu": {
         "groupTitle": "Collection listing",
         "groupYear": "Grouped by year",
@@ -26,6 +29,18 @@
             "dateRegistered": "Date registered",
             "message": "Be careful about purchasing this comic as it may be part of your collection already"
         }
+    },
+    "dates": {
+        "title": "Comics Collection",
+        "filters": {
+            "title": "Filter records",
+            "all": "All",
+            "owned": "Owned",
+            "notOwned": "Not owned"
+        }
+    },
+    "series": {
+        "filterPlaceholder": "Filter serie title"
     },
     "import": {
         "title": "Import a collection data file",
