@@ -12,7 +12,6 @@ import { CCRecord } from "src/models/record";
 import { DATE_FORMAT } from "src/constants/formats";
 
 import * as Rx from "rxjs";
-import * as lodash from "lodash";
 import * as moment from "moment";
 
 @Component({
@@ -29,6 +28,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   filteredTitles: string[] = [];
   showAutocomplete = false;
+  lockAutocompleteHidden = false;
 
   private backSubs: Rx.Subscription;
 
@@ -42,14 +42,13 @@ export class AddFormComponent implements OnInit, OnDestroy {
     private vibration: Vibration,
     private dialogs: Dialogs,
     platform: Platform,
-    private translate: TranslateService
+    translate: TranslateService
   ) {
     translate.get("add.dialog").subscribe(val => this.strs = val);
 
     this.backSubs = platform.backButton.subscribe(() => this.close());
-
+    this.updateTitles();
     this.initForm();
-    db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
   }
 
   ngOnInit() {
@@ -58,6 +57,10 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.backSubs.unsubscribe();
+  }
+
+  private updateTitles() {
+    return this.db.getSeries().subscribe(titles => this.titles = titles.map(t => t.name));
   }
 
   private initForm() {
@@ -105,7 +108,13 @@ export class AddFormComponent implements OnInit, OnDestroy {
     this.showAutocomplete = false;
   }
 
+  private hideAutocompleteLock() {
+    this.lockAutocompleteHidden = true;
+    this.hideAutocomplete();
+  }
+
   save() {
+    this.lockAutocompleteHidden = false; // Unlock autocomplete
     for (const i in this.ccRecordForm.value) {
       if (typeof this.ccRecordForm.value[i] === "string") {
         this.ccRecordForm.value[i] = this.ccRecordForm.value[i].trim();
@@ -120,6 +129,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
           } else {
             this.initForm();
             this.successToast();
+            this.updateTitles();
           }
         }
       );

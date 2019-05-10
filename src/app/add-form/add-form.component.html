@@ -23,9 +23,9 @@
       <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()"></ion-input>
     </ion-item>
 
-    <div class="autocompleteOptions" *ngIf="showAutocomplete">
+    <div class="autocompleteOptions" *ngIf="showAutocomplete && !lockAutocompleteHidden">
       <div class="close-container">
-        <ion-button class="close" color="light" fill="clear" size="small" (click)="hideAutocomplete()" no-margin>
+        <ion-button class="close" color="light" fill="clear" size="small" (click)="hideAutocompleteLock()" no-margin>
           <ion-icon name="close-circle"></ion-icon>
         </ion-button>
       </div>
