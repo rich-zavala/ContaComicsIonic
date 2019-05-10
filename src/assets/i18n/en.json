@@ -8,6 +8,25 @@
         "dataExport": "Export data",
         "about": "About"
     },
+    "add": {
+        "title": "Add a Comic",
+        "save": "Save",
+        "form": {
+            "title": "Title",
+            "volumen": "Volumen",
+            "price": "Price",
+            "variant": "Variant",
+            "check": "Is this in your shelf?",
+            "date": "Publis date"
+        },
+        "dialog": {
+            "success": "Comic is saved",
+            "header": "You already have this comic!",
+            "variant": "Variant",
+            "dateRegistered": "Date registered",
+            "message": "Be careful about purchasing this comic as it may be part of your collection already"
+        }
+    },
     "import": {
         "title": "Import a collection data file",
         "subtitle": "Choose an import mode option",

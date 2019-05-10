@@ -5,17 +5,13 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-
+    <ion-title>{{ 'add.title' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="ccRecordForm.invalid" (click)="save()" color="light" fill="solid">
         <ion-icon slot="start" name="save"></ion-icon>
-        Save
+        {{ 'add.save' | translate }}
       </ion-button>
     </ion-buttons>
-
-    <ion-title>
-      Add a Comic
-    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,7 +19,7 @@
   <form [formGroup]="ccRecordForm">
 
     <ion-item>
-      <ion-label position="floating">Title</ion-label>
+      <ion-label position="floating">{{ 'add.form.title' | translate }}</ion-label>
       <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()"></ion-input>
     </ion-item>
 
@@ -41,28 +37,28 @@
     </div>
 
     <ion-item>
-      <ion-label position="floating">Volumen</ion-label>
+      <ion-label position="floating">{{ 'add.form.volumen' | translate }}</ion-label>
       <ion-input #volumen type="number" formControlName="volumen" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Price</ion-label>
+      <ion-label position="floating">{{ 'add.form.price' | translate }}</ion-label>
       <ion-input type="number" formControlName="price" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Variant</ion-label>
+      <ion-label position="floating">{{ 'add.form.variant' | translate }}</ion-label>
       <ion-input formControlName="variant" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Is this in your shelf?</ion-label>
+      <ion-label>{{ 'add.form.check' | translate }}</ion-label>
       <ion-input></ion-input>
       <ion-checkbox color="tertiary" formControlName="checked" (ionFocus)="hideAutocomplete()"></ion-checkbox>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Publish Date</ion-label>
+      <ion-label position="floating">{{ 'add.form.date' | translate }}</ion-label>
       <ion-input type="date" formControlName="publishDate" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
   </form>

@@ -1,8 +1,11 @@
+// tslint:disable: max-line-length
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController, AlertController, ModalController, IonInput, Platform } from "@ionic/angular";
 import { Vibration } from "@ionic-native/vibration/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
+
+import { TranslateService } from "@ngx-translate/core";
 
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models/record";
@@ -29,6 +32,8 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   private backSubs: Rx.Subscription;
 
+  private strs;
+
   constructor(
     private db: CollectionService,
     private modalCtrl: ModalController,
@@ -36,8 +41,11 @@ export class AddFormComponent implements OnInit, OnDestroy {
     private alertController: AlertController,
     private vibration: Vibration,
     private dialogs: Dialogs,
-    platform: Platform
+    platform: Platform,
+    private translate: TranslateService
   ) {
+    translate.get("add.dialog").subscribe(val => this.strs = val);
+
     this.backSubs = platform.backButton.subscribe(() => this.close());
 
     this.initForm();
@@ -129,28 +137,14 @@ export class AddFormComponent implements OnInit, OnDestroy {
   showWarnDialog(cc: CCRecord) {
     this.vibration.vibrate(700);
 
-    const header = "Warning!";
-    const variant = cc.variant.length > 0 ? `Variant:\n${cc.variant}` : "";
-    const nativeMessage = `${cc.title} #${cc.volumen}\n${variant}
-Date registered:\n${cc.detailDates.registry}\n\nBe careful about purchasing this comic as it may be part of your collection already`;
+    const header = this.strs.header;
+    const variant = cc.variant.length > 0 ? `${this.strs.variant}:\n${cc.variant}\n` : "";
+    const nativeMessage = `${cc.title} #${cc.volumen}\n${variant}\n${this.strs.dateRegistered}:\n${cc.detailDates.registry}\n\n${this.strs.message}`;
+
     const alternativeDialog = async () => {
-      let altVariant = "";
-      if (cc.variant.length > 0) {
-        altVariant = `<div class="ion-margin-top">
-                        <small>Variant:</small>
-                        <div>${(lodash.isEmpty(cc.variant) ? "No variant" : cc.variant)}</div>
-                      </div>`;
-      }
       const alert = await this.alertController.create({
         header,
-        subHeader: "This comic is in the catalog",
-        message: `<b>${cc.title} #${cc.volumen}</b>
-                  ${altVariant}
-                  <div class="ion-margin-top">
-                    <small>Date registered:</small>
-                    <div>${cc.detailDates.registry}</div>
-                  </div>
-                  <div class="ion-margin-top">Be careful about purchasing this comic as it may be part of your collection already</div>`,
+        message: nativeMessage.replace(/\n/ig, "<br>"),
         buttons: ["OK"]
       });
 
