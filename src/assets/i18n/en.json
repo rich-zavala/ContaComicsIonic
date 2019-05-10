@@ -66,7 +66,7 @@
             "cleared": "The database has been cleared",
             "fileError": "Error: File is not supported",
             "newComics": "new comics",
-            "errorMsg": "Error: File is not supported"
+            "errorMsg": "Error: Something is wrong"
         }
     },
     "export": {

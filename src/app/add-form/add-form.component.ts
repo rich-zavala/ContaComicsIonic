@@ -127,7 +127,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   async successToast() {
     const toast = await this.toastController.create({
-      message: "Comic is saved.",
+      message: this.strs.success,
       duration: 2000,
       showCloseButton: true
     });

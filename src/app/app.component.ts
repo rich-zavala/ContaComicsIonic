@@ -34,10 +34,10 @@ export class AppComponent {
   private initTranslate() {
     this.translate.setDefaultLang("en");
 
-    // if (this.translate.getBrowserLang() !== undefined) {
-    //   this.translate.use(this.translate.getBrowserLang());
-    // } else {
-    //   this.translate.use("en");
-    // }
+    if (this.translate.getBrowserLang() !== undefined) {
+      this.translate.use(this.translate.getBrowserLang());
+    } else {
+      this.translate.use("en");
+    }
   }
 }
