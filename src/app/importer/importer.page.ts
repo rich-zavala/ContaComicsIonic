@@ -128,19 +128,24 @@ export class ImporterPage {
           try {
             let records: ICCRecord[] = JSON.parse(data);
             const importRecords = () => {
-              let insCounter = 0;
-              Rx.concat(...records.map(r => Rx.from(this.db.insert(r))))
-                .subscribe(
-                  () => {
-                    insCounter++;
-                    this.progress = insCounter / records.length;
+              if (records.length > 0) {
+                let insCounter = 0;
+                Rx.concat(...records.map(r => Rx.from(this.db.insert(r))))
+                  .subscribe(
+                    () => {
+                      insCounter++;
+                      this.progress = insCounter / records.length;
 
-                    if (insCounter === records.length) {
-                      this.importEnding(`${insCounter} ${this.dialogStr.newComics}!`);
-                    }
-                  },
-                  () => this.importErr()
-                );
+                      if (insCounter === records.length) {
+                        this.importEnding(`${insCounter} ${this.dialogStr.newComics}!`);
+                      }
+                    },
+                    () => this.importErr()
+                  );
+              } else {
+                console.log(this.dialogStr);
+                this.importEnding(`0 ${this.dialogStr.newComics}!`);
+              }
             };
 
             if (this.option === 0) { // Get all records and remove them from import data

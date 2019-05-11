@@ -33,7 +33,7 @@ export class ExporterPage {
     private ref: ChangeDetectorRef,
     translate: TranslateService
   ) {
-    translate.get("import.dialog").subscribe(val => this.toastStr = val);
+    translate.get("export.dialog").subscribe(val => this.toastStr = val);
   }
 
   chooseDestination() {
