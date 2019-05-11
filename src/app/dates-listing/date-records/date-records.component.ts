@@ -16,7 +16,9 @@ export class DateRecordsComponent implements OnInit, OnChanges {
   @Input() records: ICCRecord[];
   @Input() filterValue: number;
 
-  displayRecords: ICCRecord[] = [];
+  // displayRecords: ICCRecord[] = [];
+  displayDate = true;
+  recordsCount = 0;
 
   monthStr: string;
   dayStr: string;
@@ -35,24 +37,23 @@ export class DateRecordsComponent implements OnInit, OnChanges {
   }
 
   private filterRecords() {
+    let displayRecords = [];
     switch (this.filterValue) {
       case 0:
-        this.displayRecords = this.records;
+        displayRecords = this.records;
         break;
 
       case 1:
-        this.displayRecords = this.records.filter(r => r.checked);
+        displayRecords = this.records.filter(r => r.checked);
         break;
 
       case 2:
-        this.displayRecords = this.records.filter(r => !r.checked);
+        displayRecords = this.records.filter(r => !r.checked);
         break;
     }
 
-    this.totalStr = dynCurrency(lodash.sum(this.displayRecords.map(r => r.price)));
-  }
-
-  get displayDate() {
-    return this.displayRecords.length > 0;
+    this.recordsCount = displayRecords.length;
+    this.totalStr = dynCurrency(lodash.sum(displayRecords.map(r => r.price)));
+    this.displayDate = displayRecords.length > 0;
   }
 }

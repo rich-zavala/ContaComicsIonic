@@ -6,7 +6,7 @@
       <div class="width-holder"></div>
     </div>
     <div class="col-2 flex fcol fcenter">
-      <div class="counter">{{displayRecords.length}} comics</div>
+      <div class="counter">{{recordsCount}} comics</div>
       <div class="total">{{totalStr}}</div>
     </div>
   </div>
@@ -16,7 +16,8 @@
     </div>
     <div class="col-2">
       <ion-card color="dark">
-        <app-record-row *ngFor="let cc of displayRecords; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
+        <app-record-row *ngFor="let cc of records; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"
+          [ngClass]="{ hidden: (filterValue === 1 && !cc.checked) || (filterValue === 2 && cc.checked) }"></app-record-row>
       </ion-card>
     </div>
   </div>
