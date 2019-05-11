@@ -87,6 +87,7 @@
     },
     "details": {
         "variant": "Variante",
+        "price": "Precio",
         "publishedDate": "Fecha de publicación",
         "registryDate": "Fecha de registro",
         "owned": "Adquirido en",

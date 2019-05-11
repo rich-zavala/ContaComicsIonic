@@ -87,6 +87,7 @@
     },
     "details": {
         "variant": "Variant",
+        "price": "Price",
         "publishedDate": "Published date",
         "registryDate": "Registry date",
         "owned": "In your shelf since",
