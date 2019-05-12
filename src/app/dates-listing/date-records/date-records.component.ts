@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
 
-import { ICCDay, ICCRecord } from "src/models";
+import { ICCDay, ICCRecord, CCRecord } from "src/models";
 import { dynCurrency } from "src/app/tools/utils";
 
 import * as moment from "moment";
@@ -13,13 +13,10 @@ import * as lodash from "lodash";
 })
 export class DateRecordsComponent implements OnInit, OnChanges {
   @Input() date: ICCDay;
-  @Input() records: ICCRecord[];
   @Input() filterValue: number;
 
-  // displayRecords: ICCRecord[] = [];
-  displayDate = true;
   recordsCount = 0;
-
+  displayDate = true;
   monthStr: string;
   dayStr: string;
   totalStr: string;
@@ -32,7 +29,7 @@ export class DateRecordsComponent implements OnInit, OnChanges {
     this.dayStr = moment(this.date.date).format("DD");
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.filterRecords();
   }
 
@@ -40,15 +37,15 @@ export class DateRecordsComponent implements OnInit, OnChanges {
     let displayRecords = [];
     switch (this.filterValue) {
       case 0:
-        displayRecords = this.records;
+        displayRecords = this.date.records;
         break;
 
       case 1:
-        displayRecords = this.records.filter(r => r.checked);
+        displayRecords = this.date.records.filter(r => r.checked);
         break;
 
       case 2:
-        displayRecords = this.records.filter(r => !r.checked);
+        displayRecords = this.date.records.filter(r => !r.checked);
         break;
     }
 

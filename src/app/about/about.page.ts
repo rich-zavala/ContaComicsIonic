@@ -22,7 +22,8 @@ export class AboutPage {
 
   load() {
     let count = 0;
-    Rx.concat(...CC_DATA.map(r => {
+    const sample = lodash.sampleSize(CC_DATA, 500);
+    Rx.concat(...sample.map(r => {
       const d = {
         title: r.titulo,
         volumen: r.volumen,
@@ -36,7 +37,7 @@ export class AboutPage {
     }))
       .subscribe(res => {
         count++;
-        console.log(`Inserted: ${count}/${lodash.size(CC_DATA)}`);
+        console.log(`Inserted: ${count}/${lodash.size(sample)}`);
       });
   }
 }

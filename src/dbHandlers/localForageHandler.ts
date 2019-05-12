@@ -1,3 +1,4 @@
+// tslint:disable: forin
 import { ICCDBHandler, IInsertRecordResponse, IDeleteRecordResponse } from "./dbHandler";
 import { ICCRecord, CCRecord, ICCDay, ICCYear, ICCSerie } from "src/models";
 
@@ -107,16 +108,18 @@ export class LocalForageHandler implements ICCDBHandler {
             this.getDay(cc.getPublishDate()).subscribe(
                 dayData => {
                     if (dayData) {
-                        dayData.records.push(cc.id);
+                        dayData.records.push(cc);
                         dayData.records = lodash.uniq(dayData.records);
                         dayData.total += cc.price;
                     } else {
                         dayData = {
                             date: day,
-                            records: [cc.id],
+                            records: [cc],
                             total: cc.price
                         };
                     }
+
+                    dayData.records = lodash.orderBy(dayData.records.map(r => r.insertable()), ["recordDate"]).reverse();
                     this.dbDays.setItem(day, dayData, (err, val) => {
                         if (err) {
                             observer.error(err);
@@ -165,11 +168,11 @@ export class LocalForageHandler implements ICCDBHandler {
                     .pipe(toArray())
                     .subscribe(
                         (years: ICCYear[]) => {
-                            years = lodash.sortBy(
+                            years = lodash.orderBy(
                                 years.map(y => {
                                     y.days = y.days.sort().reverse();
                                     return y;
-                                }), "year").reverse();
+                                }), ["year"]).reverse();
                             observer.next(years);
                             observer.complete();
                         }
@@ -187,7 +190,7 @@ export class LocalForageHandler implements ICCDBHandler {
                             .pipe(toArray())
                             .subscribe(
                                 (daysData: ICCDay[]) => {
-                                    observer.next(lodash.sortBy(daysData, "date").reverse());
+                                    observer.next(lodash.orderBy(daysData, ["date"]).reverse());
                                     observer.complete();
                                 }
                             );
@@ -203,7 +206,7 @@ export class LocalForageHandler implements ICCDBHandler {
                     .pipe(toArray())
                     .subscribe(
                         (serie: ICCSerie[]) => {
-                            observer.next(lodash.sortBy(serie, ["title"]));
+                            observer.next(lodash.orderBy(serie, ["title"]));
                             observer.complete();
                         });
             });
@@ -258,7 +261,7 @@ export class LocalForageHandler implements ICCDBHandler {
                     const subjDates = new Rx.Observable(obsDates => {
                         const dayStr = cc.getPublishDate();
                         this.dbDays.getItem(dayStr, (dayErr, dayData: ICCDay) => {
-                            dayData.records.splice(dayData.records.indexOf(cc.id), 1);
+                            dayData.records.splice(dayData.records.findIndex(r => r.id === cc.id), 1);
                             if (dayData.records.length > 0) {
                                 dayData.total -= cc.price;
                                 resp.dayTotal = dayData.total;
@@ -303,24 +306,6 @@ export class LocalForageHandler implements ICCDBHandler {
         });
     }
 
-    getRecordsByDay(day: string): Rx.Observable<ICCRecord[]> {
-        return new Rx.Observable(observer => {
-            this.getDay(day)
-                .subscribe(
-                    dayData => {
-                        Rx.merge(...dayData.records.map(recordId => Rx.from(this.getRecord(recordId))))
-                            .pipe(toArray())
-                            .subscribe(
-                                (records: ICCRecord[]) => {
-                                    observer.next(lodash.sortBy(records, r => r.recordDate).reverse());
-                                    observer.complete();
-                                }
-                            );
-                    }
-                );
-        });
-    }
-
     getRecord(id: string): Rx.Observable<CCRecord> {
         return new Rx.Observable(observer => {
             this.dbRecords.getItem(id, (err, recordData: ICCRecord) => {
@@ -348,12 +333,15 @@ export class LocalForageHandler implements ICCDBHandler {
         });
     }
 
-    private getDay(day: string): Rx.Observable<ICCDay> {
+    getDay(day: string): Rx.Observable<ICCDay> {
         return new Rx.Observable(observer => {
             this.dbDays.getItem(day, (err, dayData: ICCDay) => {
                 if (err) {
                     observer.error(err);
                 } else {
+                    if (dayData) {
+                        dayData.records = dayData.records.map(record => new CCRecord(record));
+                    }
                     observer.next(dayData);
                 }
                 observer.complete();

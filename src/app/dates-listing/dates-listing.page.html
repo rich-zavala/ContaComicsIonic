@@ -47,10 +47,7 @@
   <ion-progress-bar *ngIf="working" color="tertiary" [value]="loadingProgress"></ion-progress-bar>
 
   <ion-list>
-    <ng-container *ngFor="let date of selectedYearDates">
-      <app-date-records *ngIf="records[date.date]" [id]="date.date" [date]="date" [records]="records[date.date]" [filterValue]="filterValue">
-      </app-date-records>
-    </ng-container>
+    <app-date-records *ngFor="let date of selectedYearDates" [id]="date.date" [date]="date" [filterValue]="filterValue"></app-date-records>
   </ion-list>
 
   <ng-container *ngIf="showEmpty">

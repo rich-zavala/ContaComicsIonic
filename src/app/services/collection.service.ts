@@ -28,8 +28,8 @@ export class CollectionService {
         this.getYears().subscribe(d => this.years$.next(d));
     }
 
-    getYearDates(year: number) {
-        return this.db.db.getYearDays(year);
+    getDay(day: string) {
+        return this.db.db.getDay(day);
     }
 
     private getYears() {

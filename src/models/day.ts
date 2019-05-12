@@ -1,8 +1,7 @@
-import * as moment from "moment";
-import { ICCRecord } from "./record";
+import { CCRecord } from "./record";
 
 export interface ICCDay {
     date: string;
     total: number;
-    records: string[];
+    records: CCRecord[];
 }

@@ -1,10 +1,10 @@
+// tslint:disable: max-line-length
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
 import { ModalController, PopoverController, IonSelect } from "@ionic/angular";
 
 import { ICCYear, ICCDay, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray } from "rxjs/operators";
 import * as lodash from "lodash";
 
 import { CollectionService } from "../services/collection.service";
@@ -27,7 +27,6 @@ export class DatesListingPage implements OnInit {
   years: ICCYear[] = [];
   selectedYear: ICCYear;
   selectedYearDates: ICCDay[] = [];
-  records: TDatesCollection = {};
 
   loadingProgress = 0;
   working = false;
@@ -66,17 +65,20 @@ export class DatesListingPage implements OnInit {
         const rPublYear = record.getPublishYear();
         const rPublDate = record.getPublishDate();
 
-        if (rPublYear === this.selectedYear.year && this.records[rPublDate]) {
-          this.records[rPublDate] = lodash.sortBy([...this.records[rPublDate], record], r => r.recordDate).reverse();
+        if (rPublYear === this.selectedYear.year) {
+          const dateIndex = this.selectedYearDates.findIndex(date => date.date === rPublDate);
+          if (dateIndex >= 0) {
+            this.selectedYearDates[dateIndex].records = lodash.orderBy([... this.selectedYearDates[dateIndex].records, record], ["recordDate"]).reverse();
+          } else {
+            const newDate: ICCDay = {
+              date: rPublDate,
+              records: [record],
+              total: record.price
+            };
+            this.selectedYearDates = lodash.orderBy([...this.selectedYearDates, newDate], ["date"]).reverse();
+          }
+
           this.showFilteredMessage();
-        } else if (rPublYear === this.selectedYear.year) {
-          /**
-           * If the new record's date is not listed in the current view,
-           * then the full list must be reseted. This is something that
-           * could behave in a better way.
-           */
-          this.reset();
-          this.updateYearSelected();
         }
       }
     );
@@ -100,8 +102,7 @@ export class DatesListingPage implements OnInit {
           if (dateChild) {
             const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
             date.total = deleteInfo.dayTotal;
-            lodash.remove(date.records, record => record === deleteInfo.record.id);
-            lodash.remove(this.records[date.date], record => record.id === deleteInfo.record.id);
+            lodash.remove(date.records, record => record.id === deleteInfo.record.id);
             dateChild.ngOnInit();
           }
         }
@@ -112,7 +113,6 @@ export class DatesListingPage implements OnInit {
   }
 
   private reset() {
-    this.records = {};
     this.selectedYearDates = [];
     this.loadingProgress = 0;
   }
@@ -133,33 +133,26 @@ export class DatesListingPage implements OnInit {
     this.working = true;
     this.showFilteredEmpty = false;
     this.loadingProgress = 0;
-    this.records = {};
-    this.db.getYearDates(this.selectedYear.year)
-      .subscribe(days => {
-        this.selectedYearDates = days;
-        const dateRecordsDbQueries: Rx.Observable<null>[] = [];
-        days.forEach(
-          day => dateRecordsDbQueries.push(
-            new Rx.Observable(observer => {
-              Rx.concat(...day.records.map(cc => Rx.from(this.db.getRecord(cc))))
-                .pipe(toArray())
-                .subscribe(r => {
-                  this.records[day.date] = r;
-                  this.loadingProgress = lodash.size(this.records) / days.length;
+    const dateDbQueries: Rx.Observable<null>[] = [];
+    this.selectedYear.days.forEach(day => dateDbQueries.push(
+      new Rx.Observable(observer => {
+        Rx.from(this.db.getDay(day))
+          .subscribe(
+            dayData => {
+              this.selectedYearDates.push(dayData);
+              this.loadingProgress = this.selectedYearDates.length / lodash.size(this.selectedYear.days);
+              if (this.loadingProgress === 1) {
+                this.working = false;
+                this.showFilteredMessage();
+              }
+              observer.complete();
+            }
+          );
 
-                  if (this.loadingProgress === 1) {
-                    this.working = false;
-                    this.showFilteredMessage();
-                  }
+      })
+    ));
 
-                  observer.complete();
-                });
-            })
-          )
-        );
-        Rx.concat(...dateRecordsDbQueries).subscribe();
-      });
-
+    Rx.concat(...dateDbQueries).subscribe();
   }
 
   private isSelected(year: number) {

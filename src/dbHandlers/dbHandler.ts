@@ -24,8 +24,8 @@ export interface ICCDBHandler {
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;
     getYearDays(year: number): Observable<ICCDay[]>;
+    getDay(day: string): Observable<ICCDay>;
     getSeries(): Observable<ICCSerie[]>;
-    getRecordsByDay(date: string): Observable<ICCRecord[]>;
     getRecord(id: string): Observable<CCRecord>;
     clear(): Observable<boolean>;
 }
