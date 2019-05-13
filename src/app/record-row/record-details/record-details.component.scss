@@ -21,6 +21,7 @@ small {
     color: var(--ion-color-medium);
 }
 
-ion-checkbox {
-    --size: 1.6em;
+.checkboxContainer {
+    flex: 1;
+    justify-content: space-between;
 }

@@ -61,10 +61,6 @@ export class CCRecord implements ICCRecord {
         return this.publishDateMoment.year();
     }
 
-    public getPublishDate() {
-        return this.publishDateMoment.format(DATE_FORMAT);
-    }
-
     public insertable() {
         return JSON.parse(JSON.stringify(this));
     }

@@ -17,8 +17,8 @@ export class RecordHandlerComponent implements OnInit {
         this.checkState.checked = this.cc.checked;
     }
 
-    checkUpdate($event: CustomEvent) {
-        if ($event.detail.checked) {
+    checkUpdate($event) {
+        if (($event.target && $event.target.checked) || ($event.detail && $event.detail.checked)) {
             this.cc.check();
             this.db.updateRecord(this.cc, this.emmitUpdates);
         } else {

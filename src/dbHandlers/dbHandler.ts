@@ -20,12 +20,13 @@ export interface IDeleteRecordResponse {
 }
 export interface ICCDBHandler {
     insert(data: ICCRecord): Observable<IInsertRecordResponse>;
-    update(data: ICCRecord): Observable<ICCRecord>;
+    update(data: CCRecord): Observable<CCRecord>;
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;
     getYearDays(year: number): Observable<ICCDay[]>;
     getDay(day: string): Observable<ICCDay>;
     getSeries(): Observable<ICCSerie[]>;
     getRecord(id: string): Observable<CCRecord>;
+    getRecordsByDay(day: string): Observable<CCRecord[]>;
     clear(): Observable<boolean>;
 }

@@ -39,9 +39,14 @@
           </ion-label>
         </ion-item>
         <ion-item color="dark" no-margin no-padding>
-          <ion-label *ngIf="cc.checked">{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
-          <ion-label *ngIf="!cc.checked">{{ 'details.notOwned' | translate }}</ion-label>
-          <ion-checkbox color="tertiary" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
+          <label class="checkboxContainer flex fvertical">
+            <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
+            <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
+
+            <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (change)="checkUpdate($event)">
+            <ion-icon *ngIf="!checkState.checked" class="checkbox" name="square-outline"></ion-icon>
+            <ion-icon *ngIf="checkState.checked" class="checkbox" name="checkbox"></ion-icon>
+          </label>
         </ion-item>
       </ion-list>
     </ion-card-content>

@@ -13,6 +13,7 @@ import * as lodash from "lodash";
 })
 export class DateRecordsComponent implements OnInit, OnChanges {
   @Input() date: ICCDay;
+  @Input() records: ICCRecord[];
   @Input() filterValue: number;
 
   recordsCount = 0;
@@ -37,15 +38,15 @@ export class DateRecordsComponent implements OnInit, OnChanges {
     let displayRecords = [];
     switch (this.filterValue) {
       case 0:
-        displayRecords = this.date.records;
+        displayRecords = this.records;
         break;
 
       case 1:
-        displayRecords = this.date.records.filter(r => r.checked);
+        displayRecords = this.records.filter(r => r.checked);
         break;
 
       case 2:
-        displayRecords = this.date.records.filter(r => !r.checked);
+        displayRecords = this.records.filter(r => !r.checked);
         break;
     }
 

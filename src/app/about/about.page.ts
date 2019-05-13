@@ -5,6 +5,7 @@ import * as moment from "moment";
 import * as lodash from "lodash";
 import { CC_DATA } from "src/cc";
 import { DbHandlingService } from "../services/db-handling.service";
+import { DATE_FORMAT } from "src/constants/formats";
 
 @Component({
   selector: "app-about",
@@ -22,14 +23,14 @@ export class AboutPage {
 
   load() {
     let count = 0;
-    const sample = lodash.sampleSize(CC_DATA, 500);
+    const sample = lodash.sampleSize(CC_DATA, 100);
     Rx.concat(...sample.map(r => {
       const d = {
         title: r.titulo,
         volumen: r.volumen,
         price: r.precio,
         checked: r.adquirido === 1,
-        publishDate: moment(r.fecha).valueOf(),
+        publishDate: moment(r.fecha).format(DATE_FORMAT),
         checkedDate: moment(r.fecha_adquisicion).valueOf(),
         recordDate: moment(r.fecha_registro).valueOf()
       };

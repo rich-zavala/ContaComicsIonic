@@ -25,15 +25,15 @@ export class CollectionService {
     ) { }
 
     updateYears() {
-        this.getYears().subscribe(d => this.years$.next(d));
+        this.db.db.getYears().subscribe(d => this.years$.next(d));
     }
 
-    getDay(day: string) {
-        return this.db.db.getDay(day);
+    getDayRecords(day: string) {
+        return this.db.db.getRecordsByDay(day);
     }
 
-    private getYears() {
-        return this.db.db.getYears();
+    getYearDates(year: number) {
+        return this.db.db.getYearDays(year);
     }
 
     updateSeries() {
@@ -128,7 +128,7 @@ export class CollectionService {
     }
 
     updateRecord(cc: CCRecord, emmit: boolean) {
-        return this.db.db.update(cc.insertable())
+        return this.db.db.update(cc)
             .subscribe(
                 () => {
                     if (emmit) {

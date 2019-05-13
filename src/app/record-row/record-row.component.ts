@@ -35,7 +35,7 @@ export class RecordRowComponent extends RecordHandlerComponent {
   }
 
   async showDetails($event) {
-    if ($event.target.localName !== "ion-checkbox") {
+    if (!["ion-icon", "input", "label"].includes($event.target.localName)) {
       const modal = await this.modalController.create({
         component: RecordDetailsComponent,
         componentProps: { cc: this.cc }

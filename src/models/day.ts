@@ -1,7 +1,6 @@
-import { CCRecord } from "./record";
-
 export interface ICCDay {
     date: string;
+    year: number;
     total: number;
-    records: CCRecord[];
+    records: string[];
 }
