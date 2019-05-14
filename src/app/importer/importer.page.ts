@@ -131,7 +131,6 @@ export class ImporterPage {
               if (records.length > 0) {
                 let insCounter = 0;
                 Rx.concat(...records
-                  .map(r => new CCRecord(r).insertable())
                   .map(r => Rx.from(this.db.insert(r)))
                 ).subscribe(
                   () => {
