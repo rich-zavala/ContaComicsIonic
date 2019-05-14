@@ -16,7 +16,6 @@ import * as Rx from "rxjs";
 })
 export class RecordDetailsComponent extends RecordHandlerComponent {
   public emmitUpdates = true;
-
   private dialogStr;
 
   constructor(

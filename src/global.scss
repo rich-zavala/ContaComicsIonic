@@ -68,7 +68,35 @@ ion-alert {
     text-transform: capitalize;
 }
 
-.checkbox {
-    color: var(--ion-color-tertiary);
-    font-size: 24px;
+.checkboxContainer {
+    position: relative;
+    width: 34px;
+    height: 24px;
+
+    .checkbox {
+        color: var(--ion-color-tertiary);
+        font-size: 20px;
+        z-index: 1;
+    }
+
+    .checkbox-square {
+        display: block;
+        height: 18px;
+        width: 18px;
+        margin: 1px 3px;
+        border: 2px solid;
+        border-radius: 4px;
+        color: var(--ion-color-tertiary);
+        transition: all .3s;
+
+        &.checked {
+            height: 14px;
+            width: 14px;
+            margin: auto;
+            position: absolute;
+            background: var(--ion-color-light);
+            border: none;
+            z-index: 0;
+        }
+    }
 }

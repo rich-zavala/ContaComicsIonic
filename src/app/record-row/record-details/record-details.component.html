@@ -19,36 +19,35 @@
       <div class="volumen">#{{cc.volumen}}</div>
     </ion-card-header>
     <ion-card-content>
-      <ion-list no-margin no-padding>
-        <ion-item color="dark" no-margin no-padding>
-          <ion-label>
-            <small>{{ 'details.price' | translate }}</small>
-            <div>{{cc.price | currency}}</div>
-          </ion-label>
-        </ion-item>
-        <ion-item color="dark" no-margin no-padding>
-          <ion-label>
-            <small>{{ 'details.publishedDate' | translate }}</small>
-            <div>{{cc.detailDates.published}}</div>
-          </ion-label>
-        </ion-item>
-        <ion-item color="dark" no-margin no-padding>
-          <ion-label>
-            <small>{{ 'details.registryDate' | translate }}</small>
-            <div>{{cc.detailDates.registry}}</div>
-          </ion-label>
-        </ion-item>
-        <ion-item color="dark" no-margin no-padding>
-          <label class="checkboxContainer flex fvertical">
-            <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
-            <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
-
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.price' | translate }}</small>
+          <div>{{cc.price | currency}}</div>
+        </ion-label>
+      </div>
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.publishedDate' | translate }}</small>
+          <div>{{cc.detailDates.published}}</div>
+        </ion-label>
+      </div>
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.registryDate' | translate }}</small>
+          <div>{{cc.detailDates.registry}}</div>
+        </ion-label>
+      </div>
+      <div class="detail-row flex checked-state-row">
+        <label class="checked-state-label flex fcenter">
+          <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
+          <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
+          <label class="checkboxContainer flex fcenter fvertical">
             <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (change)="checkUpdate($event)">
-            <ion-icon *ngIf="!checkState.checked" class="checkbox" name="square-outline"></ion-icon>
-            <ion-icon *ngIf="checkState.checked" class="checkbox" name="checkbox"></ion-icon>
+            <fa-icon *ngIf="checkState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
+            <i class="checkbox-square" [ngClass]="{ checked: checkState.checked }"></i>
           </label>
-        </ion-item>
-      </ion-list>
+        </label>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

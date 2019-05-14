@@ -1,11 +1,8 @@
 <div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd }" (click)="showDetails($event)" ion-activatable>
-  <!-- <label class="checkboxContainer flex fcenter">
-    <ion-checkbox color="tertiary" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (ionChange)="checkUpdate($event)"></ion-checkbox>
-  </label> -->
-  <label class="checkboxContainer flex fcenter">
+  <label class="checkboxContainer flex fcenter fvertical">
     <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (change)="checkUpdate($event)">
-    <ion-icon *ngIf="!checkState.checked" class="checkbox" name="square-outline"></ion-icon>
-    <ion-icon *ngIf="checkState.checked" class="checkbox" name="checkbox"></ion-icon>
+    <fa-icon *ngIf="checkState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
+    <i class="checkbox-square" [ngClass]="{ checked: checkState.checked }"></i>
   </label>
   <div class="title flex fcol">
     <div class="ion-text-capitalize">{{cc.title}}</div>

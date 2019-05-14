@@ -11,17 +11,32 @@ ion-card-header {
 
     .volumen {
         font-size: 2rem;
+        line-height: 1;
     }
 
 }
 
-small {
-    margin-bottom: .5rem;
-    display: block;
-    color: var(--ion-color-medium);
-}
+.detail-row {
+    margin-bottom: 1rem;
 
-.checkboxContainer {
-    flex: 1;
-    justify-content: space-between;
+    small {
+        margin-bottom: .2rem;
+        display: block;
+        color: var(--ion-color-medium);
+    }
+
+    &.checked-state-row {
+        margin: 0;
+        height: 36px;
+
+        .checked-state-label {
+            justify-content: space-between;
+            flex: 1;
+            align-items: center;
+
+            .checkboxContainer {
+                margin-right: -2px;
+            }
+        }
+    }
 }
