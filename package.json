@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "apk": "ionic cordova run android",
-    "android": "ionic cordova run android -l --address 192.168.1.110 --debug --device --verbose"
+    "android": "ionic cordova run android -l --address 192.168.1.110 --debug --device"
   },
   "private": true,
   "dependencies": {

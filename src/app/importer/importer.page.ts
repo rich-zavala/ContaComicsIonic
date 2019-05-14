@@ -6,7 +6,7 @@ import { Dialogs } from "@ionic-native/dialogs/ngx";
 import { TranslateService } from "@ngx-translate/core";
 
 import { CollectionService } from "../services/collection.service";
-import { ICCRecord } from "src/models";
+import { ICCRecord, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
 import * as lodash from "lodash";
@@ -130,18 +130,20 @@ export class ImporterPage {
             const importRecords = () => {
               if (records.length > 0) {
                 let insCounter = 0;
-                Rx.concat(...records.map(r => Rx.from(this.db.insert(r))))
-                  .subscribe(
-                    () => {
-                      insCounter++;
-                      this.progress = insCounter / records.length;
+                Rx.concat(...records
+                  .map(r => new CCRecord(r).insertable())
+                  .map(r => Rx.from(this.db.insert(r)))
+                ).subscribe(
+                  () => {
+                    insCounter++;
+                    this.progress = insCounter / records.length;
 
-                      if (insCounter === records.length) {
-                        this.importEnding(`${insCounter} ${this.dialogStr.newComics}!`);
-                      }
-                    },
-                    () => this.importErr()
-                  );
+                    if (insCounter === records.length) {
+                      this.importEnding(`${insCounter} ${this.dialogStr.newComics}!`);
+                    }
+                  },
+                  () => this.importErr()
+                );
               } else {
                 console.log(this.dialogStr);
                 this.importEnding(`0 ${this.dialogStr.newComics}!`);

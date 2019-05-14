@@ -33,7 +33,7 @@ export class CCRecord implements ICCRecord {
         this.price = data.price;
         this.variant = data.variant;
         this.checked = data.checked || false;
-        this.publishDate = data.publishDate;
+        this.publishDate = moment(data.publishDate).format(DATE_FORMAT);
         this.checkedDate = data.checkedDate;
         this.recordDate = data.recordDate || Date.now();
 

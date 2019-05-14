@@ -136,15 +136,6 @@ export class DexieHandler implements ICCDBHandler {
 
     getDay(day: string): Rx.Observable<ICCDay> {
         return Rx.from(this.dbDays.get(day));
-        // return new Rx.Observable(observer => {
-        //     Rx.from(this.dbDays.get(day)).subscribe(dayData => {
-        //         if (dayData) {
-        //             dayData.records = dayData.records.map(record => new CCRecord(record));
-        //         }
-        //         observer.next(dayData);
-        //         observer.complete();
-        //     });
-        // });
     }
 
     private insertYear(cc: CCRecord): Rx.Observable<ICCYear> {
