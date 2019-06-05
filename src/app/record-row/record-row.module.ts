@@ -11,7 +11,7 @@ import { RecordDetailsComponent } from "./record-details/record-details.componen
 import { RecordHandlerComponent } from "./record-handler.component";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare } from "@fortawesome/free-solid-svg-icons/faCheckSquare";
 
 library.add(faCheckSquare);
 

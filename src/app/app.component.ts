@@ -5,7 +5,11 @@ import { Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
+import { CollectionService } from "./services/collection.service";
+
 import * as Rx from "rxjs";
+import { toArray } from "rxjs/operators";
+
 import * as moment from "moment";
 
 @Component({
@@ -23,17 +27,18 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.splashScreen.hide();
-      this.initTranslate().subscribe(
-        () => {
-          if (typeof cordova !== "undefined" && cordova.platformId === "android") {
-            this.statusBar.overlaysWebView(false);
-            this.statusBar.backgroundColorByHexString("#9a0031");
-          }
+    Rx.merge(
+      this.platform.ready(),
+      this.initTranslate(),
+    )
+      .pipe(toArray())
+      .subscribe(res => {
+        this.splashScreen.hide();
+        if (typeof cordova !== "undefined" && cordova.platformId === "android") {
+          this.statusBar.overlaysWebView(false);
+          this.statusBar.backgroundColorByHexString("#9a0031");
         }
-      );
-    });
+      });
   }
 
   private initTranslate() {

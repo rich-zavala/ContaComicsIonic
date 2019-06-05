@@ -47,8 +47,28 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="floating">Format</ion-label>
+      <ion-select formControlName="format">
+        <ion-select-option *ngFor="let f of formats" [value]="f">{{f}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label position="floating">{{ 'add.form.variant' | translate }}</ion-label>
       <ion-input formControlName="variant" (ionFocus)="hideAutocomplete()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ 'add.form.lang' | translate }}</ion-label>
+      <ion-select formControlName="lang">
+        <ion-select-option value="esp">Spanish</ion-select-option>
+        <ion-select-option value="eng">English</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ 'add.form.date' | translate }}</ion-label>
+      <ion-input type="date" formControlName="publishDate" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -58,8 +78,24 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">{{ 'add.form.date' | translate }}</ion-label>
-      <ion-input type="date" formControlName="publishDate" (ionFocus)="hideAutocomplete()"></ion-input>
+      <ion-label>{{ 'add.form.read' | translate }}</ion-label>
+      <ion-input></ion-input>
+      <ion-checkbox color="tertiary" formControlName="read" (ionFocus)="hideAutocomplete()"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="ccRecordForm.controls.read.value">
+      <ion-label position="floating">{{ 'add.form.readDate' | translate }}</ion-label>
+      <ion-input type="date" formControlName="readDate" (ionFocus)="hideAutocomplete()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" auto-grow="true">{{ 'add.form.provider' | translate }}</ion-label>
+      <ion-input type="text" formControlName="provider" (ionFocus)="hideAutocomplete()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ 'add.form.comments' | translate }}</ion-label>
+      <ion-textarea type="text" formControlName="comments" (ionFocus)="hideAutocomplete()"></ion-textarea>
     </ion-item>
   </form>
 </ion-content>

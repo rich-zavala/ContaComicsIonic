@@ -8,11 +8,12 @@ import { Dialogs } from "@ionic-native/dialogs/ngx";
 import { TranslateService } from "@ngx-translate/core";
 
 import { CollectionService } from "../services/collection.service";
-import { CCRecord } from "src/models/record";
+import { CCRecord, RECORD_FORMAT_TYPE } from "src/models/record";
 import { DATE_FORMAT } from "src/constants/formats";
 
 import * as Rx from "rxjs";
 import * as moment from "moment";
+import * as lodash from "lodash";
 
 @Component({
   selector: "app-add-form",
@@ -31,7 +32,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
   lockAutocompleteHidden = false;
 
   private backSubs: Rx.Subscription;
-
+  private formats: string[] = lodash.toArray(RECORD_FORMAT_TYPE);
   private strs;
 
   constructor(
@@ -45,7 +46,6 @@ export class AddFormComponent implements OnInit, OnDestroy {
     translate: TranslateService
   ) {
     translate.get("add.dialog").subscribe(val => this.strs = val);
-
     this.backSubs = platform.backButton.subscribe(() => this.close());
     this.updateTitles();
     this.initForm();
@@ -69,6 +69,12 @@ export class AddFormComponent implements OnInit, OnDestroy {
       volumen: new FormControl("", Validators.required),
       price: new FormControl("", Validators.required),
       variant: new FormControl(""),
+      format: new FormControl(RECORD_FORMAT_TYPE.Staples, Validators.required),
+      lang: new FormControl("esp", Validators.required),
+      read: new FormControl(false),
+      readDate: new FormControl(moment().format(DATE_FORMAT)),
+      provider: new FormControl(""),
+      comments: new FormControl(""),
       checked: new FormControl(false),
       publishDate: new FormControl(moment().format(DATE_FORMAT), Validators.required)
     });

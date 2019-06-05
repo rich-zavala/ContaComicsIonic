@@ -17,7 +17,9 @@ ion-card-header {
 }
 
 .detail-row {
-    margin-bottom: 1rem;
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
 
     small {
         margin-bottom: .2rem;
@@ -26,8 +28,7 @@ ion-card-header {
     }
 
     &.checked-state-row {
-        margin: 0;
-        height: 36px;
+        height: 38px;
 
         .checked-state-label {
             justify-content: space-between;
@@ -38,5 +39,10 @@ ion-card-header {
                 margin-right: -2px;
             }
         }
+    }
+
+    .comments {
+        white-space: pre-line;
+        color: var(--ion-color-dark-contrast);
     }
 }

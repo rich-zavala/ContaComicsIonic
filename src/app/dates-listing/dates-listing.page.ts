@@ -43,11 +43,7 @@ export class DatesListingPage implements OnInit {
     private modalCtrl: ModalController,
     public popoverController: PopoverController
   ) {
-    db.updateYears();
-  }
-
-  ngOnInit() {
-    this.db.years$.subscribe(d => {
+    db.years$.subscribe(d => {
       if (!this.years || this.years.length === 0 || JSON.stringify(this.years) !== JSON.stringify(d)) {
         this.years = d;
         if (!lodash.isEmpty(d) && (!this.selectedYear || !this.years.map(y => y.year).includes(this.selectedYear.year))) {
@@ -58,34 +54,32 @@ export class DatesListingPage implements OnInit {
       this.showEmpty = this.years.length === 0;
     });
 
-    this.db.insertedRecord$.subscribe(
-      record => {
-        if (!this.selectedYear || this.years.length === 0) {
-          this.reset();
-          return;
-        }
-
-        const rPublYear = record.getPublishYear();
-        const rPublDate = record.publishDate;
-
-        if (rPublYear === this.selectedYear.year && this.records[rPublDate]) {
-          this.records[rPublDate] = lodash.sortBy([...this.records[rPublDate], record], r => r.recordDate).reverse();
-        } else if (rPublYear === this.selectedYear.year) {
-          const newDate: ICCDay = {
-            date: rPublDate,
-            records: [record.id],
-            year: moment(rPublDate).year(),
-            total: record.price
-          };
-          this.records[rPublDate] = [record];
-          this.selectedYearDates = lodash.orderBy([...this.selectedYearDates, newDate], ["date"]).reverse();
-
-        }
-        this.showFilteredMessage();
+    db.insertedRecord$.subscribe(record => {
+      if (!this.selectedYear || this.years.length === 0) {
+        this.reset();
+        return;
       }
-    );
 
-    this.db.deletedRecord$.subscribe(deleteInfo => {
+      const rPublYear = record.getPublishYear();
+      const rPublDate = record.publishDate;
+
+      if (rPublYear === this.selectedYear.year && this.records[rPublDate]) {
+        this.records[rPublDate] = lodash.sortBy([...this.records[rPublDate], record], r => r.recordDate).reverse();
+      } else if (rPublYear === this.selectedYear.year) {
+        const newDate: ICCDay = {
+          date: rPublDate,
+          records: [record.id],
+          year: moment(rPublDate).year(),
+          total: record.price
+        };
+        this.records[rPublDate] = [record];
+        this.selectedYearDates = lodash.orderBy([...this.selectedYearDates, newDate], ["date"]).reverse();
+
+      }
+      this.showFilteredMessage();
+    });
+
+    db.deletedRecord$.subscribe(deleteInfo => {
       if (this.selectedYear.year === deleteInfo.recordYear) {
         this.selectedYear.total = deleteInfo.yearTotal;
         if (deleteInfo.yearDeleted) {
@@ -113,6 +107,10 @@ export class DatesListingPage implements OnInit {
         this.showFilteredMessage();
       }
     });
+  }
+
+  ngOnInit() {
+    this.db.updateYears();
   }
 
   private reset() {
@@ -144,19 +142,25 @@ export class DatesListingPage implements OnInit {
         const dateRecordsDbQueries: Rx.Observable<null>[] = days.map(day =>
           new Rx.Observable(observer => {
             this.db.getDayRecords(day.date)
-              .subscribe(r => {
-                this.records[day.date] = r;
-                this.loadingProgress = lodash.size(this.records) / days.length;
-                if (this.loadingProgress === 1) {
-                  this.working = false;
-                  this.showFilteredMessage();
-                }
+              .subscribe(
+                r => {
+                  this.records[day.date] = r;
+                  this.loadingProgress = lodash.size(this.records) / days.length;
+                  if (this.loadingProgress === 1) {
+                    this.working = false;
+                    this.showFilteredMessage();
+                  }
 
-                observer.complete();
-              });
+                  observer.complete();
+                },
+                err => observer.error(err)
+              );
           })
         );
-        Rx.merge(...dateRecordsDbQueries).subscribe();
+        Rx.concat(...dateRecordsDbQueries).subscribe(
+          () => { },
+          err => console.error("Error", err)
+        );
       });
   }
 

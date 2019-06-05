@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 
-import { ICCDay, ICCRecord, CCRecord } from "src/models";
+import { ICCDay, ICCRecord } from "src/models";
 import { dynCurrency } from "src/app/tools/utils";
 
 import * as moment from "moment";

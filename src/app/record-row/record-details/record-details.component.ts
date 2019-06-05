@@ -4,10 +4,12 @@ import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import { TranslateService } from "@ngx-translate/core";
 
+import { RECORD_FORMAT_TYPE } from "../../../models/record";
 import { RecordHandlerComponent } from "../record-handler.component";
-import { CollectionService } from "src/app/services/collection.service";
+import { CollectionService } from "../../services/collection.service";
 
 import * as Rx from "rxjs";
+import * as lodash from "lodash";
 
 @Component({
   selector: "app-record-details",
@@ -18,6 +20,8 @@ export class RecordDetailsComponent extends RecordHandlerComponent {
   public emmitUpdates = true;
   private dialogStr;
 
+  private formats: string[] = lodash.toArray(RECORD_FORMAT_TYPE);
+
   constructor(
     public db: CollectionService,
     private modalCtrl: ModalController,
@@ -27,6 +31,16 @@ export class RecordDetailsComponent extends RecordHandlerComponent {
   ) {
     super(db);
     translate.get("details.dialog").subscribe(val => this.dialogStr = val);
+  }
+
+  readUpdate($event) {
+    if (this.isChecked($event)) {
+      this.cc.doRead();
+    } else {
+      this.cc.unRead();
+    }
+
+    this.db.updateRecord(this.cc, false);
   }
 
   close() {

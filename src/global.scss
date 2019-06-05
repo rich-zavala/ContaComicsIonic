@@ -100,3 +100,7 @@ ion-alert {
         }
     }
 }
+
+ion-item {
+    --background-focused: var(--ion-color-dark-tint);
+}

@@ -18,25 +18,50 @@
       </div>
       <div class="volumen">#{{cc.volumen}}</div>
     </ion-card-header>
+
     <ion-card-content>
-      <div class="detail-row flex">
-        <ion-label>
-          <small>{{ 'details.price' | translate }}</small>
-          <div>{{cc.price | currency}}</div>
-        </ion-label>
-      </div>
       <div class="detail-row flex">
         <ion-label>
           <small>{{ 'details.publishedDate' | translate }}</small>
           <div>{{cc.detailDates.published}}</div>
         </ion-label>
       </div>
+
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.price' | translate }}</small>
+          <div>{{cc.price | currency}}</div>
+        </ion-label>
+      </div>
+
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.format' | translate }}</small>
+          <div>{{cc.format}}</div>
+        </ion-label>
+      </div>
+
+      <div class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.lang' | translate }}</small>
+          <div class="ion-text-capitalize">{{cc.lang}}</div>
+        </ion-label>
+      </div>
+
+      <div *ngIf="cc.provider" class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.provider' | translate }}</small>
+          <div>{{cc.provider}}</div>
+        </ion-label>
+      </div>
+
       <div class="detail-row flex">
         <ion-label>
           <small>{{ 'details.registryDate' | translate }}</small>
           <div>{{cc.detailDates.registry}}</div>
         </ion-label>
       </div>
+
       <div class="detail-row flex checked-state-row">
         <label class="checked-state-label flex fcenter">
           <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
@@ -47,6 +72,25 @@
             <i class="checkbox-square" [ngClass]="{ checked: checkState.checked }"></i>
           </label>
         </label>
+      </div>
+
+      <div class="detail-row flex checked-state-row">
+        <label class="checked-state-label flex fcenter">
+          <ion-label *ngIf="cc.read" no-margin no-padding>{{ 'details.read' | translate }}<br>{{cc.detailDates.read}}</ion-label>
+          <ion-label *ngIf="!cc.read" no-margin no-padding>{{ 'details.notRead' | translate }}</ion-label>
+          <label class="checkboxContainer flex fcenter fvertical">
+            <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.read" (change)="readUpdate($event)">
+            <fa-icon *ngIf="checkState.read" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
+            <i class="checkbox-square" [ngClass]="{ checked: checkState.read }"></i>
+          </label>
+        </label>
+      </div>
+
+      <div *ngIf="cc.comments" class="detail-row flex">
+        <ion-label>
+          <small>{{ 'details.comments' | translate }}</small>
+          <small class="comments">{{cc.comments}}</small>
+        </ion-label>
       </div>
     </ion-card-content>
   </ion-card>

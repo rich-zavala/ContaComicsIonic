@@ -8,17 +8,22 @@ import { CollectionService } from "src/app/services/collection.service";
 })
 export class RecordHandlerComponent implements OnInit {
     @Input() cc: CCRecord;
-    public checkState = { checked: false };
+    public checkState = { checked: false, read: false };
     public emmitUpdates = false;
 
     constructor(public db: CollectionService) { }
 
     ngOnInit() {
         this.checkState.checked = this.cc.checked;
+        this.checkState.read = this.cc.read;
+    }
+
+    isChecked($event) {
+        return ($event.target && $event.target.checked) || ($event.detail && $event.detail.checked);
     }
 
     checkUpdate($event) {
-        if (($event.target && $event.target.checked) || ($event.detail && $event.detail.checked)) {
+        if (this.isChecked($event)) {
             this.cc.check();
             this.db.updateRecord(this.cc, this.emmitUpdates);
         } else {
