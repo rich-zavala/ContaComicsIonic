@@ -12,15 +12,23 @@
         "about": "About"
     },
     "add": {
-        "title": "Add a Comic",
+        "title_add": "Add a Comic",
+        "title_edit": "Edit a Comic",
         "save": "Save",
+        "edit": "Edit",
         "form": {
             "title": "Title",
             "volumen": "Volumen",
             "price": "Price",
             "variant": "Variant",
             "check": "Is this in your shelf?",
-            "date": "Publish date"
+            "date": "Publish date",
+            "format": "Format",
+            "read": "Is it read?",
+            "readDate": "When did you read it?",
+            "lang": "Language",
+            "provider": "Provider",
+            "comments": "Comments"
         },
         "dialog": {
             "success": "Comic is saved",
@@ -92,6 +100,12 @@
         "registryDate": "Registry date",
         "owned": "In your shelf since",
         "notOwned": "Not owned... yet",
+        "read": "Read on",
+        "notRead": "It's not read",
+        "format": "Format",
+        "lang": "Language",
+        "provider": "Provider",
+        "comments": "Comments",
         "delete": "Delete this record",
         "dialog": {
             "header": "Are you sure?",

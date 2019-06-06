@@ -29,11 +29,10 @@ export class DexieHandler implements ICCDBHandler {
         this.dbYears = (this.dexie as any).years;
     }
 
-    insert(cc: ICCRecord): Rx.Observable<IInsertRecordResponse> {
+    insert(cc: CCRecord): Rx.Observable<IInsertRecordResponse> {
         const resp: IInsertRecordResponse = { duplicate: false, record: null };
-        const ccInst = new CCRecord(cc);
         return new Rx.Observable(observer => {
-            this.insertRecord(ccInst)
+            this.insertRecord(cc)
                 .pipe(
                     finalize(() => {
                         observer.next(resp);
@@ -41,7 +40,7 @@ export class DexieHandler implements ICCDBHandler {
                     })
                 )
                 .subscribe(
-                    () => resp.record = ccInst,
+                    () => resp.record = cc,
                     dbData => {
                         resp.duplicate = true;
                         resp.record = new CCRecord(dbData);

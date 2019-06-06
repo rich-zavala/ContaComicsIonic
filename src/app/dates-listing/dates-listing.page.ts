@@ -170,7 +170,10 @@ export class DatesListingPage implements OnInit {
 
   async openAddForm() {
     const modal = await this.modalCtrl.create({
-      component: AddFormComponent
+      component: AddFormComponent,
+      componentProps: {
+        editRecord: null
+      }
     });
     return await modal.present();
   }

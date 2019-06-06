@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { CCRecord } from "src/models";
-import { CollectionService } from "src/app/services/collection.service";
+import { ModalController } from "@ionic/angular";
+
+import { CCRecord } from "../../models";
+import { CollectionService } from "../services/collection.service";
+import { AddFormComponent } from "../add-form/add-form.component";
+
+import * as lodash from "lodash";
 
 @Component({
     selector: "app-record-handler",
@@ -8,14 +13,30 @@ import { CollectionService } from "src/app/services/collection.service";
 })
 export class RecordHandlerComponent implements OnInit {
     @Input() cc: CCRecord;
-    public checkState = { checked: false, read: false };
-    public emmitUpdates = false;
+    checkableState = { checked: false, read: false };
+    emmitUpdates = false;
+    formatStr: string;
 
-    constructor(public db: CollectionService) { }
+    constructor(public db: CollectionService, public modalCtrl: ModalController) {
+        db.updatedRecord$.subscribe(
+            updatedRecord => {
+                if (updatedRecord.id === this.cc.id) {
+                    lodash.keys(updatedRecord.insertable()).forEach(attr => this.cc[attr] = updatedRecord[attr]);
+                    this.initCheckableStates();
+                }
+            }
+        );
+    }
 
     ngOnInit() {
-        this.checkState.checked = this.cc.checked;
-        this.checkState.read = this.cc.read;
+        this.initCheckableStates();
+    }
+
+    initCheckableStates() {
+        this.cc.init();
+        this.checkableState.checked = this.cc.checked;
+        this.checkableState.read = this.cc.read;
+        this.formatStr = this.cc.format.slice(0, 4);
     }
 
     isChecked($event) {
@@ -31,10 +52,21 @@ export class RecordHandlerComponent implements OnInit {
                 .subscribe(
                     unchecked => {
                         if (!unchecked) {
-                            this.checkState.checked = true;
+                            this.checkableState.checked = true;
                         }
                     }
                 );
         }
+    }
+
+    async edit() {
+        const modal = await this.modalCtrl.create({
+            component: AddFormComponent,
+            componentProps: {
+                editRecord: this.cc
+            }
+        });
+
+        await modal.present();
     }
 }

@@ -10,6 +10,7 @@ ion-card-header {
     }
 
     .volumen {
+        margin-left: 1rem;
         font-size: 2rem;
         line-height: 1;
     }
@@ -17,9 +18,6 @@ ion-card-header {
 }
 
 .detail-row {
-    &:not(:last-child) {
-        margin-bottom: 1rem;
-    }
 
     small {
         margin-bottom: .2rem;

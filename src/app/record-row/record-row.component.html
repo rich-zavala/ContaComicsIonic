@@ -1,14 +1,17 @@
-<div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd }" (click)="showDetails($event)" ion-activatable>
+<div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd }" (click)="showDetails($event)" (press)="startPressDetail($event)" (pressup)="stopPressDetail($event)" ion-activatable>
   <label class="checkboxContainer flex fcenter fvertical">
-    <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkState.checked" (change)="checkUpdate($event)">
-    <fa-icon *ngIf="checkState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
-    <i class="checkbox-square" [ngClass]="{ checked: checkState.checked }"></i>
+    <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
+    <fa-icon *ngIf="checkableState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
+    <i class="checkbox-square" [ngClass]="{ checked: checkableState.checked }"></i>
   </label>
   <div class="title flex fcol">
     <div class="ion-text-capitalize">{{cc.title}}</div>
     <div class="variant" *ngIf="cc.variant">{{cc.variant}}</div>
   </div>
   <div class="volumen">#{{cc.volumen}}</div>
-  <div class="price">{{cc.priceCurrency()}}</div>
+  <div class="misc flex fcol">
+    <div class="price">{{cc.priceCurrency}}</div>
+    <div class="format {{cc.lang}}">{{formatStr}}</div>
+  </div>
   <ion-ripple-effect></ion-ripple-effect>
 </div>

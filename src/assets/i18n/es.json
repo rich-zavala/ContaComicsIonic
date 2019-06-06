@@ -12,15 +12,23 @@
         "about": "Acerca de"
     },
     "add": {
-        "title": "Agrega un Comic",
+        "title_add": "Agrega un Comic",
+        "title_edit": "Edita un Comic",
         "save": "Guardar",
+        "edit": "Edit",
         "form": {
             "title": "Título",
             "volumen": "Volumen",
             "price": "Precio",
             "variant": "Variante",
             "check": "¿Ya lo tienes?",
-            "date": "Fecha de publicación"
+            "date": "Fecha de publicación",
+            "format": "Formato",
+            "read": "¿Ha sido leído?",
+            "readDate": "¿Cuándo lo leíste?",
+            "lang": "Idioma",
+            "provider": "Proveedor",
+            "comments": "Comentarios"
         },
         "dialog": {
             "success": "El Comic se ha guardado",
@@ -90,8 +98,14 @@
         "price": "Precio",
         "publishedDate": "Fecha de publicación",
         "registryDate": "Fecha de registro",
-        "owned": "Adquirido en",
+        "owned": "Adquirido el día",
         "notOwned": "No adquirido... aún",
+        "read": "Leído el día",
+        "notRead": "Aún no ha sido leído",
+        "format": "Formato",
+        "lang": "Idioma",
+        "provider": "Proveedor",
+        "comments": "Comentarios",
         "delete": "Eliminar este registro",
         "dialog": {
             "header": "¿Estás seguro?",

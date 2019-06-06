@@ -19,7 +19,7 @@ export interface IDeleteRecordResponse {
     recordDate: string;
 }
 export interface ICCDBHandler {
-    insert(data: ICCRecord): Observable<IInsertRecordResponse>;
+    insert(data: CCRecord): Observable<IInsertRecordResponse>;
     update(data: CCRecord): Observable<CCRecord>;
     delete(data: ICCRecord): Observable<IDeleteRecordResponse>;
     getYears(): Observable<ICCYear[]>;

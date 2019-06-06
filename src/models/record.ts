@@ -19,17 +19,17 @@ export interface ICCRecord {
     price: number;
     variant: string;
     checked: boolean;
-    publishDate: string;
     checkedDate: number;
+    publishDate: string;
     recordDate: number;
 
     // New data
     format: RECORD_FORMAT_TYPE;
     lang: string;
     read: boolean;
+    readDate: string;
     provider: string;
     comments: string;
-    readDate: number;
 }
 
 export class CCRecord implements ICCRecord {
@@ -41,83 +41,89 @@ export class CCRecord implements ICCRecord {
     format: RECORD_FORMAT_TYPE;
     lang: string;
     read: boolean;
+    readDate: string;
     provider: string;
     comments: string;
     checked: boolean;
-    publishDate: string;
     checkedDate: number;
-    readDate: number;
+    publishDate: string;
     recordDate: number;
 
     private publishDateMoment: moment.Moment;
+    priceCurrency: string;
+    detailDates = {
+        published: "",
+        registry: "",
+        checked: "",
+        read: ""
+    };
 
     constructor(data: ICCRecord) {
         this.title = data.title;
         this.volumen = data.volumen;
         this.price = data.price;
-        this.variant = data.variant;
+        this.variant = data.variant || "";
         this.format = data.format || RECORD_FORMAT_TYPE.Staples;
         this.lang = data.lang || "esp";
-        this.read = data.read === true ? true : false;
-        this.provider = data.provider;
-        this.comments = data.comments;
+        this.read = data.read === false ? false : true;
+        this.provider = data.provider || "";
+        this.comments = data.comments || "";
 
         this.checked = data.checked || false;
-        this.publishDate = data.publishDate;
         this.checkedDate = data.checkedDate;
         this.readDate = data.readDate;
-        this.recordDate = data.recordDate || Date.now();
+        this.recordDate = data.recordDate;
+        this.publishDate = data.publishDate;
 
         this.id = [data.title, data.volumen, data.variant]
             .filter(d => d)
             .join("_")
             .replace(/[^a-zA-Z0-9]/g, "");
 
+        this.init();
+    }
+
+    init() {
         this.publishDateMoment = moment(this.publishDate);
-    }
+        this.priceCurrency = dynCurrency(this.price);
 
-    public check() {
-        if (!this.checked) {
-            this.checked = true;
-            this.checkedDate = Date.now();
-        }
-    }
-
-    public uncheck() {
-        this.checked = false;
-        this.checkedDate = undefined;
-    }
-
-    public doRead() {
-        if (!this.read) {
-            this.read = true;
-            this.readDate = Date.now();
-        }
-    }
-
-    public unRead() {
-        this.read = false;
-        this.readDate = undefined;
-    }
-
-    public getPublishYear() {
-        return this.publishDateMoment.year();
-    }
-
-    public insertable() {
-        return JSON.parse(JSON.stringify(this));
-    }
-
-    public priceCurrency() {
-        return dynCurrency(this.price);
-    }
-
-    get detailDates() {
-        return {
+        this.detailDates = {
             published: this.publishDateMoment.format(DATE_FORMAT_READ),
             registry: moment(this.recordDate).format(DATE_FORMAT_READ_TIME),
             checked: moment(this.checkedDate).format(DATE_FORMAT_READ),
             read: moment(this.readDate).format(DATE_FORMAT_READ)
         };
+    }
+
+    check() {
+        if (!this.checked || !this.checkedDate) {
+            this.checked = true;
+            this.checkedDate = Date.now();
+        }
+    }
+
+    uncheck() {
+        this.checked = false;
+        this.checkedDate = undefined;
+    }
+
+    doRead() {
+        if (!this.read || !this.readDate) {
+            this.read = true;
+            this.readDate = moment(Date.now()).format(DATE_FORMAT);
+        }
+    }
+
+    unRead() {
+        this.read = false;
+        this.readDate = undefined;
+    }
+
+    getPublishYear() {
+        return this.publishDateMoment.year();
+    }
+
+    insertable(): ICCRecord {
+        return JSON.parse(JSON.stringify(this));
     }
 }

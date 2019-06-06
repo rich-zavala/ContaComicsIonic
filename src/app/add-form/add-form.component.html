@@ -5,11 +5,13 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ 'add.title' | translate }}</ion-title>
+    <ion-title *ngIf="!editing">{{ 'add.title_add' | translate }}</ion-title>
+    <ion-title *ngIf="editing">{{ 'add.title_edit' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="ccRecordForm.invalid" (click)="save()" color="light" fill="solid">
         <ion-icon slot="start" name="save"></ion-icon>
-        {{ 'add.save' | translate }}
+        <ng-container *ngIf="!editing">{{ 'add.save' | translate }}</ng-container>
+        <ng-container *ngIf="editing">{{ 'add.edit' | translate }}</ng-container>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -23,7 +25,7 @@
       <ion-input #title formControlName="title" autocapitalize="characters" (ionBlur)="updateTitle()"></ion-input>
     </ion-item>
 
-    <div class="autocompleteOptions" *ngIf="showAutocomplete && !lockAutocompleteHidden">
+    <div class="autocompleteOptions" *ngIf="!editing && showAutocomplete && !lockAutocompleteHidden">
       <div class="close-container">
         <ion-button class="close" color="light" fill="clear" size="small" (click)="hideAutocompleteLock()" no-margin>
           <ion-icon name="close-circle"></ion-icon>
@@ -43,11 +45,11 @@
 
     <ion-item>
       <ion-label position="floating">{{ 'add.form.price' | translate }}</ion-label>
-      <ion-input type="number" formControlName="price" (ionFocus)="hideAutocomplete()"></ion-input>
+      <ion-input #price type="number" formControlName="price" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Format</ion-label>
+      <ion-label position="floating">{{ 'add.form.format' | translate }}</ion-label>
       <ion-select formControlName="format">
         <ion-select-option *ngFor="let f of formats" [value]="f">{{f}}</ion-select-option>
       </ion-select>

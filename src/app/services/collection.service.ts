@@ -48,14 +48,14 @@ export class CollectionService {
         return this.db.db.getRecord(id);
     }
 
-    insert(cc: ICCRecord): Rx.Observable<IInsertRecordResponse> {
+    insert(cc: CCRecord): Rx.Observable<IInsertRecordResponse> {
         return new Rx.Observable(observer => {
             this.db.db.insert(cc).subscribe(
                 insertResult => {
                     if (!insertResult.duplicate) {
                         this.updateYears();
                         this.updateSeries();
-                        this.insertedRecord$.next(new CCRecord(insertResult.record));
+                        this.insertedRecord$.next(insertResult.record);
                     }
                     observer.next(insertResult);
                     observer.complete();

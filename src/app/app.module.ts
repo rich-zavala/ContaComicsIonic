@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { HttpClientModule, HttpClient, } from "@angular/common/http";
 
@@ -15,12 +15,12 @@ import { Dialogs } from "@ionic-native/dialogs/ngx";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AddFormModule } from "./add-form/add-form.module";
+import { IonicGestureConfig } from "./services/hammerGestures.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
-
 
 @NgModule({
   declarations: [
@@ -45,9 +45,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatusBar,
     SplashScreen,
     Dialogs,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
 
-    TranslateService
+    TranslateService,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: IonicGestureConfig
+    }
   ],
   bootstrap: [
     AppComponent

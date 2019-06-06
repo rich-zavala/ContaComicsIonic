@@ -24,12 +24,12 @@ export class RecordDetailsComponent extends RecordHandlerComponent {
 
   constructor(
     public db: CollectionService,
-    private modalCtrl: ModalController,
+    public modalCtrl: ModalController,
     private alertController: AlertController,
     private dialogs: Dialogs,
     translate: TranslateService
   ) {
-    super(db);
+    super(db, modalCtrl);
     translate.get("details.dialog").subscribe(val => this.dialogStr = val);
   }
 

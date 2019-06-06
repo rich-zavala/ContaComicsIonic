@@ -20,7 +20,7 @@
     }
 
     .title {
-        padding: 2px 0;
+        padding: 6px 0;
         flex: 1;
 
         .variant {
@@ -34,8 +34,25 @@
         font-weight: bold;
     }
 
-    .price {
+    .misc {
         min-width: 36px;
-        text-align: right;
+        margin-right: 6px;
+        align-items: flex-end;
+
+        .price {
+            font-size: .8rem;
+        }
+
+        .format {
+            font-size: .5rem;
+
+            &.esp {
+                color: #ffd800;
+            }
+
+            &.eng {
+                color: #009dff;
+            }
+        }
     }
 }
