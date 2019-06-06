@@ -5,7 +5,7 @@ import { ModalController, PopoverController, IonSelect } from "@ionic/angular";
 import { ICCYear, ICCDay, CCRecord, ICCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray } from "rxjs/operators";
+import { toArray, takeUntil } from "rxjs/operators";
 import * as lodash from "lodash";
 import * as moment from "moment";
 
@@ -31,6 +31,7 @@ export class DatesListingPage implements OnInit {
   selectedYearDates: ICCDay[] = [];
   records: TDatesCollection = {};
 
+  stopDatesQuery$ = new Rx.Subject();
   loadingProgress = 0;
   working = false;
   showEmpty = false;
@@ -114,12 +115,14 @@ export class DatesListingPage implements OnInit {
   }
 
   private reset() {
+    this.working = false;
     this.selectedYearDates = [];
     this.loadingProgress = 0;
   }
 
   private selectYear(yearData: ICCYear) {
     if (!this.isSelected(yearData.year)) {
+      this.stopDatesQuery$.next();
       this.reset();
       this.selectedYear = yearData;
       this.updateYearSelected();
@@ -144,6 +147,7 @@ export class DatesListingPage implements OnInit {
             this.db.getDayRecords(day.date)
               .subscribe(
                 r => {
+                  console.log("Got", this.selectedYear.year, day.date);
                   this.records[day.date] = r;
                   this.loadingProgress = lodash.size(this.records) / days.length;
                   if (this.loadingProgress === 1) {
@@ -157,10 +161,12 @@ export class DatesListingPage implements OnInit {
               );
           })
         );
-        Rx.concat(...dateRecordsDbQueries).subscribe(
-          () => { },
-          err => console.error("Error", err)
-        );
+        Rx.concat(...dateRecordsDbQueries)
+          .pipe(takeUntil(this.stopDatesQuery$))
+          .subscribe(
+            () => { },
+            err => console.error("Error", err)
+          );
       });
   }
 

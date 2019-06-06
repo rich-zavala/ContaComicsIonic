@@ -34,7 +34,7 @@
   <ion-toolbar *ngIf="!showEmpty">
     <ion-tabs>
       <ion-tab-bar slot="top">
-        <ion-tab-button *ngFor="let year of years" (click)="selectYear(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: working || isSelected(year.year) }">
+        <ion-tab-button *ngFor="let year of years" (click)="selectYear(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: isSelected(year.year) }">
           <ion-icon name="calendar"></ion-icon>
           <ion-label>{{year.year}}</ion-label>
         </ion-tab-button>
