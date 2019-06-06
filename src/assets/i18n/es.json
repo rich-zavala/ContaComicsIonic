@@ -115,5 +115,16 @@
                 "Cancelar"
             ]
         }
+    },
+    "langs": {
+        "eng": "Inglés",
+        "esp": "Español"
+    },
+    "formats": {
+        "Staples": "Grapas",
+        "TP": "TP",
+        "HC": "Pasta Dura",
+        "Monster": "Monster",
+        "Manga": "Manga"
     }
 }

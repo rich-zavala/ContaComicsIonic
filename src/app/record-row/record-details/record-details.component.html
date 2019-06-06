@@ -49,7 +49,7 @@
             <div class="detail-row flex">
               <ion-label>
                 <small>{{ 'details.format' | translate }}</small>
-                <div>{{cc.format}}</div>
+                <div>{{ 'formats.' + cc.format | translate }}</div>
               </ion-label>
             </div>
           </ion-col>
@@ -71,16 +71,21 @@
         </ion-label>
       </div>
 
-      <div class=" detail-row flex ion-margin-bottom">
+      <div class="detail-row flex ion-margin-bottom">
         <ion-label>
           <small>{{ 'details.registryDate' | translate }}</small>
-          <div>{{cc.detailDates.registry}}</div>
+          <div class="dateRow">{{cc.detailDates.registry}}</div>
         </ion-label>
       </div>
 
       <div class="detail-row flex checked-state-row ion-margin-bottom">
         <label class=" checked-state-label flex fcenter">
-          <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br>{{cc.detailDates.checked}}</ion-label>
+          <!-- <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br><span class="dateRow">{{cc.detailDates.checked}}</span></ion-label> -->
+
+          <ion-label *ngIf="cc.checked">
+            <small>{{ 'details.owned' | translate }}</small>
+            <span class="dateRow">{{cc.detailDates.checked}}</span>
+          </ion-label>
           <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
             <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
@@ -92,7 +97,10 @@
 
       <div class="detail-row flex checked-state-row ion-margin-bottom">
         <label class=" checked-state-label flex fcenter">
-          <ion-label *ngIf="cc.read" no-margin no-padding>{{ 'details.read' | translate }}<br>{{cc.detailDates.read}}</ion-label>
+          <ion-label *ngIf="cc.read">
+            <small>{{ 'details.read' | translate }}</small>
+            <span class="dateRow">{{cc.detailDates.read}}</span>
+          </ion-label>
           <ion-label *ngIf="!cc.read" no-margin no-padding>{{ 'details.notRead' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
             <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.read" (change)="readUpdate($event)">

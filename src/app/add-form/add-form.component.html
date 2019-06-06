@@ -51,7 +51,7 @@
     <ion-item>
       <ion-label position="floating">{{ 'add.form.format' | translate }}</ion-label>
       <ion-select formControlName="format">
-        <ion-select-option *ngFor="let f of formats" [value]="f">{{f}}</ion-select-option>
+        <ion-select-option *ngFor="let f of formats" [value]="f">{{ 'formats.' + f | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -63,8 +63,8 @@
     <ion-item>
       <ion-label position="floating">{{ 'add.form.lang' | translate }}</ion-label>
       <ion-select formControlName="lang">
-        <ion-select-option value="esp">Spanish</ion-select-option>
-        <ion-select-option value="eng">English</ion-select-option>
+        <ion-select-option value="esp">{{ 'langs.esp' | translate }}</ion-select-option>
+        <ion-select-option value="eng">{{ 'langs.eng' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 

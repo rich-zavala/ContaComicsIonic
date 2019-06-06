@@ -115,5 +115,16 @@
                 "Cancel"
             ]
         }
+    },
+    "langs": {
+        "eng": "English",
+        "esp": "Spanish"
+    },
+    "formats": {
+        "Staples": "Staples",
+        "TP": "TP",
+        "HC": "HC",
+        "Monster": "Monster",
+        "Manga": "Manga"
     }
 }
