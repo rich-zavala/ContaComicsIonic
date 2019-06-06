@@ -28,8 +28,9 @@ export class SeriesListingPage implements OnInit {
 
   showEmpty = false;
   filterEmpty = false;
-
   filterValue = "";
+
+  private showingAddForm = false;
 
   constructor(
     private db: CollectionService,
@@ -115,12 +116,18 @@ export class SeriesListingPage implements OnInit {
   }
 
   async openAddForm() {
+    if (this.showingAddForm) {
+      return;
+    }
+
     const modal = await this.modalCtrl.create({
       component: AddFormComponent,
       componentProps: {
         editRecord: null
       }
     });
-    return await modal.present();
+
+    await modal.present();
+    this.showingAddForm = false;
   }
 }

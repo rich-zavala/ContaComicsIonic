@@ -14,7 +14,8 @@ import { CollectionService } from "../services/collection.service";
 })
 export class RecordRowComponent extends RecordHandlerComponent {
   @Input() odd: any;
-  updatingCheckFromDetails = false;
+
+  private showingDetails = false;
 
   // Long press handlers
   protected detailPressInterval: any;
@@ -29,12 +30,19 @@ export class RecordRowComponent extends RecordHandlerComponent {
   }
 
   async showDetails($event) {
+    if (this.showingDetails) {
+      return;
+    }
+
     if (!["i", "path", "svg", "input", "label"].includes($event.target.localName)) {
+      this.showingDetails = true;
       const modal = await this.modalCtrl.create({
         component: RecordDetailsComponent,
         componentProps: { cc: this.cc }
       });
-      return await modal.present();
+
+      await modal.present();
+      this.showingDetails = false;
     }
   }
 

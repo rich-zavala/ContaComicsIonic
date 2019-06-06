@@ -39,6 +39,8 @@ export class DatesListingPage implements OnInit {
   filterValue = 0;
   showFilteredEmpty = false;
 
+  private showingAddForm = false;
+
   constructor(
     private db: CollectionService,
     private modalCtrl: ModalController,
@@ -147,7 +149,6 @@ export class DatesListingPage implements OnInit {
             this.db.getDayRecords(day.date)
               .subscribe(
                 r => {
-                  console.log("Got", this.selectedYear.year, day.date);
                   this.records[day.date] = r;
                   this.loadingProgress = lodash.size(this.records) / days.length;
                   if (this.loadingProgress === 1) {
@@ -175,13 +176,20 @@ export class DatesListingPage implements OnInit {
   }
 
   async openAddForm() {
+    if (this.showingAddForm) {
+      return;
+    }
+
+    this.showingAddForm = true;
     const modal = await this.modalCtrl.create({
       component: AddFormComponent,
       componentProps: {
         editRecord: null
       }
     });
-    return await modal.present();
+
+    await modal.present();
+    this.showingAddForm = false;
   }
 
   showFilter() {
