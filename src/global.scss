@@ -104,3 +104,13 @@ ion-alert {
 ion-item {
     --background-focused: var(--ion-color-dark-tint);
 }
+
+.lang {
+    &.esp {
+        color: #ffd800;
+    }
+
+    &.eng {
+        color: #009dff;
+    }
+}

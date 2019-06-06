@@ -57,7 +57,7 @@
             <div class="detail-row flex">
               <ion-label>
                 <small>{{ 'details.lang' | translate }}</small>
-                <div class="ion-text-capitalize">{{cc.lang}}</div>
+                <div class="ion-text-capitalize lang {{cc.lang}}">{{cc.lang}}</div>
               </ion-label>
             </div>
           </ion-col>
@@ -80,8 +80,6 @@
 
       <div class="detail-row flex checked-state-row ion-margin-bottom">
         <label class=" checked-state-label flex fcenter">
-          <!-- <ion-label *ngIf="cc.checked" no-margin no-padding>{{ 'details.owned' | translate }}<br><span class="dateRow">{{cc.detailDates.checked}}</span></ion-label> -->
-
           <ion-label *ngIf="cc.checked">
             <small>{{ 'details.owned' | translate }}</small>
             <span class="dateRow">{{cc.detailDates.checked}}</span>
