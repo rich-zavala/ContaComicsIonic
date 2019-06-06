@@ -120,6 +120,7 @@ export class SeriesListingPage implements OnInit {
       return;
     }
 
+    this.showingAddForm = true;
     const modal = await this.modalCtrl.create({
       component: AddFormComponent,
       componentProps: {
