@@ -1,6 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 
+import { TranslateService } from "@ngx-translate/core";
+
 import { RecordHandlerComponent } from "./record-handler.component";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { CollectionService } from "../services/collection.service";
@@ -20,9 +22,10 @@ export class RecordRowComponent extends RecordHandlerComponent {
 
   constructor(
     public db: CollectionService,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    translate: TranslateService
   ) {
-    super(db, modalCtrl);
+    super(db, modalCtrl, translate);
   }
 
   async showDetails($event) {

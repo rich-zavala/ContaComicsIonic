@@ -3,6 +3,14 @@
     flex: 1;
     position: relative;
 
+    &:not(.read) .checkboxContainer {
+
+        .checkbox,
+        .checkbox-square {
+            color: var(--ion-color-warning-shade);
+        }
+    }
+
     &.odd {
         background: var(--ion-color-odd);
     }

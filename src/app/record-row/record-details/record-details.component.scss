@@ -18,7 +18,6 @@ ion-card-header {
 }
 
 .detail-row {
-
     small {
         margin-bottom: .2rem;
         display: block;
@@ -37,6 +36,10 @@ ion-card-header {
                 margin-right: -2px;
             }
         }
+    }
+
+    .dateRow {
+        text-transform: capitalize;
     }
 
     .comments {

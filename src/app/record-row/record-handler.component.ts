@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 
+import { TranslateService } from "@ngx-translate/core";
+
 import { CCRecord } from "../../models";
 import { CollectionService } from "../services/collection.service";
 import { AddFormComponent } from "../add-form/add-form.component";
@@ -15,9 +17,13 @@ export class RecordHandlerComponent implements OnInit {
     @Input() cc: CCRecord;
     checkableState = { checked: false, read: false };
     emmitUpdates = false;
+
+    private strs;
     formatStr: string;
 
-    constructor(public db: CollectionService, public modalCtrl: ModalController) {
+    constructor(public db: CollectionService, public modalCtrl: ModalController, translate: TranslateService) {
+        translate.get("formats").subscribe(val => this.strs = val);
+
         db.updatedRecord$.subscribe(
             updatedRecord => {
                 if (updatedRecord.id === this.cc.id) {
@@ -36,7 +42,7 @@ export class RecordHandlerComponent implements OnInit {
         this.cc.init();
         this.checkableState.checked = this.cc.checked;
         this.checkableState.read = this.cc.read;
-        this.formatStr = this.cc.format.slice(0, 4);
+        this.formatStr = this.strs[this.cc.format].slice(0, 7);
     }
 
     isChecked($event) {

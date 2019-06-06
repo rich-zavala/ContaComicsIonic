@@ -29,7 +29,7 @@ export class RecordDetailsComponent extends RecordHandlerComponent {
     private dialogs: Dialogs,
     translate: TranslateService
   ) {
-    super(db, modalCtrl);
+    super(db, modalCtrl, translate);
     translate.get("details.dialog").subscribe(val => this.dialogStr = val);
   }
 

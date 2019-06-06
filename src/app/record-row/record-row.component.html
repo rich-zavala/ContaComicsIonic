@@ -1,4 +1,4 @@
-<div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd }" (click)="showDetails($event)" (press)="startPressDetail($event)" (pressup)="stopPressDetail($event)" ion-activatable>
+<div class="cc-row flex fvertical ion-activatable" [ngClass]="{ odd: odd, read: cc.read }" (click)="showDetails($event)" (press)="startPressDetail($event)" (pressup)="stopPressDetail($event)" ion-activatable>
   <label class="checkboxContainer flex fcenter fvertical">
     <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
     <fa-icon *ngIf="checkableState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
