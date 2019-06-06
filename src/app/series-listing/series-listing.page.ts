@@ -35,10 +35,6 @@ export class SeriesListingPage implements OnInit {
     private db: CollectionService,
     private modalCtrl: ModalController
   ) {
-    db.updateSeries();
-  }
-
-  ngOnInit() {
     this.db.series$.subscribe(d => {
       this.series = d;
       this.series.forEach(serie => {
@@ -70,6 +66,11 @@ export class SeriesListingPage implements OnInit {
 
       this.showEmpty = this.series.length === 0;
     });
+
+  }
+
+  ngOnInit() {
+    this.db.updateSeries();
   }
 
   private filter() {

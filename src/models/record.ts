@@ -91,7 +91,7 @@ export class CCRecord implements ICCRecord {
             published: this.publishDateMoment.format(DATE_FORMAT_READ),
             registry: moment(this.recordDate).format(DATE_FORMAT_READ_TIME),
             checked: moment(this.checkedDate).format(DATE_FORMAT_READ),
-            read: moment(this.readDate).format(DATE_FORMAT_READ)
+            read: this.readDate ? moment(this.readDate).format(DATE_FORMAT_READ) : "Unknown"
         };
     }
 

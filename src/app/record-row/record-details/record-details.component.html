@@ -86,7 +86,7 @@
           </ion-label>
           <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
-            <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
+            <input type="checkbox" class="hidden" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
             <fa-icon *ngIf="checkableState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
             <i class="checkbox-square" [ngClass]="{ checked: checkableState.checked }"></i>
           </label>
@@ -101,7 +101,7 @@
           </ion-label>
           <ion-label *ngIf="!cc.read" no-margin no-padding>{{ 'details.notRead' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
-            <input type="checkbox" class="hidden" *ngIf="!updatingCheckFromDetails" [(ngModel)]="checkableState.read" (change)="readUpdate($event)">
+            <input type="checkbox" class="hidden" [(ngModel)]="checkableState.read" (change)="readUpdate($event)">
             <fa-icon *ngIf="checkableState.read" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
             <i class="checkbox-square" [ngClass]="{ checked: checkableState.read }"></i>
           </label>

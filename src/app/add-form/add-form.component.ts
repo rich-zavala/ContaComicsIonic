@@ -37,7 +37,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
   lockAutocompleteHidden = false;
 
   private backSubs: Rx.Subscription;
-  private formats: string[] = lodash.toArray(RECORD_FORMAT_TYPE);
+  formats: string[] = lodash.toArray(RECORD_FORMAT_TYPE);
   private strs;
 
   editing = false;
@@ -70,6 +70,11 @@ export class AddFormComponent implements OnInit, OnDestroy {
     if (this.editing) {
       lodash.keys(this.ccRecordForm.controls).forEach(attr => this.ccRecordForm.controls[attr].setValue(this.editRecord[attr]));
       this.nonEditableFields.forEach(attr => this.ccRecordForm.controls[attr].disable());
+
+      // Must of imported records will be read but with no read date...
+      if (this.editRecord.read && lodash.isEmpty(this.editRecord.readDate)) {
+        this.ccRecordForm.controls.readDate.setValue(moment().format(DATE_FORMAT));
+      }
       fieldToFocus = this.priceField;
     } else {
       this.ccRecordForm.reset();
@@ -98,7 +103,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
       format: new FormControl(RECORD_FORMAT_TYPE.Staples, Validators.required),
       lang: new FormControl("esp", Validators.required),
       read: new FormControl(false),
-      readDate: new FormControl(),
+      readDate: new FormControl(moment().format(DATE_FORMAT)),
       provider: new FormControl(""),
       comments: new FormControl(""),
       checked: new FormControl(false),
@@ -144,7 +149,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
     this.volumenField.setFocus();
   }
 
-  private hideAutocomplete() {
+  hideAutocomplete() {
     this.showAutocomplete = false;
   }
 
