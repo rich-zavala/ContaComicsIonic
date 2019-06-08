@@ -77,7 +77,7 @@ export class CCRecord implements ICCRecord {
         this.id = [data.title, data.volumen, data.variant]
             .filter(d => d)
             .join("_")
-            .replace(/[^a-zA-Z0-9]/g, "");
+            .replace(/[^a-zA-Z0-9]/g, "_");
 
         if (!this.checked) {
             this.unRead();

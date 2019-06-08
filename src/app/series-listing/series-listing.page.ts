@@ -58,11 +58,11 @@ export class SeriesListingPage implements OnInit {
     );
 
     this.db.deletedRecord$.subscribe(deleteInfo => {
+      lodash.remove(this.states[deleteInfo.record.title].records, r => r.id === deleteInfo.record.id);
+
       if (deleteInfo.serieDeleted) {
         this.series = this.series.filter(s => s.name !== deleteInfo.record.title);
         this.filter();
-      } else {
-        lodash.remove(this.states[deleteInfo.record.title].records, r => r.id === deleteInfo.record.id);
       }
 
       this.showEmpty = this.series.length === 0;

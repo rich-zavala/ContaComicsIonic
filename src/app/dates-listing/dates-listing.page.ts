@@ -77,14 +77,24 @@ export class DatesListingPage implements OnInit {
         };
         this.records[rPublDate] = [record];
         this.selectedYearDates = lodash.orderBy([...this.selectedYearDates, newDate], ["date"]).reverse();
-
       }
+
       this.showFilteredMessage();
     });
 
     db.deletedRecord$.subscribe(deleteInfo => {
       if (this.selectedYear.year === deleteInfo.recordYear) {
         this.selectedYear.total = deleteInfo.yearTotal;
+
+        // Update record day data
+        const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
+        date.total = deleteInfo.dayTotal;
+        lodash.remove(date.records, record => record === deleteInfo.record.id);
+        lodash.remove(this.records[date.date], record => record.id === deleteInfo.record.id);
+        if (this.records[date.date].length === 0) {
+          delete this.records[date.date];
+        }
+
         if (deleteInfo.yearDeleted) {
           lodash.remove(this.years, y => y.year === deleteInfo.recordYear);
           if (this.years.length > 0) {
@@ -99,10 +109,6 @@ export class DatesListingPage implements OnInit {
         } else {
           const dateChild = this.dateChildren.find(dc => dc.date.date === deleteInfo.recordDate);
           if (dateChild) {
-            const date = this.selectedYearDates.find(d => d.date === deleteInfo.recordDate);
-            date.total = deleteInfo.dayTotal;
-            lodash.remove(date.records, record => record === deleteInfo.record.id);
-            lodash.remove(this.records[date.date], record => record.id === deleteInfo.record.id);
             dateChild.ngOnInit();
           }
         }

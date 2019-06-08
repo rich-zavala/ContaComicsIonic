@@ -8,7 +8,7 @@
     <ion-title *ngIf="!editing">{{ 'add.title_add' | translate }}</ion-title>
     <ion-title *ngIf="editing">{{ 'add.title_edit' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="ccRecordForm.invalid" (click)="save()" color="light" fill="solid">
+      <ion-button [disabled]="ccRecordForm.invalid || working" (click)="save()" color="light" fill="solid">
         <ion-icon slot="start" name="save"></ion-icon>
         <ng-container *ngIf="!editing">{{ 'add.save' | translate }}</ng-container>
         <ng-container *ngIf="editing">{{ 'add.edit' | translate }}</ng-container>

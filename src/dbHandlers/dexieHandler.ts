@@ -68,6 +68,7 @@ export class DexieHandler implements ICCDBHandler {
                                         ];
                                         Rx.merge(...dataHandlers)
                                             .pipe(
+                                                toArray(),
                                                 finalize(() => {
                                                     observer.next(cc);
                                                     observer.complete();
@@ -220,6 +221,10 @@ export class DexieHandler implements ICCDBHandler {
                 });
 
                 const subjDates = new Rx.Observable(obsDates => {
+                    const finish = () => {
+                        obsDates.next(null);
+                        obsDates.complete();
+                    };
                     const dayStr = cc.publishDate;
                     Rx.from(this.dbDays.get(dayStr)).subscribe(dayData => {
                         dayData.records.splice(dayData.records.findIndex(rId => rId === cc.id), 1);
@@ -227,6 +232,8 @@ export class DexieHandler implements ICCDBHandler {
                             dayData.total -= cc.price;
                             resp.dayTotal = dayData.total;
                             sequentialUpdates.push(Rx.from(this.dbDays.put(dayData)));
+
+                            finish();
                         } else {
                             resp.dayDeleted = true;
                             sequentialUpdates.push(Rx.from(this.dbDays.delete(dayStr)));
@@ -242,11 +249,11 @@ export class DexieHandler implements ICCDBHandler {
                                     resp.yearDeleted = true;
                                     sequentialUpdates.push(Rx.from(this.dbYears.delete(year as any)));
                                 }
+
+                                finish();
                             });
                         }
                     });
-                    obsDates.next(null);
-                    obsDates.complete();
                 });
 
                 Rx.merge(subjSerie, subjDates)
@@ -254,12 +261,11 @@ export class DexieHandler implements ICCDBHandler {
                         toArray(),
                         finalize(() => {
                             Rx.merge(...sequentialUpdates)
-                                .subscribe(
-                                    () => {
-                                        observer.next(resp);
-                                        observer.complete();
-                                    }
-                                );
+                                .pipe(finalize(() => {
+                                    observer.next(resp);
+                                    observer.complete();
+                                }))
+                                .subscribe();
                         }))
                     .subscribe();
             });

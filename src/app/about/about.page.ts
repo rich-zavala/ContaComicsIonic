@@ -3,9 +3,11 @@ import { Component } from "@angular/core";
 import * as Rx from "rxjs";
 import * as moment from "moment";
 import * as lodash from "lodash";
-import { CC_DATA } from "src/cc";
+import { CC_DATA } from "../../cc";
+import { CCRecord } from "../../models";
+import { RECORD_FORMAT_TYPE } from "../../models/record";
+import { DATE_FORMAT } from "../../constants/formats";
 import { DbHandlingService } from "../services/db-handling.service";
-import { DATE_FORMAT } from "src/constants/formats";
 
 @Component({
   selector: "app-about",
@@ -21,20 +23,29 @@ export class AboutPage {
     this.expanded = !this.expanded;
   }
 
-  load() {
+  load() { }
+
+  _load() {
     let count = 0;
-    const sample = lodash.sampleSize(CC_DATA, 100);
+    const sample = lodash.sampleSize(CC_DATA, 500);
     Rx.concat(...sample.map(r => {
       const d = {
         title: r.titulo,
         volumen: r.volumen,
+        variant: r.variante,
+        format: RECORD_FORMAT_TYPE.Staples,
+        lang: "esp",
+        read: true,
+        readDate: undefined,
+        provider: "",
+        comments: "",
         price: r.precio,
         checked: r.adquirido === 1,
         publishDate: moment(r.fecha).format(DATE_FORMAT),
         checkedDate: moment(r.fecha_adquisicion).valueOf(),
         recordDate: moment(r.fecha_registro).valueOf()
       };
-      return this.db.db.insert(d as any);
+      return this.db.db.insert(new CCRecord(d));
     }))
       .subscribe(res => {
         count++;

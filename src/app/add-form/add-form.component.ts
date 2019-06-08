@@ -29,6 +29,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
   @ViewChild("volumen") volumenField: IonInput;
   @ViewChild("price") priceField: IonInput;
 
+  working = false;
   ccRecordForm: FormGroup;
   titles: string[] = [];
 
@@ -159,6 +160,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    this.working = true;
     this.lockAutocompleteHidden = false; // Unlock autocomplete
     const recordValues: ICCRecord = this.ccRecordForm.value;
     for (const i in recordValues) {
@@ -192,13 +194,16 @@ export class AddFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.editing) {
-      this.db.updateRecord(newRecInst, true)
-        .add(() => {
-          this.editRecord = newRecInst;
-          this.successToast();
-          this.close();
+      this.db.deleteRecord(this.editRecord).add(() => {
+        this.db.insert(newRecInst).subscribe(() => {
+          this.db.updateRecord(newRecInst, true)
+            .add(() => {
+              this.editRecord = newRecInst;
+              this.successToast();
+              this.close();
+            });
         });
-
+      });
     } else {
       this.db.insert(newRecInst)
         .subscribe(
@@ -216,6 +221,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
   }
 
   async successToast() {
+    this.working = false;
     const toast = await this.toastController.create({
       message: this.strs.success,
       duration: 2000,
@@ -226,7 +232,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
 
   showWarnDialog(cc: CCRecord) {
     this.vibration.vibrate(700);
-
+    this.working = false;
     const header = this.strs.header;
     const variant = cc.variant.length > 0 ? `${this.strs.variant}:\n${cc.variant}\n` : "";
     const nativeMessage = `${cc.title} #${cc.volumen}\n${variant}\n${this.strs.dateRegistered}:\n${cc.detailDates.registry}\n\n${this.strs.message}`;
