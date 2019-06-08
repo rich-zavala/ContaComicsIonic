@@ -65,7 +65,6 @@ export class CCRecord implements ICCRecord {
         this.variant = data.variant || "";
         this.format = data.format || RECORD_FORMAT_TYPE.Staples;
         this.lang = data.lang || "esp";
-        this.read = data.read === false ? false : true;
         this.provider = data.provider || "";
         this.comments = data.comments || "";
 
@@ -79,6 +78,13 @@ export class CCRecord implements ICCRecord {
             .filter(d => d)
             .join("_")
             .replace(/[^a-zA-Z0-9]/g, "");
+
+        if (!this.checked) {
+            this.unRead();
+        } else {
+            this.read = data.read === false ? false : true;
+            this.readDate = data.readDate;
+        }
 
         this.init();
     }
