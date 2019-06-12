@@ -12,13 +12,13 @@
             <ion-label>{{ 'menu.groupTitle' | translate }}</ion-label>
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/dates-listing']">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/' + PAGE_NAMES.DATES_LISTING]" (click)="setLastPage(PAGE_NAMES.DATES_LISTING)">
               <ion-icon color="light" slot="start" name="calendar"></ion-icon>
               <ion-label>{{ 'menu.groupYear' | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/series-listing']">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/' + PAGE_NAMES.SERIES_LISTING]" (click)="setLastPage(PAGE_NAMES.SERIES_LISTING)">
               <ion-icon color="light" slot="start" name="list"></ion-icon>
               <ion-label>{{ 'menu.groupSeries' | translate }}</ion-label>
             </ion-item>

@@ -1,31 +1,37 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { PAGE_NAMES, PAGE_NAME } from "../constants/page-names";
+
+const LOCAL_STORAGE_PAGE = window.localStorage.getItem(PAGE_NAME);
+const MAIN_ROUTE = LOCAL_STORAGE_PAGE ? LOCAL_STORAGE_PAGE : PAGE_NAMES.DATES_LISTING;
+
+alert(MAIN_ROUTE);
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dates-listing",
+    redirectTo: MAIN_ROUTE,
     pathMatch: "full"
   },
   {
-    path: "dates-listing",
+    path: PAGE_NAMES.DATES_LISTING,
     loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
   },
   {
-    path: "series-listing",
+    path: PAGE_NAMES.SERIES_LISTING,
     loadChildren: "./series-listing/series-listing.module#SeriesListingPageModule"
   },
 
   {
-    path: "exporter",
+    path: PAGE_NAMES.EXPORTER,
     loadChildren: "./exporter/exporter.module#ExporterPageModule"
   },
   {
-    path: "importer",
+    path: PAGE_NAMES.IMPORTER,
     loadChildren: "./importer/importer.module#ImporterPageModule"
   },
   {
-    path: "about",
+    path: PAGE_NAMES.ABOUT,
     loadChildren: "./about/about.module#AboutPageModule"
   }
 ];

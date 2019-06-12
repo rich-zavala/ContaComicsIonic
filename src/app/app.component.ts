@@ -5,7 +5,7 @@ import { Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
-import { CollectionService } from "./services/collection.service";
+import { PAGE_NAMES, PAGE_NAME } from "../constants/page-names";
 
 import * as Rx from "rxjs";
 import { toArray } from "rxjs/operators";
@@ -17,6 +17,8 @@ import * as moment from "moment";
   templateUrl: "app.component.html"
 })
 export class AppComponent {
+  PAGE_NAMES = PAGE_NAMES;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -54,5 +56,9 @@ export class AppComponent {
     }
 
     return UseResolver;
+  }
+
+  setLastPage(pageName: string) {
+    window.localStorage.setItem(PAGE_NAME, pageName);
   }
 }
