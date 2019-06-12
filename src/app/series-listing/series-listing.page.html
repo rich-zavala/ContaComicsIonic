@@ -39,14 +39,14 @@
   </ion-item-group>
 
   <ng-container *ngIf="showEmpty">
-    <ion-text class="flex fcol fvertical marginBottom20">
+    <ion-text class="flex fcol fvertical margin20">
       <h2>{{ 'noRecords' | translate }}</h2>
       <ion-button strong="false" size="small" color="tertiary" (click)="openAddForm()">{{ 'isEmpty' | translate }}</ion-button>
     </ion-text>
   </ng-container>
 
   <ng-container *ngIf="filterEmpty">
-    <ion-text class="flex fcol fvertical marginBottom20" color="medium">{{ 'isEmptyFilter' | translate }}</ion-text>
+    <ion-text class="flex fcol fvertical margin20" color="medium">{{ 'isEmptyFilter' | translate }}</ion-text>
   </ng-container>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddForm()">

@@ -105,6 +105,7 @@ export class CCRecord implements ICCRecord {
         if (!this.checked || !this.checkedDate) {
             this.checked = true;
             this.checkedDate = Date.now();
+            this.init();
         }
     }
 
@@ -117,6 +118,7 @@ export class CCRecord implements ICCRecord {
         if (!this.read || !this.readDate) {
             this.read = true;
             this.readDate = moment(Date.now()).format(DATE_FORMAT);
+            this.init();
         }
     }
 
