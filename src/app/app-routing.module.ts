@@ -2,15 +2,10 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { PAGE_NAMES, PAGE_NAME } from "../constants/page-names";
 
-const LOCAL_STORAGE_PAGE = window.localStorage.getItem(PAGE_NAME);
-const MAIN_ROUTE = LOCAL_STORAGE_PAGE ? LOCAL_STORAGE_PAGE : PAGE_NAMES.DATES_LISTING;
-
-alert(MAIN_ROUTE);
-
 const routes: Routes = [
   {
     path: "",
-    redirectTo: MAIN_ROUTE,
+    redirectTo: PAGE_NAMES.DATES_LISTING,
     pathMatch: "full"
   },
   {

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 
 import { Platform } from "@ionic/angular";
@@ -23,7 +24,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -35,11 +37,17 @@ export class AppComponent {
     )
       .pipe(toArray())
       .subscribe(res => {
-        this.splashScreen.hide();
         if (typeof cordova !== "undefined" && cordova.platformId === "android") {
           this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByHexString("#9a0031");
         }
+
+        // Navigate to last visited page
+        const LOCAL_STORAGE_PAGE = window.localStorage.getItem(PAGE_NAME);
+        const MAIN_ROUTE = LOCAL_STORAGE_PAGE ? LOCAL_STORAGE_PAGE : PAGE_NAMES.DATES_LISTING;
+        Rx.from(this.router.navigateByUrl(MAIN_ROUTE)).subscribe(() => {
+          this.splashScreen.hide();
+        });
       });
   }
 
