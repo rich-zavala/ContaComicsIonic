@@ -1,5 +1,5 @@
 rm -rf ./node_modules
-rm -ff ./platforms
+rm -rf ./platforms
 rm -rf ./plugins
 npm install
 cordova prepare
