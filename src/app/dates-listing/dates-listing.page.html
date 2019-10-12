@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-buttons slot="end" class="filterButton" (click)="showFilter()">
+    <ion-buttons *ngIf="!showEmpty" slot="end" class="filterButton" (click)="showFilter()">
       <ng-container *ngIf="filterValue === 0">
         <ion-label>{{ 'dates.filters.all' | translate }}</ion-label>
       </ng-container>

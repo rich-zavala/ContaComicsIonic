@@ -5,7 +5,7 @@ import { ModalController, PopoverController, IonSelect } from "@ionic/angular";
 import { ICCYear, ICCDay, CCRecord, ICCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { toArray, takeUntil } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 import * as lodash from "lodash";
 import * as moment from "moment";
 
