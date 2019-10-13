@@ -8,22 +8,23 @@
 </ion-header>
 
 <ion-content>
-  <p class="justify margin20">
-    <small>{{ 'export.subtitle' | translate }}</small>
-  </p>
+  <div class="ion-padding">
+    <ion-note color="default">About how ContaComics stores data</ion-note>
+    <p class="justify ">
+      <small>{{ 'export.subtitle' | translate }}</small>
+    </p>
+  </div>
 
   <div class="ion-padding">
     <div class="marginBottom20">
-      <ion-button (click)="chooseDestination()" color="medium" expand="block" [disabled]="working">
-        <ng-container *ngIf="!filePath">{{ 'export.btns.choose0' | translate }}</ng-container>
-        <ng-container *ngIf="filePath">{{ 'export.btns.choose1' | translate }}</ng-container>
-      </ion-button>
-    </div>
-    <div class="marginBottom20">
-      <ion-button color="tertiary" expand="block" (click)="export()" [disabled]="!filePath || working">
-        {{ 'export.btns.export' | translate }}
+      <ion-button color="tertiary" expand="block" (click)="export()" [disabled]="working">
+        {{ 'export.btn' | translate }}
         <ion-icon slot="end" name="download"></ion-icon>
       </ion-button>
+    </div>
+    <div *ngIf="!working && success" class="info-text ion-text-center">
+      {{ 'export.pathMsg' | translate }}<br>
+      <b>{{fileName}}</b>
     </div>
   </div>
 

@@ -80,11 +80,8 @@
     "export": {
         "title": "Exportar colección",
         "subtitle": "La información de tu colección EXISTE ÚNICAMENTE EN ESTE DISPOSITIVO y no es compartida con ninguna otra entidad, por lo que es importante generar constantemente un archivo de reespaldo el cual puede ser importado en cualquier momento en este u otro dispositivo.",
-        "btns": {
-            "choose0": "Elige la carpeta de destino",
-            "choose1": "Cambia la carpeta de destino",
-            "export": "Guardar archivo de respaldo"
-        },
+        "btn": "Guardar archivo de respaldo",
+        "pathMsg": "Respaldo guardado como:",
         "successMsg": "El archivo de respaldo ha sido creado",
         "errorMsg": "Error: algo salió mal"
     },

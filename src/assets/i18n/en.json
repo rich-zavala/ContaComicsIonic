@@ -80,11 +80,8 @@
     "export": {
         "title": "Export your collection data",
         "subtitle": "Your data is stored and exists ONLY ON THIS DEVICE and it's not shared with any other entity, so it's important to generate a backup file from time to time. This backup file could be imported at any time into this or other device.",
-        "btns": {
-            "choose0": "Choose file destination",
-            "choose1": "Change file destination",
-            "export": "Save data backup"
-        },
+        "btn": "Save data backup",
+        "pathMsg": "Backup saved in your main Download folder as:",
         "successMsg": "Backup file have been created",
         "errorMsg": "Error: the backup was not created"
     },

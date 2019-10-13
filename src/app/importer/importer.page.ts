@@ -2,6 +2,8 @@ import { Component, ChangeDetectorRef } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
+import { FileChooser } from "@ionic-native/file-chooser/ngx";
+import { FilePath } from "@ionic-native/file-path/ngx";
 
 import { TranslateService } from "@ngx-translate/core";
 
@@ -9,6 +11,7 @@ import { CollectionService } from "../services/collection.service";
 import { ICCRecord, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
+import { flatMap } from "rxjs/operators";
 import * as lodash from "lodash";
 
 @Component({
@@ -30,6 +33,8 @@ export class ImporterPage {
     private db: CollectionService,
     private alertController: AlertController,
     private fileController: File,
+    private fileChooser: FileChooser,
+    private filePathSrv: FilePath,
     private dialogs: Dialogs,
     translate: TranslateService
   ) {
@@ -41,19 +46,13 @@ export class ImporterPage {
   }
 
   chooseFile() {
-    (window as any).OurCodeWorld.Filebrowser.filePicker.single({
-      success: data => {
-        if (!data.length) {
-          // No folder selected
-          return;
-        }
-
-        this.filePath = lodash.first(data);
+    Rx.from(this.fileChooser.open())
+      .pipe(flatMap(data => Rx.from(this.filePathSrv.resolveNativePath(data))))
+      .subscribe(data => {
+        this.filePath = data;
         this.importOutput = "";
         this.ref.detectChanges();
-      },
-      error: err => console.log(err)
-    });
+      });
   }
 
   importData() {

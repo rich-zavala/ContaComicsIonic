@@ -4,8 +4,7 @@ import { ToastController } from "@ionic/angular";
 import { File } from "@ionic-native/file/ngx";
 import { TranslateService } from "@ngx-translate/core";
 
-
-import { DATE_FORMAT } from "src/constants/formats";
+import { DATE_FORMAT_EXPORT } from "src/constants/formats";
 import { CollectionService } from "../services/collection.service";
 import { CCRecord } from "src/models";
 
@@ -23,7 +22,8 @@ import * as moment from "moment";
 export class ExporterPage {
   filePath: string;
   working = false;
-
+  success = false;
+  fileName: string;
   private toastStr;
 
   constructor(
@@ -76,10 +76,14 @@ export class ExporterPage {
   }
 
   private writeFile(data: string) {
-    const filename = `ContaComics-${moment().format(DATE_FORMAT)}.json`;
-    Rx.from(this.fileController.writeFile(this.filePath, filename, data, { replace: true }))
+    this.success = false;
+    this.fileName = `ContaComics-${moment().format(DATE_FORMAT_EXPORT)}.json`;
+    Rx.from(this.fileController.writeFile(this.fileController.externalRootDirectory + "/Download/", this.fileName, data, { replace: true }))
       .subscribe(
-        () => this.showToast(this.toastStr.successMsg),
+        () => {
+          this.success = true;
+          this.showToast(this.toastStr.successMsg);
+        },
         () => this.showToast(this.toastStr.errorMsg)
       );
   }
