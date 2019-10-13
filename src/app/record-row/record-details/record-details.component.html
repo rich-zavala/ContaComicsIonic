@@ -84,7 +84,7 @@
             <small>{{ 'details.owned' | translate }}</small>
             <span class="dateRow">{{cc.detailDates.checked}}</span>
           </ion-label>
-          <ion-label *ngIf="!cc.checked" no-margin no-padding>{{ 'details.notOwned' | translate }}</ion-label>
+          <ion-label *ngIf="!cc.checked" class="ion-no-margin ion-no-padding">{{ 'details.notOwned' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
             <input type="checkbox" class="hidden" [(ngModel)]="checkableState.checked" (change)="checkUpdate($event)">
             <fa-icon *ngIf="checkableState.checked" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>
@@ -99,7 +99,7 @@
             <small>{{ 'details.read' | translate }}</small>
             <span class="dateRow">{{cc.detailDates.read}}</span>
           </ion-label>
-          <ion-label *ngIf="!cc.read" no-margin no-padding>{{ 'details.notRead' | translate }}</ion-label>
+          <ion-label *ngIf="!cc.read" class="ion-no-margin ion-no-padding">{{ 'details.notRead' | translate }}</ion-label>
           <label class="checkboxContainer flex fcenter fvertical">
             <input type="checkbox" class="hidden" [(ngModel)]="checkableState.read" (change)="readUpdate($event)">
             <fa-icon *ngIf="checkableState.read" class="checkbox flex" [icon]="['fas', 'check-square']" [fixedWidth]="true"></fa-icon>

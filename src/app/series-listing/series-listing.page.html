@@ -14,8 +14,8 @@
 
   <ion-item-group>
     <ng-container *ngFor="let serie of seriesFiltered">
-      <ion-item-divider [ngClass]="{ expanded: states[serie.name].expanded }" no-padding>
-        <ion-label class="flex fvertical ion-activatable" (click)="expandToggle(serie)" no-margin ion-activatable>
+      <ion-item-divider class="ion-no-padding" [ngClass]="{ expanded: states[serie.name].expanded }">
+        <ion-label class="flex fvertical ion-activatable ion-no-margin" (click)="expandToggle(serie)" ion-activatable>
           <div class="serie-name">{{serie.name}}</div>
           <div class="serie-details">
             <div class="count">{{serie.records.length}} records</div>
@@ -30,7 +30,7 @@
             <ion-spinner></ion-spinner>
           </div>
 
-          <ion-card *ngIf="states[serie.name].records.length > 0" color="dark" no-margin>
+          <ion-card *ngIf="states[serie.name].records.length > 0" class="ion-no-margin" color="dark">
             <app-record-row *ngFor="let cc of states[serie.name].records; let index = index; let odd = odd;" [cc]="cc" [odd]="odd"></app-record-row>
           </ion-card>
         </div>

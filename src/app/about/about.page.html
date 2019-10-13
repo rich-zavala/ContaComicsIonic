@@ -24,8 +24,8 @@
     </ion-card-content>
   </ion-card>
   <ion-card color="dark">
-    <ion-card-header (click)="expandTerms()" no-padding>
-      <ion-item color="dark" no-margin>
+    <ion-card-header (click)="expandTerms()" class="ion-no-padding">
+      <ion-item color="dark" class="ion-no-margin">
         {{ 'about.terms' | translate }}
         <ion-icon *ngIf="!expanded" slot="end" name="arrow-dropdown"></ion-icon>
         <ion-icon *ngIf="expanded" slot="end" name="arrow-dropup"></ion-icon>
