@@ -1,4 +1,7 @@
+rm -rf my-release-key.keystore &&
 keytool -genkey -v -keystore my-release-key.keystore -alias conta_comics -keyalg RSA -keysize 2048 -validity 10000
-ionic cordova build android --prod --release
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk conta_comics
+
+rm -rf conta_comics.apk && 
+ionic cordova build android --prod --release && 
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore -storepass rich2013 -keypass rich2013 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk conta_comics && 
 ./zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk conta_comics.apk
