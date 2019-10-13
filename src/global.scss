@@ -118,3 +118,11 @@ ion-item {
         color: #009dff;
     }
 }
+
+.clickEnableCls {
+    pointer-events: visible !important;
+}
+
+.clickDisableCls {
+    pointer-events: none !important;
+}

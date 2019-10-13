@@ -271,4 +271,9 @@ export class AddFormComponent implements OnInit, OnDestroy {
     this.modalCtrl.getTop();
     this.modalCtrl.dismiss();
   }
+
+  // Checkboxes
+  toggleCheckbox(field: string) {
+    this.ccRecordForm.controls[field].setValue(!this.ccRecordForm.controls[field].value);
+  }
 }

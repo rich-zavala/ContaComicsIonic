@@ -73,16 +73,16 @@
       <ion-input type="date" formControlName="publishDate" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>{{ 'add.form.check' | translate }}</ion-label>
+    <ion-item (click)="toggleCheckbox('checked')">
+      <ion-label class="clickEnableCls">{{ 'add.form.check' | translate }}</ion-label>
       <ion-input disabled></ion-input>
-      <ion-checkbox color="tertiary" formControlName="checked" (ionFocus)="hideAutocomplete()"></ion-checkbox>
+      <ion-checkbox #checked class="clickDisableCls" color="tertiary" formControlName="checked" (ionFocus)="hideAutocomplete()"></ion-checkbox>
     </ion-item>
 
-    <ion-item>
-      <ion-label>{{ 'add.form.read' | translate }}</ion-label>
+    <ion-item (click)="toggleCheckbox('read')">
+      <ion-label class="clickEnableCls">{{ 'add.form.read' | translate }}</ion-label>
       <ion-input disabled></ion-input>
-      <ion-checkbox color="tertiary" formControlName="read" (ionFocus)="hideAutocomplete()"></ion-checkbox>
+      <ion-checkbox #read class="clickDisableCls" color="tertiary" formControlName="read" (ionFocus)="hideAutocomplete()"></ion-checkbox>
     </ion-item>
 
     <ion-item *ngIf="ccRecordForm.controls.read.value">
