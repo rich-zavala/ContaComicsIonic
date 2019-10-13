@@ -16,8 +16,8 @@
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  // --ion-color-primary-shade: #3171e0;
+  // --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;
@@ -86,4 +86,23 @@
   --ion-tab-bar-background: var(--ion-color-dark);
   --ion-tab-bar-color: var(--ion-color-light);
   --ion-tab-bar-color-activated: var(--ion-color-tertiary-tint);
+
+  // Color theme correction
+  .item-has-focus.label-floating.sc-ion-label-md-h {
+    color: var(--ion-color-light-tint);
+  }
+
+  .item-has-focus {
+    .label-floating.sc-ion-label-md-h {
+      color: var(--ion-color-light-tint);
+    }
+
+    .label-stacked.sc-ion-label-md-h {
+      color: var(--ion-color-light-tint);
+    }
+  }
+
+  .item-has-focus.label-stacked.sc-ion-label-md-h {
+    color: var(--ion-color-light-tint);
+  }
 }
