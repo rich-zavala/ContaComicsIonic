@@ -48,7 +48,7 @@
       <ion-input #price type="number" formControlName="price" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="render">
       <ion-label position="floating">{{ 'add.form.format' | translate }}</ion-label>
       <ion-select formControlName="format">
         <ion-select-option *ngFor="let f of formats" [value]="f">{{ 'formats.' + f | translate }}</ion-select-option>
@@ -60,7 +60,7 @@
       <ion-input formControlName="variant" (ionFocus)="hideAutocomplete()"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="render">
       <ion-label position="floating">{{ 'add.form.lang' | translate }}</ion-label>
       <ion-select formControlName="lang">
         <ion-select-option value="esp">{{ 'langs.esp' | translate }}</ion-select-option>
@@ -75,13 +75,13 @@
 
     <ion-item>
       <ion-label>{{ 'add.form.check' | translate }}</ion-label>
-      <ion-input></ion-input>
+      <ion-input disabled></ion-input>
       <ion-checkbox color="tertiary" formControlName="checked" (ionFocus)="hideAutocomplete()"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>{{ 'add.form.read' | translate }}</ion-label>
-      <ion-input></ion-input>
+      <ion-input disabled></ion-input>
       <ion-checkbox color="tertiary" formControlName="read" (ionFocus)="hideAutocomplete()"></ion-checkbox>
     </ion-item>
 

@@ -44,6 +44,14 @@ export class AddFormComponent implements OnInit, OnDestroy {
   editing = false;
   private nonEditableFields = ["title", "volumen", "publishDate"];
 
+  /**
+   * Something happened to the <ion-select> and the UI render
+   * was overlapping the label with the input. So fix so far,
+   * but by awaiting a little for the modal to display and THEN
+   * show the form seems to draw that input correctly
+   */
+  render = false;
+
   constructor(
     private db: CollectionService,
     private modalCtrl: ModalController,
@@ -72,7 +80,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
       lodash.keys(this.ccRecordForm.controls).forEach(attr => this.ccRecordForm.controls[attr].setValue(this.editRecord[attr]));
       this.nonEditableFields.forEach(attr => this.ccRecordForm.controls[attr].disable());
 
-      // Must of imported records will be read but with no read date...
+      // Some imported records will be read but with no read date...
       if (this.editRecord.read && lodash.isEmpty(this.editRecord.readDate)) {
         this.ccRecordForm.controls.readDate.setValue(moment().format(DATE_FORMAT));
       }
@@ -84,6 +92,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
       fieldToFocus = this.titleField;
     }
 
+    this.render = true;
     setTimeout(() => fieldToFocus.setFocus(), 500);
   }
 
