@@ -11,7 +11,7 @@
     <div class="ion-padding">
         <ion-note color="default"><b>Backup</b> file destination folder</ion-note>
         <div class="info-text" color="tertiary">{{backupFolder}}</div>
-        <ion-button color="tertiary" expand="block" (click)="chooseFolder(0)" [disabled]="working">
+        <ion-button color="tertiary" expand="block" (click)="chooseFolder(0)">
             {{ 'settings.btnLabel' | translate }}
             <ion-icon slot="end" name="folder-open"></ion-icon>
         </ion-button>
@@ -19,7 +19,7 @@
     <div class="ion-padding">
         <ion-note color="default"><b>Covers</b> images folder</ion-note>
         <div class="info-text">{{coversFolder}}</div>
-        <ion-button color="tertiary" expand="block" (click)="chooseFolder(1)" [disabled]="working">
+        <ion-button color="tertiary" expand="block" (click)="chooseFolder(1)">
             {{ 'settings.btnLabel' | translate }}
             <ion-icon slot="end" name="folder-open"></ion-icon>
         </ion-button>

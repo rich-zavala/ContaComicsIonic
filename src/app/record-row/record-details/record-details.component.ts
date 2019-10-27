@@ -28,13 +28,13 @@ import * as lodash from "lodash";
   styleUrls: ["./record-details.component.scss"]
 })
 export class RecordDetailsComponent extends RecordHandlerComponent implements OnInit {
+  translations;
   public emmitUpdates = true;
-  private translations;
 
+  coverImg: SafeStyle;
   private coverDir: string;
   private coverName: string;
   private coverPath: string;
-  private coverImg: SafeStyle;
   private coverFront = false;
 
   private formats: string[] = lodash.toArray(RECORD_FORMAT_TYPE);

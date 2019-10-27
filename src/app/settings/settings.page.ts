@@ -26,7 +26,7 @@ export class SettingsPage {
         this.coversFolder = currentSettings.covers;
     }
 
-    private chooseFolder(mode: number) {
+    chooseFolder(mode: number) {
         (window as any).OurCodeWorld.Filebrowser.folderPicker.single({
             success: data => {
                 if (!data.length) {
