@@ -9,7 +9,9 @@
         "dataTitle": "Data management",
         "dataImport": "Import data",
         "dataExport": "Export data",
-        "about": "About"
+        "about": "About",
+        "settingsTitle": "Options",
+        "settingsFolder": "Directories configuracion"
     },
     "add": {
         "title_add": "Add a Comic",
@@ -104,6 +106,14 @@
         "provider": "Provider",
         "comments": "Comments",
         "delete": "Delete this record",
+        "coverOptions": "Cover options",
+        "edit": "Edit record",
+        "coverOptionsDialog": {
+            "header": "Comic Cover",
+            "takePhoto": "Take a photo",
+            "choose": "Choose an image",
+            "remove": "Remove current cover"
+        },
         "dialog": {
             "header": "Are you sure?",
             "subHeader": "This action cannot be undone",
@@ -123,5 +133,9 @@
         "HC": "HC",
         "Monster": "Monster",
         "Manga": "Manga"
+    },
+    "settings": {
+        "title": "Folder Settings",
+        "btnLabel": "Select folder"
     }
 }

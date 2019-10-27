@@ -4,5 +4,6 @@ export const PAGE_NAMES = {
     SERIES_LISTING: "series-listing",
     EXPORTER: "exporter",
     IMPORTER: "importer",
-    ABOUT: "about"
+    ABOUT: "about",
+    FOLDER_SETTINGS: "foldersettings"
 };

@@ -6,16 +6,12 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{cc.title}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="edit()" fill="clear">
-        <ion-icon name="create"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card color="dark">
+  <div *ngIf="coverImg" class="cover" [style.background-image]="coverImg" [ngClass]="{ front: coverFront }" (click)="toggleCover()"></div>
+  <ion-card color="dark" [ngClass]="{ hasCover: !!coverImg }">
     <ion-card-header class="flex">
       <div class="info">
         {{cc.title}}
@@ -118,9 +114,23 @@
   </ion-card>
 </ion-content>
 
-<ion-footer slot="end" class="ion-padding">
-  <ion-button size="small" color="danger" expand="block" (click)="delete()">
-    {{ 'details.delete' | translate }}
-    <ion-icon slot="end" name="trash"></ion-icon>
-  </ion-button>
-</ion-footer>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="tertiary">
+    <ion-icon name="settings"></ion-icon>
+  </ion-fab-button>
+
+  <ion-fab-list side="top">
+    <ion-fab-button color="tertiary" (click)="coverMng()" [attr.data-label]="translations.coverOptions">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="tertiary" (click)="edit()" [attr.data-label]="translations.edit">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+
+  <ion-fab-list side="start">
+    <ion-fab-button color="danger" (click)="delete()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

@@ -39,6 +39,16 @@
               <ion-label>{{ 'menu.dataExport' | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+
+          <ion-item-divider>
+            <ion-label>{{ 'menu.settingsTitle' | translate }}</ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/foldersettings']">
+              <ion-icon color="light" slot="start" name="folder-open"></ion-icon>
+              <ion-label>{{ 'menu.settingsFolder' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
       <ion-footer>

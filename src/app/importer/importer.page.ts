@@ -1,7 +1,8 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { AlertController } from "@ionic/angular";
-import { File } from "@ionic-native/file/ngx";
+
 import { Dialogs } from "@ionic-native/dialogs/ngx";
+import { File } from "@ionic-native/file/ngx";
 import { FileChooser } from "@ionic-native/file-chooser/ngx";
 import { FilePath } from "@ionic-native/file-path/ngx";
 

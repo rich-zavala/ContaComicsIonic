@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { PAGE_NAMES, PAGE_NAME } from "../constants/page-names";
+import { PAGE_NAMES } from "../constants/page-names";
 
 const routes: Routes = [
   {
@@ -26,8 +26,8 @@ const routes: Routes = [
     loadChildren: "./importer/importer.module#ImporterPageModule"
   },
   {
-    path: PAGE_NAMES.ABOUT,
-    loadChildren: "./about/about.module#AboutPageModule"
+    path: PAGE_NAMES.FOLDER_SETTINGS,
+    loadChildren: "./settings/settings.module#SettingsPageModule"
   }
 ];
 

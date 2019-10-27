@@ -7,6 +7,7 @@ import { TranslateModule } from "@ngx-translate/core";
 
 import { IonicModule } from "@ionic/angular";
 import { ExporterPage } from "./exporter.page";
+import { FoldersService } from "../services/folders.service";
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     ExporterPage
   ],
   providers: [
-    File
+    File,
+    FoldersService
   ]
 })
 export class ExporterPageModule { }

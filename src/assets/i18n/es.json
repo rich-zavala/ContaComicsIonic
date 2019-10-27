@@ -9,7 +9,9 @@
         "dataTitle": "Gestión de datos",
         "dataImport": "Restaurar colección",
         "dataExport": "Exportar colección",
-        "about": "Acerca de"
+        "about": "Acerca de",
+        "settingsTitle": "Opciones",
+        "settingsFolder": "Configuración de carpetas"
     },
     "add": {
         "title_add": "Agrega un Comic",
@@ -104,6 +106,14 @@
         "provider": "Proveedor",
         "comments": "Comentarios",
         "delete": "Eliminar este registro",
+        "coverOptions": "Portada",
+        "edit": "Editar",
+        "coverOptionsDialog": {
+            "header": "Portada",
+            "takePhoto": "Tomar foto",
+            "choose": "Elegir imagen",
+            "remove": "Remover la portada"
+        },
         "dialog": {
             "header": "¿Estás seguro?",
             "subHeader": "Esta acción no se puede deshacer",
@@ -123,5 +133,9 @@
         "HC": "Pasta Dura",
         "Monster": "Monster",
         "Manga": "Manga"
+    },
+    "settings": {
+        "title": "Configuración de carpetas",
+        "btnLabel": "Elegir carpeta"
     }
 }
