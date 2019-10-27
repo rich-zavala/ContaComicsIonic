@@ -161,7 +161,7 @@ export class RecordDetailsComponent extends RecordHandlerComponent implements On
     const options: ImageResizerOptions = {
       uri: coverFilePath,
       folderName: this.fileController.cacheDirectory,
-      quality: 70,
+      quality: 90,
       width: this.platform.width(),
       height: this.platform.height()
     };
