@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SafeStyle, DomSanitizer } from "@angular/platform-browser";
-import { ModalController, AlertController, Platform } from "@ionic/angular";
+import { ModalController, AlertController } from "@ionic/angular";
 import { AlertButton } from "@ionic/core";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
@@ -50,7 +50,6 @@ export class RecordDetailsComponent extends RecordHandlerComponent implements On
     private filePathSrv: FilePath,
     private imageResizer: ImageResizer,
     private camera: Camera,
-    private platform: Platform,
     private sanitizer: DomSanitizer,
     translate: TranslateService
   ) {
@@ -162,8 +161,8 @@ export class RecordDetailsComponent extends RecordHandlerComponent implements On
       uri: coverFilePath,
       folderName: this.fileController.cacheDirectory,
       quality: 90,
-      width: this.platform.width(),
-      height: this.platform.height()
+      width: 1284,
+      height: 1024
     };
 
     Rx.from(this.imageResizer.resize(options))
