@@ -208,18 +208,22 @@ export class RecordDetailsComponent extends RecordHandlerComponent implements On
   }
 
   private makeTrustedCoverImage() {
-    Rx.from(this.fileController.readAsDataURL(this.coverDir, this.coverName))
-      .subscribe(
-        coverData => {
-          const imageString = JSON.stringify(coverData).replace(/\\n/g, "");
-          const style = "url(" + imageString + ")";
-          this.coverImg = this.sanitizer.bypassSecurityTrustStyle(style);
-        },
-        err => {
-          delete this.coverImg;
-          console.error("No cover available", err);
-        }
-      );
+    try {
+      Rx.from(this.fileController.readAsDataURL(this.coverDir, this.coverName))
+        .subscribe(
+          coverData => {
+            const imageString = JSON.stringify(coverData).replace(/\\n/g, "");
+            const style = "url(" + imageString + ")";
+            this.coverImg = this.sanitizer.bypassSecurityTrustStyle(style);
+          },
+          err => {
+            delete this.coverImg;
+            console.error("No cover available", err);
+          }
+        );
+    } catch (e) {
+      console.warn("No cover available");
+    }
   }
 
   private toggleCover() {
