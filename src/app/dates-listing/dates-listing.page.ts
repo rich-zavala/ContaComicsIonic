@@ -2,10 +2,10 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from "@angular/core";
 import { ModalController, PopoverController, IonSelect } from "@ionic/angular";
 
-import { ICCYear, ICCDay, CCRecord, ICCRecord } from "src/models";
+import { ICCYear, ICCDay, CCRecord } from "src/models";
 
 import * as Rx from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil, flatMap } from "rxjs/operators";
 import * as lodash from "lodash";
 import * as moment from "moment";
 
@@ -147,10 +147,10 @@ export class DatesListingPage implements OnInit {
     this.loadingProgress = 0;
     this.records = {};
 
-    this.db.getYearDates(this.selectedYear.year)
-      .subscribe(days => {
+    this.db.getYearDates(this.selectedYear.year).pipe(
+      flatMap(days => {
         this.selectedYearDates = days;
-        const dateRecordsDbQueries: Rx.Observable<null>[] = days.map(day =>
+        return Rx.concat(...days.map(day =>
           new Rx.Observable(observer => {
             this.db.getDayRecords(day.date)
               .subscribe(
@@ -167,14 +167,13 @@ export class DatesListingPage implements OnInit {
                 err => observer.error(err)
               );
           })
-        );
-        Rx.concat(...dateRecordsDbQueries)
-          .pipe(takeUntil(this.stopDatesQuery$))
-          .subscribe(
-            () => { },
-            err => console.error("Error", err)
-          );
-      });
+        ));
+      }),
+      takeUntil(this.stopDatesQuery$) // This is how to cancel the current year's dates requests
+    ).subscribe(
+      () => { },
+      err => console.error("Error", err)
+    );
   }
 
   private isSelected(year: number) {

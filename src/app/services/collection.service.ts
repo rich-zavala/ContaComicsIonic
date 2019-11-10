@@ -3,6 +3,7 @@ import { AlertController } from "@ionic/angular";
 import { Dialogs } from "@ionic-native/dialogs/ngx";
 
 import * as Rx from "rxjs";
+import { map } from "rxjs/operators";
 
 import { DbHandlingService } from "./db-handling.service";
 
@@ -49,38 +50,34 @@ export class CollectionService {
     }
 
     insert(cc: CCRecord): Rx.Observable<IInsertRecordResponse> {
-        return new Rx.Observable(observer => {
-            this.db.db.insert(cc).subscribe(
-                insertResult => {
-                    if (!insertResult.duplicate) {
-                        this.updateYears();
-                        this.updateSeries();
-                        this.insertedRecord$.next(insertResult.record);
-                    }
-                    observer.next(insertResult);
-                    observer.complete();
+        return this.db.db.insert(cc).pipe(
+            map(insertResult => {
+                if (!insertResult.duplicate) {
+                    this.updateYears();
+                    this.updateSeries();
+                    this.insertedRecord$.next(insertResult.record);
                 }
-            );
-        });
+                return insertResult;
+            })
+        );
     }
 
     uncheck(cc: CCRecord, emmit: boolean): Rx.Observable<boolean> {
+        const header = "Are you sure?";
+        const subHeader = "Please confirm this action";
+        const buttons = ["Keep it", "Uncheck it"];
+
         return new Rx.Observable(observer => {
             const resolve = (value: boolean) => {
                 observer.next(value);
                 observer.complete();
             };
-
-            const header = "Are you sure?";
-            const subHeader = "Please confirm this action";
-            const buttons = ["Keep it", "Uncheck it"];
             const uncheck = () => {
                 cc.uncheck();
                 this.updateRecord(cc, emmit);
                 resolve(true);
             };
             const revert = () => resolve(false);
-
             const alternativeDialog = async () => {
                 const alert = await this.alertController.create({
                     header,
@@ -122,8 +119,6 @@ export class CollectionService {
             } catch (e) {
                 alternativeDialog();
             }
-
-
         });
     }
 

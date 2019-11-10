@@ -23,6 +23,7 @@ export class AboutPage {
     this.expanded = !this.expanded;
   }
 
+  // Switch this method name to load the test DB
   load() { }
 
   _load() {
