@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: PAGE_NAMES.FOLDER_SETTINGS,
     loadChildren: "./settings/settings.module#SettingsPageModule"
+  },
+  {
+    path: PAGE_NAMES.ABOUT,
+    loadChildren: "./about/about.module#AboutPageModule"
   }
 ];
 
