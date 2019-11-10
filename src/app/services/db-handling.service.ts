@@ -1,10 +1,14 @@
 import { Injectable } from "@angular/core";
 import { ICCDBHandler } from "src/dbHandlers/dbHandler";
-import { DexieHandler } from "src/dbHandlers/dexieHandler";
+import { AngularFirestore } from "angularfire2/firestore";
+import { FireBaseHandler } from "src/dbHandlers/firebaseHandler";
 
 @Injectable({
   providedIn: "root"
 })
 export class DbHandlingService {
-  db: ICCDBHandler = new DexieHandler();
+  db: ICCDBHandler;
+  constructor(ngFirestone: AngularFirestore) {
+    this.db = new FireBaseHandler(ngFirestone);
+  }
 }

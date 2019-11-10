@@ -17,6 +17,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AddFormModule } from "./add-form/add-form.module";
 import { IonicGestureConfig } from "./services/hammerGestures.service";
 
+import { AngularFireModule } from "angularfire2";
+import { environment } from "../environments/environment";
+import { AngularFirestoreModule } from "angularfire2/firestore";
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -39,7 +43,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [
     StatusBar,
