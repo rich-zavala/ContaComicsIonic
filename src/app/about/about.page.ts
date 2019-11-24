@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
 
-import * as Rx from "rxjs";
-import * as moment from "moment";
-import * as lodash from "lodash";
 import { CC_DATA } from "../../cc";
 import { CCRecord } from "../../models";
 import { RECORD_FORMAT_TYPE } from "../../models/record";
 import { DATE_FORMAT } from "../../constants/formats";
 import { DbHandlingService } from "../services/db-handling.service";
+
+import * as Rx from "rxjs";
+import * as lodash from "lodash";
+import * as moment from "moment";
 
 @Component({
   selector: "app-about",
@@ -27,6 +28,8 @@ export class AboutPage {
   load() { }
 
   _load() {
+    // return this.db.db.clear().subscribe();
+
     let count = 0;
     const sample = lodash.sampleSize(CC_DATA, 500);
     Rx.concat(...sample.map(r => {

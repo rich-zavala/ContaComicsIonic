@@ -37,3 +37,13 @@ conta_comics.apk
 my-release-key.keystore
 zipalign
 build-instructions.txt
+
+.firebaserc
+.firebase/*.cache
+
+**.apk
+
+scr/environments/*.*
+src/environments/*.ts
+src/environments/environment.prod.ts
+src/environments/environment.ts

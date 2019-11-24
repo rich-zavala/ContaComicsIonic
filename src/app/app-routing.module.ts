@@ -1,22 +1,25 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { PAGE_NAMES } from "../constants/page-names";
+import { FireStoreRouteGuard } from "./services/fireStoreRouteGuard";
 
 const routes: Routes = [
   {
     path: "",
     redirectTo: PAGE_NAMES.DATES_LISTING,
-    pathMatch: "full"
+    pathMatch: "full",
+    canActivate: [FireStoreRouteGuard]
   },
   {
     path: PAGE_NAMES.DATES_LISTING,
-    loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
+    loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule",
+    canActivate: [FireStoreRouteGuard]
   },
   {
     path: PAGE_NAMES.SERIES_LISTING,
-    loadChildren: "./series-listing/series-listing.module#SeriesListingPageModule"
+    loadChildren: "./series-listing/series-listing.module#SeriesListingPageModule",
+    canActivate: [FireStoreRouteGuard]
   },
-
   {
     path: PAGE_NAMES.EXPORTER,
     loadChildren: "./exporter/exporter.module#ExporterPageModule"

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { HttpClientModule, HttpClient, } from "@angular/common/http";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -17,9 +18,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AddFormModule } from "./add-form/add-form.module";
 import { IonicGestureConfig } from "./services/hammerGestures.service";
 
-import { AngularFireModule } from "angularfire2";
+import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
-import { AngularFirestoreModule } from "angularfire2/firestore";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,7 +46,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
 
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
   ],
   providers: [
     StatusBar,
@@ -56,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-
+    AngularFirestore,
     TranslateService,
     {
       provide: HAMMER_GESTURE_CONFIG,

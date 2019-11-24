@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ICCDBHandler } from "src/dbHandlers/dbHandler";
-import { AngularFirestore } from "angularfire2/firestore";
-import { FireBaseHandler } from "src/dbHandlers/firebaseHandler";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { FireBaseHandler } from "src/dbHandlers/firestoreHandler";
 
 @Injectable({
   providedIn: "root"
