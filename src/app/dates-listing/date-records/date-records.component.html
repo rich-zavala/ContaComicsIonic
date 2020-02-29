@@ -16,7 +16,11 @@
     </div>
     <div class="col-2">
       <ion-card color="dark">
-        <app-record-row *ngFor="let cc of records; let odd = odd;" [cc]="cc" [odd]="odd" [ngClass]="{ hidden: (filterValue === 1 && !cc.checked) || (filterValue === 2 && cc.checked) }">
+        <app-record-row
+          *ngFor="let cc of records; let odd = odd;"
+          [cc]="cc"
+          [odd]="odd"
+          [ngClass]="{ hidden: hidden(cc) }">
         </app-record-row>
       </ion-card>
     </div>

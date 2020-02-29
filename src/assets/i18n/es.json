@@ -46,7 +46,8 @@
             "title": "Filtro de registros",
             "all": "Todos",
             "owned": "Adquiridos",
-            "notOwned": "Sin adquirir"
+            "notOwned": "Sin adquirir",
+            "notRead": "Sin leer"
         }
     },
     "series": {

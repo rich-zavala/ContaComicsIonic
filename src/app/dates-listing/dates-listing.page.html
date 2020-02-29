@@ -16,6 +16,10 @@
         <ion-icon name="square-outline"></ion-icon>
         <ion-label>{{ 'dates.filters.notOwned' | translate }}</ion-label>
       </ng-container>
+      <ng-container *ngIf="filterValue === 3">
+        <ion-icon name="square-outline"></ion-icon>
+        <ion-label>{{ 'dates.filters.notRead' | translate }}</ion-label>
+      </ng-container>
       <ion-icon name="arrow-dropdown"></ion-icon>
     </ion-buttons>
 
@@ -25,6 +29,7 @@
         <ion-select-option value="0">{{ 'dates.filters.all' | translate }}</ion-select-option>
         <ion-select-option value="1">{{ 'dates.filters.owned' | translate }}</ion-select-option>
         <ion-select-option value="2">{{ 'dates.filters.notOwned' | translate }}</ion-select-option>
+        <ion-select-option value="3">{{ 'dates.filters.notRead' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 

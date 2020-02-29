@@ -31,6 +31,7 @@ export class DatesListingPage implements OnInit {
   selectedYearDates: ICCDay[] = [];
   records: TDatesCollection = {};
 
+  dataSubscription: Rx.Subscription[] = [];
   stopDatesQuery$ = new Rx.Subject();
   loadingProgress = 0;
   working = false;
@@ -126,6 +127,7 @@ export class DatesListingPage implements OnInit {
     this.working = false;
     this.selectedYearDates = [];
     this.loadingProgress = 0;
+    this.dataSubscription.forEach(s => s.unsubscribe());
   }
 
   private selectYear(yearData: ICCYear) {
@@ -147,32 +149,36 @@ export class DatesListingPage implements OnInit {
     this.loadingProgress = 0;
     this.records = {};
 
-    this.db.getYearDates(this.selectedYear.year).pipe(
-      flatMap(days => {
-        this.selectedYearDates = days;
-        return Rx.concat(...days.map(day =>
-          new Rx.Observable(observer => {
-            this.db.getDayRecords(day.date)
-              .subscribe(
-                r => {
-                  this.records[day.date] = r;
-                  this.loadingProgress = lodash.size(this.records) / days.length;
-                  if (this.loadingProgress === 1) {
-                    this.working = false;
-                    this.showFilteredMessage();
-                  }
+    this.dataSubscription.push(
+      this.db.getYearDates(this.selectedYear.year).pipe(
+        flatMap(days => {
+          this.selectedYearDates = days;
+          return Rx.concat(...days.map(day =>
+            new Rx.Observable(observer => {
+              this.dataSubscription.push(
+                this.db.getDayRecords(day.date)
+                  .subscribe(
+                    r => {
+                      this.records[day.date] = r;
+                      this.loadingProgress = lodash.size(this.records) / days.length;
+                      if (this.loadingProgress === 1) {
+                        this.working = false;
+                        this.showFilteredMessage();
+                      }
 
-                  observer.complete();
-                },
-                err => observer.error(err)
+                      observer.complete();
+                    },
+                    err => observer.error(err)
+                  )
               );
-          })
-        ));
-      }),
-      takeUntil(this.stopDatesQuery$) // This is how to cancel the current year's dates requests
-    ).subscribe(
-      () => { },
-      err => console.error("Error", err)
+            })
+          ));
+        }),
+        takeUntil(this.stopDatesQuery$) // This is how to cancel the current year's dates requests
+      ).subscribe(
+        () => { },
+        err => console.error("Error", err)
+      )
     );
   }
 

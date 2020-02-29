@@ -46,7 +46,8 @@
             "title": "Filter records",
             "all": "All",
             "owned": "Owned",
-            "notOwned": "Not owned"
+            "notOwned": "Not owned",
+            "notRead": "Not read"
         }
     },
     "series": {
