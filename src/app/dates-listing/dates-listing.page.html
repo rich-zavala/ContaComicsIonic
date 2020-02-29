@@ -31,15 +31,19 @@
     <ion-title>{{ 'dates.title' | translate }}</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="!showEmpty">
-    <ion-tabs>
-      <ion-tab-bar slot="top">
-        <ion-tab-button *ngFor="let year of years" (click)="selectYear(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: isSelected(year.year) }">
-          <ion-icon name="calendar"></ion-icon>
-          <ion-label>{{year.year}}</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+  <ion-toolbar *ngIf="!showEmpty" color="dark">
+    <ion-grid class="ion-no-padding" fixed>
+      <ion-row>
+        <ion-col class="ion-no-padding" size="12">
+          <ion-segment scrollable>
+            <ion-tab-button *ngFor="let year of years" (click)="selectYear(year)" [selected]="isSelected(year.year)" [ngClass]="{ blocked: isSelected(year.year) }">
+              <ion-icon name="calendar" [color]="isSelected(year.year) ? 'tertiary' : 'light'"></ion-icon>
+              <ion-label [color]="isSelected(year.year) ? 'tertiary' : 'light'">{{year.year}}</ion-label>
+            </ion-tab-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
