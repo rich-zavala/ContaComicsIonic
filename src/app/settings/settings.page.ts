@@ -1,15 +1,6 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { FoldersService } from "../services/folders.service";
-
-import { File } from "@ionic-native/file/ngx";
-import * as Rx from "rxjs";
-import * as moment from "moment";
 import * as lodash from "lodash";
-import { CC_DATA } from "../../cc";
-import { CCRecord } from "../../models";
-import { RECORD_FORMAT_TYPE } from "../../models/record";
-import { DATE_FORMAT } from "../../constants/formats";
-import { DbHandlingService } from "../services/db-handling.service";
 
 @Component({
     selector: "app-settings",

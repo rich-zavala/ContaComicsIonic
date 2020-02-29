@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { RecordHandlerComponent } from "./record-handler.component";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
+import { AddFormComponent } from "../add-form/add-form.component";
 import { CollectionService } from "../services/collection.service";
 
 @Component({
@@ -50,7 +51,7 @@ export class RecordRowComponent extends RecordHandlerComponent {
     this.detailPressInterval = setInterval(() => {
       this.detailPressProgress++;
       if (this.detailPressProgress >= 3) {
-        this.edit();
+        this.edit(AddFormComponent);
         this.stopPressDetail();
       }
     }, 50);

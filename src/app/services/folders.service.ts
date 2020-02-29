@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file/ngx";
-import * as Rx from "rxjs";
 import * as lodash from "lodash";
 
 @Injectable({

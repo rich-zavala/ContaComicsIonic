@@ -8,6 +8,7 @@ import { Dialogs } from "@ionic-native/dialogs/ngx";
 import { TranslateService } from "@ngx-translate/core";
 
 import { CollectionService } from "../services/collection.service";
+import { RecordDetailsComponent } from "../record-row/record-details/record-details.component";
 import { CCRecord, RECORD_FORMAT_TYPE, ICCRecord } from "src/models/record";
 import { DATE_FORMAT } from "src/constants/formats";
 
@@ -220,13 +221,22 @@ export class AddFormComponent implements OnInit, OnDestroy {
             if (res.duplicate) {
               this.showWarnDialog(res.record);
             } else {
-              this.initForm();
               this.successToast();
-              this.updateTitles();
+              this.close();
+              this.displayDetails(newRecInst);
             }
           }
         );
     }
+  }
+
+  async displayDetails(cc: CCRecord) {
+    const modal = await this.modalCtrl.create({
+      component: RecordDetailsComponent,
+      componentProps: { cc }
+    });
+
+    await modal.present();
   }
 
   async successToast() {
