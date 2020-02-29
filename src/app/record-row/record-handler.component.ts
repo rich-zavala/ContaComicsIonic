@@ -65,7 +65,7 @@ export class RecordHandlerComponent implements OnInit {
         }
     }
 
-    async edit(modalPage: typeof AddFormComponent) { // This argument was added to avoid circular dependency warnings
+    async edit(modalPage: typeof AddFormComponent = AddFormComponent) { // This argument was added to avoid circular dependency warnings
         const modal = await this.modalCtrl.create({
             component: modalPage,
             componentProps: {

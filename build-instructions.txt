@@ -1,6 +1,24 @@
 rm -rf my-release-key.keystore &&
 keytool -genkey -v -keystore my-release-key.keystore -alias conta_comics -keyalg RSA -keysize 2048 -validity 10000
 
+#######################################
+What is your first and last name?
+  [Unknown]:  Ricardo Zavala
+What is the name of your organizational unit?
+  [Unknown]:  CComics
+What is the name of your organization?
+  [Unknown]:  CComics
+What is the name of your City or Locality?
+  [Unknown]:  Merida
+What is the name of your State or Province?  [Unknown]:  Yucatan
+What is the two-letter country code for this unit?
+  [Unknown]:  MX
+Is CN=Ricardo Zavala, OU=CComics, O=CComics, L=Merida, ST=Yucatan, C=MX correct?
+  [no]:  yes
+#######################################
+IMPORTANT: You don't need to create a new keystore if there's already one in the project folder
+#######################################
+
 rm -rf conta_comics.apk && 
 ionic cordova build android --prod --release && 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore -storepass rich2013 -keypass rich2013 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk conta_comics && 
