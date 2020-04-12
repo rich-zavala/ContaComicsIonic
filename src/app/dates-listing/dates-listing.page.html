@@ -36,7 +36,7 @@
     <ion-title>{{ 'dates.title' | translate }}</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="!showEmpty" color="dark">
+  <ion-toolbar *ngIf="!showEmpty && years.length > 1" color="dark">
     <ion-grid class="ion-no-padding" fixed>
       <ion-row>
         <ion-col class="ion-no-padding" size="12">

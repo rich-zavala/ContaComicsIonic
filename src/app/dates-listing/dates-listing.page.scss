@@ -3,6 +3,10 @@
     touch-action: none;
 }
 
+ion-segment {
+    justify-content: center;
+}
+
 ion-tab-button {
     --ripple-color: var(--ion-color-light);
 }
