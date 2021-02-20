@@ -50,7 +50,7 @@
 
     <ion-item *ngIf="render">
       <ion-label position="floating">{{ 'add.form.format' | translate }}</ion-label>
-      <ion-select formControlName="format">
+      <ion-select formControlName="format" interface="popover">
         <ion-select-option *ngFor="let f of formats" [value]="f">{{ 'formats.' + f | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -62,7 +62,7 @@
 
     <ion-item *ngIf="render">
       <ion-label position="floating">{{ 'add.form.lang' | translate }}</ion-label>
-      <ion-select formControlName="lang">
+      <ion-select formControlName="lang" interface="popover">
         <ion-select-option value="esp">{{ 'langs.esp' | translate }}</ion-select-option>
         <ion-select-option value="eng">{{ 'langs.eng' | translate }}</ion-select-option>
       </ion-select>

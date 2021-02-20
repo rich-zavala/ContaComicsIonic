@@ -10,9 +10,10 @@
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
   --ion-color-tertiary-shade: #9a0031;
   --ion-color-tertiary-tint: #c70e49;
+  --ion-color-tertiary-font: #b3a7a7;
 
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #ffffff;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -105,4 +106,7 @@
   .item-has-focus.label-stacked.sc-ion-label-md-h {
     color: var(--ion-color-light-tint);
   }
+
+  --ion-color-step-50: --ion-background-color;
+  --ion-color-step-850: var(--ion-color-light-tint);
 }

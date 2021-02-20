@@ -107,6 +107,11 @@ ion-alert {
 
 ion-item {
     --background-focused: var(--ion-color-dark-tint);
+    --background-activated: var(--ion-color-dark-shade);
+}
+
+.item.sc-ion-label-ios-h, .item .sc-ion-label-ios-h {
+    color: var(--ion-color-tertiary-font);
 }
 
 .lang {

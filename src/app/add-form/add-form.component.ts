@@ -72,6 +72,8 @@ export class AddFormComponent implements OnInit, OnDestroy {
     this.backSubs = platform.backButton.subscribe(() => this.close());
     this.updateTitles();
     this.initForm();
+
+    console.log("Format", this.formats);
   }
 
   ngOnInit() {
