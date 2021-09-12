@@ -79,8 +79,7 @@ export class ExporterPage {
   async showToast(message: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 2000,
-      showCloseButton: true
+      duration: 2000
     });
     toast.present();
     this.working = false;

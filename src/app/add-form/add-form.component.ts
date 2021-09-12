@@ -245,8 +245,7 @@ export class AddFormComponent implements OnInit, OnDestroy {
     this.working = false;
     const toast = await this.toastController.create({
       message: this.strs.success,
-      duration: 2000,
-      showCloseButton: true
+      duration: 2000
     });
     toast.present();
   }

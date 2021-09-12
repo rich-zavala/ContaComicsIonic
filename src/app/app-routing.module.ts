@@ -10,28 +10,28 @@ const routes: Routes = [
   },
   {
     path: PAGE_NAMES.DATES_LISTING,
-    loadChildren: "./dates-listing/dates-listing.module#DatesListingPageModule"
+    loadChildren: () => import("./dates-listing/dates-listing.module").then(m => m.DatesListingPageModule)
   },
   {
     path: PAGE_NAMES.SERIES_LISTING,
-    loadChildren: "./series-listing/series-listing.module#SeriesListingPageModule"
+    loadChildren: () => import("./series-listing/series-listing.module").then(m => m.SeriesListingPageModule)
   },
 
   {
     path: PAGE_NAMES.EXPORTER,
-    loadChildren: "./exporter/exporter.module#ExporterPageModule"
+    loadChildren: () => import("./exporter/exporter.module").then(m => m.ExporterPageModule)
   },
   {
     path: PAGE_NAMES.IMPORTER,
-    loadChildren: "./importer/importer.module#ImporterPageModule"
+    loadChildren: () => import("./importer/importer.module").then(m => m.ImporterPageModule)
   },
   {
     path: PAGE_NAMES.FOLDER_SETTINGS,
-    loadChildren: "./settings/settings.module#SettingsPageModule"
+    loadChildren: () => import("./settings/settings.module").then(m => m.SettingsPageModule)
   },
   {
     path: PAGE_NAMES.ABOUT,
-    loadChildren: "./about/about.module#AboutPageModule"
+    loadChildren: () => import("./about/about.module").then(m => m.AboutPageModule)
   }
 ];
 
